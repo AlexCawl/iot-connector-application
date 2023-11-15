@@ -25,7 +25,6 @@ dependencies {
     // Android
     implementation(ApplicationDeps.Android.coreKtx)
     implementation(ApplicationDeps.Android.viewModel)
-    implementation(ApplicationDeps.Android.fragment)
     implementation(ApplicationDeps.Android.runtime)
     implementation(ApplicationDeps.Android.lifecycleExtensions)
 }

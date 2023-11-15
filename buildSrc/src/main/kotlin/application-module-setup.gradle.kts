@@ -42,6 +42,14 @@ android {
     kotlinOptions {
         jvmTarget = ApplicationConfig.jvmTarget
     }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = ApplicationConfig.kotlinComposeCompiler
+    }
 }
 
 dependencies {
@@ -69,23 +77,35 @@ dependencies {
 
     // Android
     implementation(ApplicationDeps.Android.coreKtx)
-    implementation(ApplicationDeps.Android.appcompat)
-    implementation(ApplicationDeps.Android.material)
-    implementation(ApplicationDeps.Android.constraint)
-    implementation(ApplicationDeps.Android.fragment)
     implementation(ApplicationDeps.Android.viewModel)
     implementation(ApplicationDeps.Android.runtime)
     implementation(ApplicationDeps.Android.lifecycleExtensions)
 
+    // Compose
+    implementation(ApplicationDeps.Compose.material3)
+    implementation(ApplicationDeps.Compose.ui)
+    implementation(ApplicationDeps.Compose.runtime)
+    implementation(ApplicationDeps.Compose.activity)
+    implementation(ApplicationDeps.Compose.viewModel)
+
+    // Android Studio Preview support
+    implementation(ApplicationDeps.Compose.uiToolingPreview)
+    debugImplementation(ApplicationDeps.Compose.uiTooling)
+
     // Navigation
-    implementation(ApplicationDeps.Navigation.ui)
-    implementation(ApplicationDeps.Navigation.fragment)
+    implementation(ApplicationDeps.Navigation.compose)
 
     // Util
     implementation(ApplicationDeps.Utils.coil)
+    implementation(ApplicationDeps.Utils.coilCompose)
 
     // Testing
     testImplementation(ApplicationDeps.Test.junit)
     androidTestImplementation(ApplicationDeps.Test.androidJunit)
     androidTestImplementation(ApplicationDeps.Test.espresso)
+
+    // Testing Compose
+    androidTestImplementation(ApplicationDeps.Test.junitCompose)
+    debugImplementation(ApplicationDeps.Test.manifestCompose)
+    androidTestImplementation(ApplicationDeps.Test.navigationCompose)
 }

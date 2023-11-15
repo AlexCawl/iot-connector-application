@@ -3,25 +3,37 @@ plugins {
 }
 
 dependencies {
-    // Android
-    implementation(ApplicationDeps.Android.appcompat)
-    implementation(ApplicationDeps.Android.material)
-    implementation(ApplicationDeps.Android.constraint)
+    // Compose
+    implementation(ApplicationDeps.Compose.material3)
+    implementation(ApplicationDeps.Compose.ui)
+    implementation(ApplicationDeps.Compose.runtime)
+    implementation(ApplicationDeps.Compose.activity)
+    implementation(ApplicationDeps.Compose.viewModel)
+
+    // Android Studio Preview support
+    implementation(ApplicationDeps.Compose.uiToolingPreview)
+    debugImplementation(ApplicationDeps.Compose.uiTooling)
 
     // Navigation
-    implementation(ApplicationDeps.Navigation.ui)
-    implementation(ApplicationDeps.Navigation.fragment)
+    implementation(ApplicationDeps.Navigation.compose)
 
     // Util
     implementation(ApplicationDeps.Utils.coil)
+    implementation(ApplicationDeps.Utils.coilCompose)
 
     // Testing
     androidTestImplementation(ApplicationDeps.Test.espresso)
+    androidTestImplementation(ApplicationDeps.Test.junitCompose)
+    debugImplementation(ApplicationDeps.Test.manifestCompose)
+    androidTestImplementation(ApplicationDeps.Test.navigationCompose)
 }
 
 android {
     buildFeatures {
-        viewBinding = true
-        compose = false
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = ApplicationConfig.kotlinComposeCompiler
     }
 }
