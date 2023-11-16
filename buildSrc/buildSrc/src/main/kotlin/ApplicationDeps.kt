@@ -71,6 +71,10 @@ object ApplicationDeps {
         val ktorLogging = "io.ktor:ktor-client-logging-jvm:${Version.ktor}"
     }
 
+    object Mqtt {
+        val mqttClient = "com.hivemq:hivemq-mqtt-client:1.3.0"
+    }
+
     object Room {
         val runtime = "androidx.room:room-runtime:${Version.room}"
         val compiler = "androidx.room:room-compiler:${Version.room}"
