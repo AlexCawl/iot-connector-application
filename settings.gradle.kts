@@ -13,5 +13,11 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "IoT-Connector"
+rootProject.name = "IoTConnector"
 include(":app")
+include(":core")
+include(":core:common")
+include(":core:di")
+include(":core:ui")
+include(":core:network")
+include(":core:persistence")

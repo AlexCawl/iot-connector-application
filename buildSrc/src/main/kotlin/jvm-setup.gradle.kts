@@ -5,6 +5,11 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
+java {
+    sourceCompatibility = ApplicationConfig.javaVersion
+    targetCompatibility = ApplicationConfig.javaVersion
+}
+
 dependencies {
     // Serialization
     implementation(ApplicationDeps.Serialization.core)
