@@ -16,8 +16,8 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 
-val LocalExtendedColors = staticCompositionLocalOf { ExtendedColors() }
-val LocalExtendedTypography = staticCompositionLocalOf { ExtendedTypography() }
+internal val LocalExtendedColors = staticCompositionLocalOf { ExtendedColors() }
+internal val LocalExtendedTypography = staticCompositionLocalOf { ExtendedTypography() }
 
 @Composable
 fun IoTConnectorTheme(
@@ -42,9 +42,8 @@ fun IoTConnectorTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            WindowCompat.setDecorFitsSystemWindows(window, false)
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
             window.statusBarColor = colorScheme.primary.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
 
