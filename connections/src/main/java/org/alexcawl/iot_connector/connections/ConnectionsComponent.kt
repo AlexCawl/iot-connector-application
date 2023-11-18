@@ -6,13 +6,13 @@ import org.alexcawl.iot_connector.connections.dependencies.ConnectionDependencie
 import org.alexcawl.iot_connector.connections.dependencies.ConnectionScope
 
 @ConnectionScope
-@Component(modules = [ConnectionModule::class], dependencies = [ConnectionDependencies::class])
-interface ConnectionComponent {
+@Component(modules = [ConnectionsModule::class], dependencies = [ConnectionDependencies::class])
+interface ConnectionsComponent {
     @Component.Builder
     interface Builder {
         fun dependencies(dependencies: ConnectionDependencies): Builder
 
-        fun build(): ConnectionComponent
+        fun build(): ConnectionsComponent
     }
 
     fun provideFactory(): ViewModelProvider.Factory

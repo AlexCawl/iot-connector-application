@@ -13,5 +13,5 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:persistence"))
 
-    implementation(project(":connections:dependencies"))
+    implementation(project(":profile:dependencies"))
 }

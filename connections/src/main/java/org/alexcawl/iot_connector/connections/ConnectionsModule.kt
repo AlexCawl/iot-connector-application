@@ -9,7 +9,7 @@ import org.alexcawl.iot_connector.connections.domain.ProfileViewModel
 import org.alexcawl.iot_connector.di.ViewModelKey
 
 @Module
-interface ConnectionModule {
+interface ConnectionsModule {
     @Binds
     @IntoMap
     @ViewModelKey(ConnectionsViewModel::class)

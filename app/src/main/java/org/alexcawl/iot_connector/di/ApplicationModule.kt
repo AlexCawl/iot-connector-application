@@ -1,17 +1,12 @@
 package org.alexcawl.iot_connector.di
 
-import androidx.lifecycle.ViewModel
-import dagger.Binds
 import dagger.Module
-import dagger.multibindings.IntoMap
-import org.alexcawl.iot_connector.MainViewModel
-import org.alexcawl.iot_connector.connections.ConnectionModule
-import org.alexcawl.iot_connector.network.NetworkModule
+import org.alexcawl.iot_connector.di.module.FeaturesModule
+import org.alexcawl.iot_connector.di.module.NetworkModule
+import org.alexcawl.iot_connector.di.module.PersistenceModule
+import org.alexcawl.iot_connector.di.module.ViewModelModule
 
-@Module(includes = [ViewModelModule::class, NetworkModule::class, ConnectionModule::class])
-interface ApplicationModule {
-    @Binds
-    @IntoMap
-    @ViewModelKey(MainViewModel::class)
-    fun bindMainViewModel(viewModel: MainViewModel): ViewModel
-}
+@Module(
+    includes = [ViewModelModule::class, NetworkModule::class, PersistenceModule::class, FeaturesModule::class]
+)
+interface ApplicationModule

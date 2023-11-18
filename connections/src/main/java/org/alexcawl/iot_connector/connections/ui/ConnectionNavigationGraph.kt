@@ -8,7 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import org.alexcawl.iot_connector.connections.DaggerConnectionComponent
+import org.alexcawl.iot_connector.connections.DaggerConnectionsComponent
 import org.alexcawl.iot_connector.connections.dependencies.ConnectionDependenciesStore
 import org.alexcawl.iot_connector.connections.domain.ConnectionsViewModel
 import org.alexcawl.iot_connector.connections.domain.ProfileViewModel
@@ -17,7 +17,7 @@ import org.alexcawl.iot_connector.ui.util.composeViewModel
 fun NavGraphBuilder.connectionsGraph(navController: NavController) {
     composable("connections") {
         val viewModel = composeViewModel(modelClass = ConnectionsViewModel::class.java) {
-            DaggerConnectionComponent.builder()
+            DaggerConnectionsComponent.builder()
                 .dependencies(ConnectionDependenciesStore.dependencies)
                 .build()
                 .provideFactory()
@@ -32,7 +32,7 @@ fun NavGraphBuilder.connectionsGraph(navController: NavController) {
     }
     composable("profile") {
         val viewModel = composeViewModel(modelClass = ProfileViewModel::class.java) {
-            DaggerConnectionComponent.builder()
+            DaggerConnectionsComponent.builder()
                 .dependencies(ConnectionDependenciesStore.dependencies)
                 .build()
                 .provideFactory()

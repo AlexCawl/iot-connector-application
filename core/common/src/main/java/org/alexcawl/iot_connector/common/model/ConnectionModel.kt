@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.common
+package org.alexcawl.iot_connector.common.model
 
 data class ConnectionModel(
     val name: String,
