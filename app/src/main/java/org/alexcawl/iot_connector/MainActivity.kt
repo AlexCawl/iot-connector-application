@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import org.alexcawl.iot_connector.connections.ui.connectionsGraph
+import org.alexcawl.iot_connector.profile.ui.profileGraph
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import javax.inject.Inject
 
@@ -21,8 +21,9 @@ class MainActivity : ComponentActivity() {
             IoTConnectorTheme {
                 val navController = rememberNavController()
 
-                NavHost(navController = navController, startDestination = "connections") {
-                    connectionsGraph(navController)
+                NavHost(navController = navController, startDestination = "profile") {
+//                    connectionsGraph(navController)
+                    profileGraph(navController)
                 }
             }
         }

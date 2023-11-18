@@ -18,7 +18,7 @@ data class ProfileEntity(
     val createdAt: Long,
 
     @Embedded(prefix = "conf_")
-    val configuration: MQTTConfiguration,
+    val configuration: MQTTConfigurationEntity,
 
     @ColumnInfo("info")
     val info: String? = null,

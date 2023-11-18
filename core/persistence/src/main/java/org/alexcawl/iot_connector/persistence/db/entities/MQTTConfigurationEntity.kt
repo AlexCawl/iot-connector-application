@@ -1,6 +1,6 @@
 package org.alexcawl.iot_connector.persistence.db.entities
 
-data class MQTTConfiguration(
+data class MQTTConfigurationEntity(
     val host: String,
     val port: Int,
     val login: String? = null,

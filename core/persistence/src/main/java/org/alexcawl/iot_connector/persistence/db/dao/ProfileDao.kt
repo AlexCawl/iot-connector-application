@@ -8,11 +8,15 @@ import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 import org.alexcawl.iot_connector.persistence.db.entities.ProfileEntity
+import java.util.UUID
 
 @Dao
 interface ProfileDao {
     @Query("SELECT * FROM profiles")
     fun getAllProfiles(): Flow<List<ProfileEntity>>
+
+    @Query("SELECT * FROM profiles WHERE id = :id")
+    fun getProfile(id: UUID): Flow<ProfileEntity?>
 
     @Insert(entity = ProfileEntity::class, onConflict = OnConflictStrategy.ABORT)
     suspend fun createProfile(profileEntity: ProfileEntity)
