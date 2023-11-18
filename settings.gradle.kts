@@ -24,3 +24,6 @@ include(":core:persistence")
 
 include(":connections")
 include(":connections:dependencies")
+
+include(":profile")
+include(":profile:dependencies")

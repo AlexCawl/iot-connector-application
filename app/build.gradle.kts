@@ -13,4 +13,8 @@ dependencies {
     // connections module
     implementation(project(":connections"))
     implementation(project(":connections:dependencies"))
+
+    // profile module
+    implementation(project(":profile"))
+    implementation(project(":profile:dependencies"))
 }
