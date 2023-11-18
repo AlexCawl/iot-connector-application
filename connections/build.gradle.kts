@@ -1,16 +1,17 @@
 plugins {
-    id("application-module-setup")
+    id("feature-module-setup")
+}
+
+android {
+    namespace = "connections".asModuleName()
 }
 
 dependencies {
-    // core module
     implementation(project(":core:common"))
     implementation(project(":core:di"))
-    implementation(project(":core:ui"))
     implementation(project(":core:network"))
+    implementation(project(":core:ui"))
     implementation(project(":core:persistence"))
 
-    // connections module
-    implementation(project(":connections"))
     implementation(project(":connections:dependencies"))
 }
