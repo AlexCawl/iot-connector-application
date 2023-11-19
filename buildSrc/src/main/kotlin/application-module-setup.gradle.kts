@@ -1,3 +1,5 @@
+import gradle.kotlin.dsl.accessors._ba4f4cd60847fee9ce5f1b904b753fcd.implementation
+
 plugins {
     id("com.android.application")
 
@@ -83,6 +85,9 @@ dependencies {
     implementation(ApplicationDeps.Room.room)
     implementation(ApplicationDeps.Room.runtime)
     ksp(ApplicationDeps.Room.compiler)
+
+    // Shared Preferences Datastore
+    implementation(ApplicationDeps.Datastore.preferencesDatastore)
 
     // Android
     implementation(ApplicationDeps.Android.coreKtx)

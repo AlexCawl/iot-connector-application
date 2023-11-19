@@ -7,13 +7,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.alexcawl.iot_connector.profile.domain.IProfileDatasource
+import org.alexcawl.iot_connector.profile.domain.IProfileService
 import org.alexcawl.iot_connector.ui.util.StateViewModel
 import java.util.UUID
 import javax.inject.Inject
 
 class EditProfileViewModel @Inject constructor(
-    private val source: IProfileDatasource
+    private val source: IProfileService
 ) : StateViewModel<EditProfileScreenState, EditProfileScreenAction>() {
     private val _state: MutableStateFlow<EditProfileScreenState> = MutableStateFlow(EditProfileScreenState.Initial)
     override val state: StateFlow<EditProfileScreenState> = _state.asStateFlow()

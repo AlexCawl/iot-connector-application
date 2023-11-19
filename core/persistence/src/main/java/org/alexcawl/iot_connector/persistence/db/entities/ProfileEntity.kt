@@ -24,5 +24,5 @@ data class ProfileEntity(
     val info: String? = null,
 
     @ColumnInfo("changed_at")
-    val changedAt: String? = null
+    val changedAt: Long? = null
 )

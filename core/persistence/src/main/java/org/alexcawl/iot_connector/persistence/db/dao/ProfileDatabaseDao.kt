@@ -11,7 +11,7 @@ import org.alexcawl.iot_connector.persistence.db.entities.ProfileEntity
 import java.util.UUID
 
 @Dao
-interface ProfileDao {
+interface ProfileDatabaseDao {
     @Query("SELECT * FROM profiles")
     fun getAllProfiles(): Flow<List<ProfileEntity>>
 

@@ -8,5 +8,5 @@ data class Profile(
     val createdAt: Long,
     val configuration: MQTTConfiguration,
     val info: String? = null,
-    val changedAt: String? = null
+    val changedAt: Long? = null
 )

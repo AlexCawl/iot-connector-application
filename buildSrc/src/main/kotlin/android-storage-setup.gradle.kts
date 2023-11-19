@@ -8,4 +8,7 @@ dependencies {
     implementation(ApplicationDeps.Room.room)
     implementation(ApplicationDeps.Room.runtime)
     ksp(ApplicationDeps.Room.compiler)
+
+    // Shared Preferences Datastore
+    implementation(ApplicationDeps.Datastore.preferencesDatastore)
 }

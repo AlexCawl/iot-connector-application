@@ -26,7 +26,7 @@ fun NavGraphBuilder.profileGraph(navController: NavController) {
                     .provideFactory()
             }
             val state by viewModel.state.collectAsState()
-            AllProfilesScreen(state = state, onAction = { viewModel.handle(it) })
+            AllProfilesScreen(state = state, onAction = viewModel::handle, {}, {})
         }
         composable(
             route = "profile/{id}",

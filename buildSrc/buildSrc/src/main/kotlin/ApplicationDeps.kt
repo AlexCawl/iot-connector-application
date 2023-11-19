@@ -10,6 +10,7 @@ object ApplicationDeps {
         val lifecycleExt: String = "2.2.0"
         val ktor: String = "1.5.0"
         val room: String = "2.5.2"
+        val datastore = "1.0.0"
         val navigation: String = "2.7.5"
         val dagger: String = "2.48"
         val compose: String = "1.5.4"
@@ -79,6 +80,10 @@ object ApplicationDeps {
         val runtime = "androidx.room:room-runtime:${Version.room}"
         val compiler = "androidx.room:room-compiler:${Version.room}"
         val room = "androidx.room:room-ktx:${Version.room}"
+    }
+
+    object Datastore {
+        val preferencesDatastore = "androidx.datastore:datastore-preferences:${Version.datastore}"
     }
 
     object Navigation {

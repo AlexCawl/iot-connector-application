@@ -5,8 +5,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import org.alexcawl.iot_connector.di.ViewModelKey
-import org.alexcawl.iot_connector.profile.data.ProfileDatasource
-import org.alexcawl.iot_connector.profile.domain.IProfileDatasource
+import org.alexcawl.iot_connector.profile.data.ProfileService
+import org.alexcawl.iot_connector.profile.domain.IProfileService
 import org.alexcawl.iot_connector.profile.ui.screen.all_profiles.AllProfilesViewModel
 import org.alexcawl.iot_connector.profile.ui.screen.edit_profile.EditProfileViewModel
 import org.alexcawl.iot_connector.profile.util.IMQTTConfigurationMapper
@@ -23,7 +23,7 @@ interface ProfileModule {
     fun bindConfigurationMapper(mapper: MQTTConfigurationMapper): IMQTTConfigurationMapper
 
     @Binds
-    fun bindProfileDatasource(profileDatasource: ProfileDatasource): IProfileDatasource
+    fun bindProfileDatasource(profileDatasource: ProfileService): IProfileService
 
     @Binds
     @IntoMap

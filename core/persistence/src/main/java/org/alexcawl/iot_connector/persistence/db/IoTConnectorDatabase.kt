@@ -2,7 +2,7 @@ package org.alexcawl.iot_connector.persistence.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import org.alexcawl.iot_connector.persistence.db.dao.ProfileDao
+import org.alexcawl.iot_connector.persistence.db.dao.ProfileDatabaseDao
 import org.alexcawl.iot_connector.persistence.db.entities.ProfileEntity
 
 @Database(
@@ -11,5 +11,5 @@ import org.alexcawl.iot_connector.persistence.db.entities.ProfileEntity
     exportSchema = false
 )
 abstract class IoTConnectorDatabase : RoomDatabase() {
-    abstract fun profileDao(): ProfileDao
+    abstract fun profileDao(): ProfileDatabaseDao
 }
