@@ -1,7 +1,6 @@
-package org.alexcawl.iot_connector.profile.ui.screen.all_profiles.component
+package org.alexcawl.iot_connector.profile.ui.screen.show.component
 
 import android.content.res.Configuration
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,10 +8,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -45,9 +43,7 @@ internal fun ProfileItem(
         shape = MaterialTheme.shapes.extraLarge
     ) {
         Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
+            modifier = Modifier.padding(16.dp).fillMaxWidth(),
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.Start
         ) {
@@ -56,24 +52,20 @@ internal fun ProfileItem(
                 horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.Start),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Box {
-                    Icon(
-                        imageVector = Icons.Default.AccountCircle,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier
-                            .size(96.dp)
-                            .padding(8.dp)
-                    )
-                    if (selected) {
-                        Icon(
-                            imageVector = Icons.Filled.Check,
-                            contentDescription = null,
-                            modifier = Modifier.align(Alignment.BottomEnd).background(color = MaterialTheme.colorScheme.secondary, shape = CircleShape).padding(4.dp),
-                            tint = MaterialTheme.colorScheme.onSecondary
-                        )
-                    }
-                }
+                Icon(
+                    imageVector = when (selected) {
+                        true -> Icons.Default.CheckCircle
+                        false -> Icons.Default.AccountCircle
+                    },
+                    contentDescription = null,
+                    tint = when (selected) {
+                        true -> MaterialTheme.colorScheme.primary
+                        false -> MaterialTheme.colorScheme.secondary
+                    },
+                    modifier = Modifier
+                        .size(96.dp)
+                        .padding(8.dp)
+                )
                 Column {
                     Text(
                         text = profile.name,
@@ -114,10 +106,7 @@ private fun Preview() {
         name = "home",
         createdAt = System.currentTimeMillis(),
         configuration = MQTTConfiguration(
-            host = "localhost",
-            port = 8080,
-            login = "user",
-            password = "admin"
+            host = "localhost", port = 8080, login = "user", password = "admin"
         ),
         info = "my home profile"
     )
@@ -125,11 +114,7 @@ private fun Preview() {
 
     IoTConnectorTheme {
         Box(Modifier.fillMaxWidth()) {
-            ProfileItem(
-                profile = profile,
-                selected = selected,
-                onProfileClicked = {}
-            )
+            ProfileItem(profile = profile, selected = selected, onProfileClicked = {})
         }
     }
 }

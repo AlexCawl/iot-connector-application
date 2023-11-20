@@ -34,7 +34,6 @@ fun IoTConnectorTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
         darkTheme -> darkColors
         else -> lightColors
     }
@@ -52,7 +51,9 @@ fun IoTConnectorTheme(
         LocalExtendedTypography provides extendedTypography
     ) {
         MaterialTheme(
-            colorScheme = colorScheme, typography = typography, content = content
+            colorScheme = colorScheme,
+            typography = typography,
+            content = content
         )
     }
 }

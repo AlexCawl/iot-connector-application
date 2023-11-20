@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.profile.ui.screen.all_profiles.component
+package org.alexcawl.iot_connector.profile.ui.screen.show.component
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box

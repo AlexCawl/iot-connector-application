@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.profile.ui.screen.all_profiles
+package org.alexcawl.iot_connector.profile.ui.screen.show
 
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -12,18 +12,18 @@ import org.alexcawl.iot_connector.profile.domain.usecase.SetSelectedProfileByIdU
 import org.alexcawl.iot_connector.ui.util.StateViewModel
 import javax.inject.Inject
 
-class AllProfilesViewModel @Inject constructor(
+class ShowProfilesViewModel @Inject constructor(
     private val getAllProfilesWithSelection: GetAllProfilesWithSelectionUseCase,
     private val setSelectedProfileByIdUseCase: SetSelectedProfileByIdUseCase
-) : StateViewModel<AllProfilesScreenState, AllProfilesScreenAction>() {
-    private val _state: MutableStateFlow<AllProfilesScreenState> =
-        MutableStateFlow(AllProfilesScreenState.Initial)
-    override val state: StateFlow<AllProfilesScreenState> = _state.asStateFlow()
+) : StateViewModel<ShowProfilesScreenState, ShowProfilesScreenAction>() {
+    private val _state: MutableStateFlow<ShowProfilesScreenState> =
+        MutableStateFlow(ShowProfilesScreenState.Initial)
+    override val state: StateFlow<ShowProfilesScreenState> = _state.asStateFlow()
 
-    override fun handle(action: AllProfilesScreenAction) {
+    override fun handle(action: ShowProfilesScreenAction) {
         viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
             when (action) {
-                is AllProfilesScreenAction.SelectProfileById -> setSelectedProfileByIdUseCase(action.id)
+                is ShowProfilesScreenAction.SelectProfileById -> setSelectedProfileByIdUseCase(action.id)
             }
         }
     }
@@ -31,7 +31,7 @@ class AllProfilesViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
             getAllProfilesWithSelection.invoke().collect {
-                _state.emit(AllProfilesScreenState.Successful(it.second, it.first))
+                _state.emit(ShowProfilesScreenState.Successful(it.second, it.first))
             }
         }
     }

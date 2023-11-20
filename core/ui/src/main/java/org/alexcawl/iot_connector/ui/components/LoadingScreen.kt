@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.profile.ui.screen.all_profiles.component
+package org.alexcawl.iot_connector.ui.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 
 @Composable
-internal fun AllProfilesScreenLoading(modifier: Modifier = Modifier) {
+fun LoadingScreen(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -30,7 +30,7 @@ internal fun AllProfilesScreenLoading(modifier: Modifier = Modifier) {
 private fun Preview() {
     IoTConnectorTheme {
         Box(Modifier.fillMaxSize()) {
-            AllProfilesScreenLoading(modifier = Modifier.fillMaxSize())
+            LoadingScreen(modifier = Modifier.fillMaxSize())
         }
     }
 }

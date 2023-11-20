@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.profile.ui.screen.all_profiles.component
+package org.alexcawl.iot_connector.profile.ui.screen.show.component
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 
 @Composable
-internal fun AllProfilesScreenEmpty(modifier: Modifier = Modifier) {
+internal fun ProfilesEmptyScreen(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.background(color = MaterialTheme.colorScheme.surface),
         verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
@@ -28,7 +28,7 @@ internal fun AllProfilesScreenEmpty(modifier: Modifier = Modifier) {
             color = MaterialTheme.colorScheme.onSurface
         )
         Text(
-            text = "Add them using button below!",
+            text = "Add them by using button below!",
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -41,7 +41,7 @@ internal fun AllProfilesScreenEmpty(modifier: Modifier = Modifier) {
 private fun Preview() {
     IoTConnectorTheme {
         Box(Modifier.fillMaxSize()) {
-            AllProfilesScreenEmpty(modifier = Modifier.fillMaxSize())
+            ProfilesEmptyScreen(modifier = Modifier.fillMaxSize())
         }
     }
 }

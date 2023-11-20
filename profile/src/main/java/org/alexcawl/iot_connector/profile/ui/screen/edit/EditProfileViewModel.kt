@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.profile.ui.screen.edit_profile
+package org.alexcawl.iot_connector.profile.ui.screen.edit
 
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
