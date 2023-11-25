@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import org.alexcawl.iot_connector.profile.ui.ProfileNavLocator
 import org.alexcawl.iot_connector.profile.ui.installProfileNavigation
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import javax.inject.Inject
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
             IoTConnectorTheme {
                 val navController = rememberNavController()
 
-                NavHost(navController = navController, startDestination = "profile") {
+                NavHost(navController = navController, startDestination = ProfileNavLocator.ProfileShowScreen.route) {
                     installProfileNavigation(navController)
                 }
             }

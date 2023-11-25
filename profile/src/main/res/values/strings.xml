@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profiles_title">Your profiles</string>
+    <string name="no_profiles_title">You have no profiles!</string>
+    <string name="no_profiles_subtitle">Add them by using a button below.</string>
+</resources>

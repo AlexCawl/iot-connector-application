@@ -17,10 +17,12 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import org.alexcawl.iot_connector.common.model.MQTTConfiguration
 import org.alexcawl.iot_connector.common.model.Profile
+import org.alexcawl.iot_connector.profile.R
 import org.alexcawl.iot_connector.profile.ui.screen.show.ShowProfilesScreenAction
 import org.alexcawl.iot_connector.profile.ui.screen.show.ShowProfilesScreenState
 import org.alexcawl.iot_connector.ui.components.LoadingScreen
@@ -32,36 +34,31 @@ import java.util.UUID
 fun ShowProfilesScreen(
     state: ShowProfilesScreenState,
     onAction: (ShowProfilesScreenAction) -> Unit,
-    onAddProfileAction: () -> Unit,
+    onNavigateToAddProfile: () -> Unit,
+    onNavigateToEditProfile: (UUID) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            CenterAlignedTopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary
-                ),
-                title = {
-                    Text(
-                        text = "Your profiles setups",
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                },
-                scrollBehavior = scrollBehavior
-            )
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = onAddProfileAction) {
-                Icon(imageVector = Icons.Filled.Add, contentDescription = "Add profile")
-            }
+    Scaffold(modifier = modifier, topBar = {
+        CenterAlignedTopAppBar(
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary
+            ), title = {
+                Text(
+                    text = stringResource(id = R.string.profiles_title),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }, scrollBehavior = scrollBehavior
+        )
+    }, floatingActionButton = {
+        FloatingActionButton(onClick = onNavigateToAddProfile) {
+            Icon(imageVector = Icons.Filled.Add, contentDescription = "Add profile")
         }
-    ) {
+    }) {
         Box(modifier = Modifier.padding(it)) {
             when (state) {
                 is ShowProfilesScreenState.Initial -> {
@@ -77,8 +74,8 @@ fun ShowProfilesScreen(
                         else -> {
                             AllProfilesScreenContent(
                                 profiles = state.profiles,
-                                selectedId = state.selectedProfileId,
-                                onSelectionAction = { id ->
+                                selected = state.selectedProfileId,
+                                onSelectProfile = { id ->
                                     onAction(
                                         ShowProfilesScreenAction.SelectProfileById(
                                             when (id) {
@@ -88,6 +85,7 @@ fun ShowProfilesScreen(
                                         )
                                     )
                                 },
+                                onEditProfile = onNavigateToEditProfile,
                                 modifier = Modifier.fillMaxSize()
                             )
                         }
@@ -107,9 +105,12 @@ private fun PreviewLoading() {
     val state: ShowProfilesScreenState = ShowProfilesScreenState.Initial
 
     IoTConnectorTheme {
-        ShowProfilesScreen(state = state,
+        ShowProfilesScreen(
+            state = state,
             onAction = {},
-            onAddProfileAction = {})
+            onNavigateToAddProfile = {},
+            onNavigateToEditProfile = {}
+        )
     }
 }
 
@@ -120,9 +121,12 @@ private fun PreviewEmpty() {
     val state: ShowProfilesScreenState = ShowProfilesScreenState.Successful(listOf(), null)
 
     IoTConnectorTheme {
-        ShowProfilesScreen(state = state,
+        ShowProfilesScreen(
+            state = state,
             onAction = {},
-            onAddProfileAction = {})
+            onNavigateToAddProfile = {},
+            onNavigateToEditProfile = {}
+        )
     }
 }
 
@@ -165,6 +169,8 @@ private fun Preview() {
         ShowProfilesScreen(
             state = state,
             onAction = {},
-            onAddProfileAction = {})
+            onNavigateToAddProfile = {},
+            onNavigateToEditProfile = {}
+        )
     }
 }

@@ -11,24 +11,26 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import org.alexcawl.iot_connector.profile.R
+import org.alexcawl.iot_connector.ui.components.PaddingLarge
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 
 @Composable
 internal fun ProfilesEmptyScreen(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.background(color = MaterialTheme.colorScheme.surface),
-        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
+        verticalArrangement = Arrangement.spacedBy(PaddingLarge, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "You have no profiles",
+            text = stringResource(id = R.string.no_profiles_title),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSurface
         )
         Text(
-            text = "Add them by using button below!",
+            text = stringResource(id = R.string.no_profiles_subtitle),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurface
         )
