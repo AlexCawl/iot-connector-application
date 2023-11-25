@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 
 @Composable
-fun LoadingScreen(modifier: Modifier = Modifier) {
+fun LoadingPlaceholder(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -30,7 +30,7 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
 private fun Preview() {
     IoTConnectorTheme {
         Box(Modifier.fillMaxSize()) {
-            LoadingScreen(modifier = Modifier.fillMaxSize())
+            LoadingPlaceholder(modifier = Modifier.fillMaxSize())
         }
     }
 }

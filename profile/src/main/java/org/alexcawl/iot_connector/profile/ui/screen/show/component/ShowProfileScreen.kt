@@ -25,7 +25,7 @@ import org.alexcawl.iot_connector.common.model.Profile
 import org.alexcawl.iot_connector.profile.R
 import org.alexcawl.iot_connector.profile.ui.screen.show.ShowProfilesScreenAction
 import org.alexcawl.iot_connector.profile.ui.screen.show.ShowProfilesScreenState
-import org.alexcawl.iot_connector.ui.components.LoadingScreen
+import org.alexcawl.iot_connector.ui.components.LoadingPlaceholder
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import java.util.UUID
 
@@ -62,7 +62,7 @@ fun ShowProfilesScreen(
         Box(modifier = Modifier.padding(it)) {
             when (state) {
                 is ShowProfilesScreenState.Initial -> {
-                    LoadingScreen(modifier = Modifier.fillMaxSize())
+                    LoadingPlaceholder(modifier = Modifier.fillMaxSize())
                 }
 
                 is ShowProfilesScreenState.Successful -> {
