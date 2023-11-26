@@ -14,7 +14,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -38,27 +37,29 @@ fun ShowProfilesScreen(
     onNavigateToEditProfile: (UUID) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
-
-    Scaffold(modifier = modifier, topBar = {
-        CenterAlignedTopAppBar(
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-                titleContentColor = MaterialTheme.colorScheme.onPrimary
-            ), title = {
-                Text(
-                    text = stringResource(id = R.string.profiles_title),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.titleLarge
-                )
-            }, scrollBehavior = scrollBehavior
-        )
-    }, floatingActionButton = {
-        FloatingActionButton(onClick = onNavigateToAddProfile) {
-            Icon(imageVector = Icons.Filled.Add, contentDescription = "Add profile")
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            CenterAlignedTopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                ), title = {
+                    Text(
+                        text = stringResource(id = R.string.profiles_title),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                }
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = onNavigateToAddProfile) {
+                Icon(imageVector = Icons.Filled.Add, contentDescription = "Add profile")
+            }
         }
-    }) {
+    ) {
         Box(modifier = Modifier.padding(it)) {
             when (state) {
                 is ShowProfilesScreenState.Initial -> {
