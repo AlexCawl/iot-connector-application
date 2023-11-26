@@ -22,7 +22,10 @@ class MainActivity : ComponentActivity() {
             IoTConnectorTheme {
                 val navController = rememberNavController()
 
-                NavHost(navController = navController, startDestination = ProfileNavLocator.ProfileShowScreen.route) {
+                NavHost(
+                    navController = navController,
+                    startDestination = ProfileNavLocator.ProfileShowScreen.route
+                ) {
                     installProfileNavigation(navController)
                 }
             }
