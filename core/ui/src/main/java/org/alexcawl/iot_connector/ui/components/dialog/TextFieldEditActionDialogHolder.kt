@@ -26,11 +26,11 @@ import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 @Composable
 fun EditActionDialogHolder(
     isShown: Boolean,
+    initialValue: String,
     title: @Composable () -> Unit,
     onSubmitRequest: (String) -> Unit,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
-    initialText: String = ""
 ) {
     if (isShown) {
         EditActionDialog(title = title,
@@ -55,7 +55,7 @@ fun EditActionDialogHolder(
                     Text("Cancel")
                 }
             },
-            initialText = initialText,
+            initialValue = initialValue,
             modifier = modifier
         )
     }
@@ -79,7 +79,7 @@ private fun StaticPreview() {
             },
             onSubmitRequest = {},
             onDismissRequest = {},
-            initialText = loremIpsum(20)
+            initialValue = loremIpsum(20)
         )
     }
 }
@@ -127,7 +127,7 @@ private fun DynamicPreview() {
                 isShown = false
             },
             onDismissRequest = { isShown = false },
-            initialText = text
+            initialValue = text
         )
     }
 }

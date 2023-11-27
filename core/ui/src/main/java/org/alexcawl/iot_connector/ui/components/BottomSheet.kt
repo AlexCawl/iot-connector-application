@@ -72,7 +72,7 @@ fun BottomSheet(
 
 @Preview
 @Composable
-private fun Preview() {
+private fun DynamicPreview() {
     var state by remember { mutableStateOf(false) }
     Button(onClick = { state = state.not() }) {
         Text(text = "Change state")

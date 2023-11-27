@@ -9,22 +9,22 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun EditActionDialog(
+    initialValue: String,
     title: @Composable () -> Unit,
     content: @Composable (text: String, onChange: (String) -> Unit) -> Unit,
     onSubmitRequest: (String) -> Unit,
     confirmButton: @Composable (text: String, onConfirm: (String) -> Unit) -> Unit,
     onDismissRequest: () -> Unit,
     dismissButton: @Composable (onDismiss: () -> Unit) -> Unit,
-    modifier: Modifier = Modifier,
-    initialText: String = "",
+    modifier: Modifier = Modifier
 ) {
-    var text: String by remember { mutableStateOf(initialText) }
+    var text: String by remember { mutableStateOf(initialValue) }
     val save: (String) -> Unit = {
         onSubmitRequest(it)
         onDismissRequest()
     }
     val clear: () -> Unit = {
-        text = initialText
+        text = initialValue
         onDismissRequest()
     }
 

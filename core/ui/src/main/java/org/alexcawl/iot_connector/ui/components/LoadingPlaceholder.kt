@@ -27,7 +27,7 @@ fun LoadingPlaceholder(modifier: Modifier = Modifier) {
 @Preview(name = "Light Theme", uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun Preview() {
+private fun DynamicPreview() {
     IoTConnectorTheme {
         Box(Modifier.fillMaxSize()) {
             LoadingPlaceholder(modifier = Modifier.fillMaxSize())
