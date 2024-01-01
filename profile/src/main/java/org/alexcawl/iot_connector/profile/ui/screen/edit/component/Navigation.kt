@@ -28,7 +28,7 @@ fun NavGraphBuilder.installEditProfileScreen(
         }
         val viewModel = composeViewModel(modelClass = EditProfileViewModel::class.java) { factory }
         val state by viewModel.state.collectAsState()
-        viewModel.handle(EditProfileScreenAction.InstallProfileById(profileId))
+        viewModel.handle(EditProfileScreenAction.SelectProfileById(profileId))
         EditProfileScreen(state = state, onAction = { viewModel.handle(it) })
     }
 }

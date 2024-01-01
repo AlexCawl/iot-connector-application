@@ -6,15 +6,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -27,11 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import org.alexcawl.iot_connector.common.model.MQTTConfiguration
 import org.alexcawl.iot_connector.common.model.Profile
-import org.alexcawl.iot_connector.ui.components.IconLarge
 import org.alexcawl.iot_connector.ui.components.PaddingMedium
-import org.alexcawl.iot_connector.ui.components.PaddingSmall
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.toDateFormat
 import java.util.UUID
@@ -40,10 +33,10 @@ import java.util.UUID
 @Composable
 internal fun ProfileItem(
     profile: Profile,
-    selected: Boolean,
     onClicked: (Profile) -> Unit,
     onEditClicked: (Profile) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    showType: ProfileShowType = ProfileShowType.NONE
 ) {
     Card(
         modifier = modifier,
@@ -52,7 +45,7 @@ internal fun ProfileItem(
     ) {
         Column(
             modifier = Modifier.padding(PaddingMedium),
-            verticalArrangement = Arrangement.SpaceBetween,
+            verticalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.CenterVertically),
             horizontalAlignment = Alignment.Start
         ) {
             Row(
@@ -62,22 +55,8 @@ internal fun ProfileItem(
                 horizontalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.Start),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = when (selected) {
-                        true -> Icons.Default.CheckCircle
-                        false -> Icons.Default.AccountCircle
-                    },
-                    contentDescription = null,
-                    tint = when (selected) {
-                        true -> MaterialTheme.colorScheme.primary
-                        false -> MaterialTheme.colorScheme.secondary
-                    },
-                    modifier = Modifier
-                        .size(IconLarge)
-                        .padding(PaddingSmall)
-                )
                 Column(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.fillMaxWidth(0.8f),
                     verticalArrangement = Arrangement.SpaceBetween,
                     horizontalAlignment = Alignment.Start
                 ) {
@@ -90,35 +69,56 @@ internal fun ProfileItem(
                     profile.info?.let {
                         Text(
                             text = it,
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
                     }
                 }
-                Box(
-                    modifier = Modifier.fillMaxHeight()
+                IconButton(
+                    onClick = { onEditClicked(profile) },
+                    modifier = Modifier
+                        .fillMaxWidth(1f)
+                        .height(IntrinsicSize.Max)
                 ) {
-                    IconButton(onClick = { onEditClicked(profile) }) {
-                        Icon(
-                            imageVector = Icons.Default.MoreVert,
-                            contentDescription = null
-                        )
-                    }
+                    Icon(
+                        imageVector = Icons.Default.Settings, contentDescription = null,
+                        modifier = Modifier.height(IntrinsicSize.Max)
+                    )
                 }
             }
 
-            val date = profile.changedAt ?: profile.createdAt
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.End,
-                text = date.toDateFormat(),
-                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Start,
+                text = "${profile.host}:${profile.port}",
+                style = MaterialTheme.typography.titleMedium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
+
+            when (showType) {
+                ProfileShowType.NONE -> null
+                ProfileShowType.CREATED_AT -> profile.createdAt
+                ProfileShowType.CHANGED_AT -> profile.changedAt ?: profile.createdAt
+            }?.let {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.End,
+                    text = it.toDateFormat(),
+                    style = MaterialTheme.typography.bodyMedium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     }
+}
+
+enum class ProfileShowType {
+    NONE,
+    CREATED_AT,
+    CHANGED_AT
 }
 
 @Preview(name = "Light Theme", uiMode = Configuration.UI_MODE_NIGHT_NO)
@@ -129,16 +129,16 @@ private fun Preview() {
         id = UUID.randomUUID(),
         name = "home",
         createdAt = System.currentTimeMillis(),
-        configuration = MQTTConfiguration(
-            host = "localhost", port = 8080, login = "user", password = "admin"
-        ),
+        host = "localhost",
+        port = 8080,
+        login = "user",
+        password = "admin",
         info = "my home profile"
     )
-    val selected = true
 
     IoTConnectorTheme {
         Box(Modifier.fillMaxWidth()) {
-            ProfileItem(profile = profile, selected = selected, onClicked = {}, onEditClicked = {})
+            ProfileItem(profile = profile, onClicked = {}, onEditClicked = {}, showType = ProfileShowType.CHANGED_AT)
         }
     }
 }

@@ -3,4 +3,5 @@
     <string name="profiles_title">Your profiles</string>
     <string name="no_profiles_title">You have no profiles!</string>
     <string name="no_profiles_subtitle">Add them by using a button below.</string>
+    <string name="no_profiles_selected">"No profile selected!"</string>
 </resources>

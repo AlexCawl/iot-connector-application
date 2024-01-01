@@ -13,11 +13,10 @@ import java.util.UUID
 import javax.inject.Inject
 
 class EditProfileViewModel @Inject constructor(
-    private val source: IProfileService
+    private val service: IProfileService
 ) : StateViewModel<EditProfileScreenState, EditProfileScreenAction>() {
     private val _state: MutableStateFlow<EditProfileScreenState> = MutableStateFlow(EditProfileScreenState.Initial)
     override val state: StateFlow<EditProfileScreenState> = _state.asStateFlow()
-
     private val _profileId: MutableStateFlow<UUID?> = MutableStateFlow(null)
 
     override fun handle(action: EditProfileScreenAction) = Unit
@@ -27,7 +26,7 @@ class EditProfileViewModel @Inject constructor(
             _profileId.collect { id ->
                 when (id) {
                     null -> Unit
-                    else -> source.getProfile(id).collect { profile ->
+                    else -> service.getProfile(id).collect { profile ->
                         when (profile) {
                             null -> _state.emit(EditProfileScreenState.ProfileNotFound)
                             else -> _state.emit(EditProfileScreenState.Successful(profile))

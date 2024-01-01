@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import org.alexcawl.iot_connector.common.model.MQTTConfiguration
 import org.alexcawl.iot_connector.common.model.Profile
 import org.alexcawl.iot_connector.profile.R
 import org.alexcawl.iot_connector.profile.ui.screen.show.ShowProfilesScreenAction
@@ -37,29 +36,23 @@ fun ShowProfilesScreen(
     onNavigateToEditProfile: (UUID) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            CenterAlignedTopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary
-                ), title = {
-                    Text(
-                        text = stringResource(id = R.string.profiles_title),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                }
+    Scaffold(modifier = modifier, topBar = {
+        CenterAlignedTopAppBar(colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary
+        ), title = {
+            Text(
+                text = stringResource(id = R.string.profiles_title),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.titleLarge
             )
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = onNavigateToAddProfile) {
-                Icon(imageVector = Icons.Filled.Add, contentDescription = "Add profile")
-            }
+        })
+    }, floatingActionButton = {
+        FloatingActionButton(onClick = onNavigateToAddProfile) {
+            Icon(imageVector = Icons.Filled.Add, contentDescription = "Add profile")
         }
-    ) {
+    }) {
         Box(modifier = Modifier.padding(it)) {
             when (state) {
                 is ShowProfilesScreenState.Initial -> {
@@ -73,7 +66,7 @@ fun ShowProfilesScreen(
                         }
 
                         else -> {
-                            AllProfilesScreenContent(
+                            ProfilesScreen(
                                 profiles = state.profiles,
                                 selected = state.selectedProfileId,
                                 onSelectProfile = { id ->
@@ -106,12 +99,10 @@ private fun PreviewLoading() {
     val state: ShowProfilesScreenState = ShowProfilesScreenState.Initial
 
     IoTConnectorTheme {
-        ShowProfilesScreen(
-            state = state,
+        ShowProfilesScreen(state = state,
             onAction = {},
             onNavigateToAddProfile = {},
-            onNavigateToEditProfile = {}
-        )
+            onNavigateToEditProfile = {})
     }
 }
 
@@ -122,12 +113,10 @@ private fun PreviewEmpty() {
     val state: ShowProfilesScreenState = ShowProfilesScreenState.Successful(listOf(), null)
 
     IoTConnectorTheme {
-        ShowProfilesScreen(
-            state = state,
+        ShowProfilesScreen(state = state,
             onAction = {},
             onNavigateToAddProfile = {},
-            onNavigateToEditProfile = {}
-        )
+            onNavigateToEditProfile = {})
     }
 }
 
@@ -140,38 +129,35 @@ private fun Preview() {
             id = UUID.randomUUID(),
             name = "home",
             createdAt = System.currentTimeMillis(),
-            configuration = MQTTConfiguration(
-                host = "localhost", port = 8080, login = "user", password = "admin"
-            ),
+            host = "localhost",
+            port = 8080,
+            login = "user",
+            password = "admin",
             info = "my home profile",
             changedAt = System.currentTimeMillis() + 1000L
         ), Profile(
             id = UUID.randomUUID(),
             name = "work",
             createdAt = System.currentTimeMillis(),
-            configuration = MQTTConfiguration(
-                host = "localhost", port = 8000, login = "user"
-            ),
+            host = "localhost",
+            port = 8000,
+            login = "user",
             info = "my work profile",
             changedAt = System.currentTimeMillis() + 5000L
         ), Profile(
             id = UUID.randomUUID(),
             name = "default",
             createdAt = System.currentTimeMillis(),
-            configuration = MQTTConfiguration(
-                host = "localhost", port = 8000
-            )
+            host = "localhost", port = 8000,
         )
     )
     val selected: UUID = profiles.first().id
     val state = ShowProfilesScreenState.Successful(profiles, selected)
 
     IoTConnectorTheme {
-        ShowProfilesScreen(
-            state = state,
+        ShowProfilesScreen(state = state,
             onAction = {},
             onNavigateToAddProfile = {},
-            onNavigateToEditProfile = {}
-        )
+            onNavigateToEditProfile = {})
     }
 }
