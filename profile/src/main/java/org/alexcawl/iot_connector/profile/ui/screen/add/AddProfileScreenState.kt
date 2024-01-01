@@ -4,15 +4,15 @@ sealed interface AddProfileScreenState {
     data object Initial : AddProfileScreenState
 
     data class Building(
-        val name: String? = null,
+        val name: String = "",
         val nameMessage: Message = Message.OK,
-        val info: String? = null,
-        val host: String? = null,
+        val info: String = "",
+        val host: String = "",
         val hostMessage: Message = Message.OK,
-        val port: String? = null,
+        val port: String = "",
         val portMessage: Message = Message.OK,
-        val login: String? = null,
-        val password: String? = null
+        val login: String = "",
+        val password: String = ""
     ) : AddProfileScreenState {
         enum class Message {
             OK,

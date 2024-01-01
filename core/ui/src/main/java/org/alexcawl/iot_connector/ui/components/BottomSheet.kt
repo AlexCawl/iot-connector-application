@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -70,7 +71,7 @@ fun BottomSheet(
     }
 }
 
-@Preview
+@ThemedPreview
 @Composable
 private fun DynamicPreview() {
     var state by remember { mutableStateOf(false) }

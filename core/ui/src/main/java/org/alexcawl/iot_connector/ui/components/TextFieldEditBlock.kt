@@ -1,17 +1,21 @@
 package org.alexcawl.iot_connector.ui.components
 
-import android.content.res.Configuration
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -26,69 +30,97 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import org.alexcawl.iot_connector.ui.components.dialog.EditActionDialogHolder
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
+import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
 
 @Composable
 fun TextFieldEditBlock(
-    state: FieldEditBlockState,
+    state: TextFieldEditBlockState,
     onFieldValueChange: (fieldValue: String) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     var isDialogShown: Boolean by remember { mutableStateOf(false) }
+    var isFieldShown: Boolean by remember { mutableStateOf(state.optional.not()) }
 
-    OutlinedTextField(
-        value = state.value,
-        onValueChange = {},
-        readOnly = true,
-        textStyle = MaterialTheme.typography.bodyLarge,
-        minLines = 1,
-        maxLines = 4,
-        modifier = modifier,
-        label = {
-            when (state.showLabel) {
-                true -> Text(text = state.label)
-                false -> Unit
-            }
-        },
-        trailingIcon = {
-            when (state.errorMessage) {
-                null -> Icon(
-                    imageVector = Icons.Default.Create, contentDescription = null
-                )
+    Column(
+        modifier = modifier
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().height(48.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = state.label,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.titleLarge
+            )
 
-                else -> Icon(
-                    imageVector = Icons.Default.Warning, contentDescription = null
-                )
-            }
-        },
-        isError = state.errorMessage != null,
-        supportingText = {
-            when (state.errorMessage) {
-                null -> Unit
-                else -> Text(
-                    text = state.errorMessage,
-                    minLines = 1,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.error
-                )
-            }
-        },
-        shape = MaterialTheme.shapes.large,
-        interactionSource = remember { MutableInteractionSource() }.also { interactionSource ->
-            LaunchedEffect(interactionSource) {
-                interactionSource.interactions.collect {
-                    if (it is PressInteraction.Release) {
-                        isDialogShown = true
-                    }
+            if (state.optional) {
+                IconButton(onClick = { isFieldShown = isFieldShown.not() }) {
+                    Icon(
+                        imageVector = when (isFieldShown) {
+                            true -> Icons.Filled.KeyboardArrowUp
+                            false -> Icons.Filled.KeyboardArrowDown
+                        },
+                        contentDescription = null
+                    )
+
                 }
             }
         }
-    )
+
+        if (isFieldShown) {
+            OutlinedTextField(
+                value = state.value,
+                onValueChange = {},
+                modifier = Modifier.fillMaxWidth(),
+                readOnly = true,
+                textStyle = MaterialTheme.typography.bodyLarge,
+                minLines = 1,
+                maxLines = 4,
+                trailingIcon = {
+                    when (state.errorMessage) {
+                        null -> Icon(
+                            imageVector = Icons.Default.Create, contentDescription = null
+                        )
+
+                        else -> Icon(
+                            imageVector = Icons.Default.Warning, contentDescription = null
+                        )
+                    }
+                },
+                isError = state.errorMessage != null,
+                supportingText = {
+                    when (state.errorMessage) {
+                        null -> Unit
+                        else -> Text(
+                            text = state.errorMessage,
+                            minLines = 1,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                },
+                shape = MaterialTheme.shapes.large,
+                interactionSource = remember { MutableInteractionSource() }.also { interactionSource ->
+                    LaunchedEffect(interactionSource) {
+                        interactionSource.interactions.collect {
+                            if (it is PressInteraction.Release) {
+                                isDialogShown = true
+                            }
+                        }
+                    }
+                }
+            )
+        }
+    }
 
     EditActionDialogHolder(
         isShown = isDialogShown,
@@ -111,15 +143,14 @@ fun TextFieldEditBlock(
 }
 
 @Immutable
-data class FieldEditBlockState(
+data class TextFieldEditBlockState(
     val value: String,
     val label: String,
-    val showLabel: Boolean = true,
-    val errorMessage: String? = null,
+    val optional: Boolean = false,
+    val errorMessage: String? = null
 )
 
-@Preview(name = "Light Theme", uiMode = Configuration.UI_MODE_NIGHT_NO)
-@Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@ThemedPreview
 @Composable
 private fun StaticPreview() {
     IoTConnectorTheme {
@@ -132,37 +163,27 @@ private fun StaticPreview() {
                 horizontalAlignment = Alignment.Start
             ) {
                 TextFieldEditBlock(
-                    state = FieldEditBlockState("", "Username", true, null),
+                    state = TextFieldEditBlockState("", "Username", true, null),
                     onFieldValueChange = {},
                     modifier = Modifier.fillMaxWidth()
                 )
                 TextFieldEditBlock(
-                    state = FieldEditBlockState("admin", "Username", true, null),
+                    state = TextFieldEditBlockState("admin", "Username", false, null),
                     onFieldValueChange = {},
                     modifier = Modifier.fillMaxWidth()
                 )
                 TextFieldEditBlock(
-                    state = FieldEditBlockState("", "Username", false, null),
+                    state = TextFieldEditBlockState("", "Username", false, null),
                     onFieldValueChange = {},
                     modifier = Modifier.fillMaxWidth()
                 )
                 TextFieldEditBlock(
-                    state = FieldEditBlockState("admin", "Username", false, null),
+                    state = TextFieldEditBlockState("", "Username", true, "Username is empty!"),
                     onFieldValueChange = {},
                     modifier = Modifier.fillMaxWidth()
                 )
                 TextFieldEditBlock(
-                    state = FieldEditBlockState("", "Username", true, "Username is empty!"),
-                    onFieldValueChange = {},
-                    modifier = Modifier.fillMaxWidth()
-                )
-                TextFieldEditBlock(
-                    state = FieldEditBlockState("admin", "Username", false, "Username should contain digits!"),
-                    onFieldValueChange = {},
-                    modifier = Modifier.fillMaxWidth()
-                )
-                TextFieldEditBlock(
-                    state = FieldEditBlockState(loremIpsum(500), "Username", true, null),
+                    state = TextFieldEditBlockState("admin", "Username", false, "Username should contain digits!"),
                     onFieldValueChange = {},
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -171,15 +192,14 @@ private fun StaticPreview() {
     }
 }
 
-@Preview(name = "Light Theme", uiMode = Configuration.UI_MODE_NIGHT_NO)
-@Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@ThemedPreview
 @Composable
 private fun DynamicPreview() {
-    var usernameState: FieldEditBlockState by remember {
-        mutableStateOf(FieldEditBlockState("", "Select username:", true, null))
+    var usernameState: TextFieldEditBlockState by remember {
+        mutableStateOf(TextFieldEditBlockState("", "Select username:", false, null))
     }
-    var passwordState: FieldEditBlockState by remember {
-        mutableStateOf(FieldEditBlockState("1234", "Select password:", true, "Password is too weak!"))
+    var passwordState: TextFieldEditBlockState by remember {
+        mutableStateOf(TextFieldEditBlockState("1234", "Select password:", true, "Password is too weak!"))
     }
 
     IoTConnectorTheme {

@@ -89,7 +89,7 @@ private fun StaticPreview() {
 @Composable
 private fun DynamicPreview() {
     IoTConnectorTheme {
-        var isShown by remember { mutableStateOf(true) }
+        var isShown by remember { mutableStateOf(false) }
         var text by remember { mutableStateOf(loremIpsum(500)) }
 
         Scaffold {

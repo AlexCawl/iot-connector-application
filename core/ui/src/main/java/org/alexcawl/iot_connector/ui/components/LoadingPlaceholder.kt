@@ -2,7 +2,9 @@ package org.alexcawl.iot_connector.ui.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -11,21 +13,30 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
+import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
 @Composable
-fun LoadingPlaceholder(modifier: Modifier = Modifier) {
+fun LoadingPlaceholder(
+    modifier: Modifier = Modifier,
+    title: (@Composable () -> Unit)? = null
+) {
     Box(
         modifier = modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.surface),
         contentAlignment = Alignment.Center
     ) {
-        CircularProgressIndicator()
+        Column(
+            verticalArrangement = Arrangement.spacedBy(PaddingSmall, Alignment.CenterVertically),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            CircularProgressIndicator()
+            title?.let { it() }
+        }
     }
 }
 
-@Preview(name = "Light Theme", uiMode = Configuration.UI_MODE_NIGHT_NO)
-@Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@ThemedPreview
 @Composable
 private fun DynamicPreview() {
     IoTConnectorTheme {

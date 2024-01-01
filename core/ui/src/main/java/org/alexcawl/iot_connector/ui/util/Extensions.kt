@@ -9,3 +9,4 @@ fun Long.toDateFormat(): String = run {
     val formatter = SimpleDateFormat("dd.MM.yyyy, HH:mm", Locale.getDefault())
     formatter.format(date)
 }
+

@@ -25,6 +25,7 @@ import org.alexcawl.iot_connector.profile.ui.screen.show.ShowProfilesScreenActio
 import org.alexcawl.iot_connector.profile.ui.screen.show.ShowProfilesScreenState
 import org.alexcawl.iot_connector.ui.components.LoadingPlaceholder
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
+import org.alexcawl.iot_connector.ui.util.ThemedPreview
 import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -106,8 +107,7 @@ private fun PreviewLoading() {
     }
 }
 
-@Preview(name = "Light Theme", uiMode = Configuration.UI_MODE_NIGHT_NO)
-@Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@ThemedPreview
 @Composable
 private fun PreviewEmpty() {
     val state: ShowProfilesScreenState = ShowProfilesScreenState.Successful(listOf(), null)
@@ -120,8 +120,7 @@ private fun PreviewEmpty() {
     }
 }
 
-@Preview(name = "Light Theme", uiMode = Configuration.UI_MODE_NIGHT_NO)
-@Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@ThemedPreview
 @Composable
 private fun Preview() {
     val profiles = listOf(
