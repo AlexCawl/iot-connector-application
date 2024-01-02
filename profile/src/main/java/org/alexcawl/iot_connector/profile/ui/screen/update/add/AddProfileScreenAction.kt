@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.profile.ui.screen.add
+package org.alexcawl.iot_connector.profile.ui.screen.update.add
 
 sealed interface AddProfileScreenAction {
     data class SetName(val name: String): AddProfileScreenAction

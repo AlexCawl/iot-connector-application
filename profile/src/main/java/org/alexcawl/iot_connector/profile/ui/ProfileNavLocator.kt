@@ -7,8 +7,8 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import org.alexcawl.iot_connector.profile.DaggerProfileComponent
 import org.alexcawl.iot_connector.profile.dependencies.ProfileDependenciesStore
-import org.alexcawl.iot_connector.profile.ui.screen.add.component.installAddProfileScreen
-import org.alexcawl.iot_connector.profile.ui.screen.edit.component.installEditProfileScreen
+import org.alexcawl.iot_connector.profile.ui.screen.update.add.component.installAddProfileScreen
+import org.alexcawl.iot_connector.profile.ui.screen.update.edit.component.installEditProfileScreen
 import org.alexcawl.iot_connector.profile.ui.screen.show.component.installShowProfilesScreen
 
 sealed interface ProfileNavLocator {
@@ -21,13 +21,13 @@ sealed interface ProfileNavLocator {
     }
 
     data object ProfileEditScreen : ProfileNavLocator {
-        override val route: String = "profile/{id}"
+        override val route: String = "edit_profile/{id}"
         override val arguments: List<NamedNavArgument> =
             listOf(navArgument("id") { type = NavType.StringType })
     }
 
     data object ProfileAddScreen : ProfileNavLocator {
-        override val route: String = "profile"
+        override val route: String = "add_profile"
         override val arguments: List<NamedNavArgument>? = null
     }
 }
@@ -40,13 +40,13 @@ fun NavGraphBuilder.installProfileNavigation(navController: NavController) {
     installShowProfilesScreen(
         screenRoute = ProfileNavLocator.ProfileShowScreen.route,
         onNavigateToAddProfile = { navController.navigate(ProfileNavLocator.ProfileAddScreen.route) },
-        onNavigateToEditProfile = { navController.navigate("${ProfileNavLocator.ProfileEditScreen.route}/${it}") },
+        onNavigateToEditProfile = { navController.navigate("edit_profile/${it}") },
         factory = factory
     )
     installAddProfileScreen(
         screenRoute = ProfileNavLocator.ProfileAddScreen.route,
         factory = factory,
-        onNavigateBack = { navController.navigateUp() }
+        navController = navController
     )
     installEditProfileScreen(
         screenRoute = ProfileNavLocator.ProfileEditScreen.route,

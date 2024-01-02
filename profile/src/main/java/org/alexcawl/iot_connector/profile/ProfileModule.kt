@@ -7,9 +7,9 @@ import dagger.multibindings.IntoMap
 import org.alexcawl.iot_connector.di.ViewModelKey
 import org.alexcawl.iot_connector.profile.data.ProfileService
 import org.alexcawl.iot_connector.profile.domain.IProfileService
-import org.alexcawl.iot_connector.profile.ui.screen.add.AddProfileViewModel
+import org.alexcawl.iot_connector.profile.ui.screen.update.add.AddProfileViewModel
 import org.alexcawl.iot_connector.profile.ui.screen.show.ShowProfilesViewModel
-import org.alexcawl.iot_connector.profile.ui.screen.edit.EditProfileViewModel
+import org.alexcawl.iot_connector.profile.ui.screen.update.edit.EditProfileViewModel
 import org.alexcawl.iot_connector.profile.util.IProfileMapper
 import org.alexcawl.iot_connector.profile.util.ProfileMapper
 

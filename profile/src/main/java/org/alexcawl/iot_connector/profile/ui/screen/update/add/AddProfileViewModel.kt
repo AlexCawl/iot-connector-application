@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.profile.ui.screen.add
+package org.alexcawl.iot_connector.profile.ui.screen.update.add
 
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import org.alexcawl.iot_connector.common.model.ProfileBuildException
 import org.alexcawl.iot_connector.profile.domain.IProfileService
 import org.alexcawl.iot_connector.common.model.ProfileBuilder
+import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileScreenState
 import org.alexcawl.iot_connector.ui.util.StateViewModel
 import java.lang.IllegalStateException
 import javax.inject.Inject
@@ -25,59 +26,87 @@ class AddProfileViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
             when (action) {
                 is AddProfileScreenAction.SetName -> when (val currentState = state.value) {
-                    is AddProfileScreenState.Building -> _state.emit(currentState.copy(name = action.name))
+                    is AddProfileScreenState.Building -> {
+                        val profile = currentState.profileScreenState
+                        _state.emit(currentState.copy(profile.copy(name = action.name)))
+                    }
                     else -> throw IllegalStateException()
                 }
 
                 is AddProfileScreenAction.SetInfo -> when (val currentState = state.value) {
-                    is AddProfileScreenState.Building -> _state.emit(currentState.copy(info = action.info))
+                    is AddProfileScreenState.Building -> {
+                        val profile = currentState.profileScreenState
+                        _state.emit(currentState.copy(profile.copy(info = action.info)))
+                    }
                     else -> throw IllegalStateException()
                 }
 
                 is AddProfileScreenAction.SetInfoType -> when (val currentState = state.value) {
-                    is AddProfileScreenState.Building -> _state.emit(currentState.copy(infoOptional = action.optional))
+                    is AddProfileScreenState.Building -> {
+                        val profile = currentState.profileScreenState
+                        _state.emit(currentState.copy(profile.copy(infoOptional = action.optional)))
+                    }
                     else -> throw IllegalStateException()
                 }
 
                 is AddProfileScreenAction.SetHost -> when (val currentState = state.value) {
-                    is AddProfileScreenState.Building -> _state.emit(currentState.copy(host = action.host))
+                    is AddProfileScreenState.Building -> {
+                        val profile = currentState.profileScreenState
+                        _state.emit(currentState.copy(profile.copy(host = action.host)))
+                    }
                     else -> throw IllegalStateException()
                 }
 
                 is AddProfileScreenAction.SetPort -> when (val currentState = state.value) {
-                    is AddProfileScreenState.Building -> _state.emit(currentState.copy(port = action.port))
+                    is AddProfileScreenState.Building -> {
+                        val profile = currentState.profileScreenState
+                        _state.emit(currentState.copy(profile.copy(port = action.port)))
+                    }
                     else -> throw IllegalStateException()
                 }
 
                 is AddProfileScreenAction.SetLogin -> when (val currentState = state.value) {
-                    is AddProfileScreenState.Building -> _state.emit(currentState.copy(login = action.login))
+                    is AddProfileScreenState.Building -> {
+                        val profile = currentState.profileScreenState
+                        _state.emit(currentState.copy(profile.copy(login = action.login)))
+                    }
                     else -> throw IllegalStateException()
                 }
 
                 is AddProfileScreenAction.SetLoginType -> when (val currentState = state.value) {
-                    is AddProfileScreenState.Building -> _state.emit(currentState.copy(loginOptional = action.optional))
+                    is AddProfileScreenState.Building -> {
+                        val profile = currentState.profileScreenState
+                        _state.emit(currentState.copy(profile.copy(loginOptional = action.optional)))
+                    }
                     else -> throw IllegalStateException()
                 }
 
                 is AddProfileScreenAction.SetPassword -> when (val currentState = state.value) {
-                    is AddProfileScreenState.Building -> _state.emit(currentState.copy(password = action.password))
+                    is AddProfileScreenState.Building -> {
+                        val profile = currentState.profileScreenState
+                        _state.emit(currentState.copy(profile.copy(password = action.password)))
+                    }
                     else -> throw IllegalStateException()
                 }
 
                 is AddProfileScreenAction.SetPasswordType -> when (val currentState = state.value) {
-                    is AddProfileScreenState.Building -> _state.emit(currentState.copy(passwordOptional = action.optional))
+                    is AddProfileScreenState.Building -> {
+                        val profile = currentState.profileScreenState
+                        _state.emit(currentState.copy(profile.copy(passwordOptional = action.optional)))
+                    }
                     else -> throw IllegalStateException()
                 }
 
                 is AddProfileScreenAction.AddProfile -> when (val currentState = state.value) {
                     is AddProfileScreenState.Building -> {
+                        val profileState = currentState.profileScreenState
                         val builder = ProfileBuilder(
-                            name = currentState.name,
-                            info = if (currentState.infoOptional) null else currentState.info,
-                            host = currentState.host,
-                            port = currentState.port,
-                            login = if (currentState.loginOptional) null else currentState.login,
-                            password = if (currentState.passwordOptional) null else currentState.password
+                            name = profileState.name,
+                            info = if (profileState.infoOptional) null else profileState.info,
+                            host = profileState.host,
+                            port = profileState.port,
+                            login = if (profileState.loginOptional) null else profileState.login,
+                            password = if (profileState.passwordOptional) null else profileState.password
                         )
                         _state.emit(
                             try {
@@ -87,19 +116,19 @@ class AddProfileViewModel @Inject constructor(
                             } catch (exception: ProfileBuildException) {
                                 when (exception) {
                                     ProfileBuildException.ProfileNameException -> currentState.copy(
-                                        nameMessage = AddProfileScreenState.Building.Message.NULL
+                                        profileState.copy(nameMessage = ProfileScreenState.Message.NULL)
                                     )
 
                                     ProfileBuildException.ConfigurationHostIsEmpty -> currentState.copy(
-                                        hostMessage = AddProfileScreenState.Building.Message.NULL
+                                        profileState.copy(hostMessage = ProfileScreenState.Message.NULL)
                                     )
 
                                     ProfileBuildException.ConfigurationPortIsEmpty -> currentState.copy(
-                                        portMessage = AddProfileScreenState.Building.Message.NULL
+                                        profileState.copy(portMessage = ProfileScreenState.Message.NULL)
                                     )
 
                                     ProfileBuildException.ConfigurationPortIsNotNumber -> currentState.copy(
-                                        portMessage = AddProfileScreenState.Building.Message.NOT_A_NUMBER
+                                        profileState.copy(portMessage = ProfileScreenState.Message.NOT_A_NUMBER)
                                     )
                                 }
                             }
@@ -115,7 +144,7 @@ class AddProfileViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
             _state.emit(
-                AddProfileScreenState.Building()
+                AddProfileScreenState.Building(ProfileScreenState())
             )
         }
     }
