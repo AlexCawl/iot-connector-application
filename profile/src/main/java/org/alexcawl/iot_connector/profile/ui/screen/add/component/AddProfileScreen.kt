@@ -1,24 +1,19 @@
 package org.alexcawl.iot_connector.profile.ui.screen.add.component
 
 import android.content.res.Configuration
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Button
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
@@ -27,28 +22,22 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import org.alexcawl.iot_connector.profile.R
 import org.alexcawl.iot_connector.profile.ui.screen.add.AddProfileScreenAction
 import org.alexcawl.iot_connector.profile.ui.screen.add.AddProfileScreenState
 import org.alexcawl.iot_connector.ui.components.LoadingPlaceholder
 import org.alexcawl.iot_connector.ui.components.MaterialSpacer
 import org.alexcawl.iot_connector.ui.components.PaddingMedium
-import org.alexcawl.iot_connector.ui.components.PaddingSmall
-import org.alexcawl.iot_connector.ui.components.Spacer
-import org.alexcawl.iot_connector.ui.components.TextFieldEditBlock
-import org.alexcawl.iot_connector.ui.components.TextFieldEditBlockState
+import org.alexcawl.iot_connector.ui.components.input.DialogTextFieldState
+import org.alexcawl.iot_connector.ui.components.input.OptionalDialogTextField
+import org.alexcawl.iot_connector.ui.components.input.RequiredDialogTextField
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,7 +48,7 @@ fun AddProfileScreen(
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -109,82 +98,94 @@ fun AddProfileScreen(
                     verticalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.Top),
                     horizontalAlignment = Alignment.Start
                 ) {
-                    var name by remember { mutableStateOf(state.name) }
-                    val nameState = TextFieldEditBlockState(
-                        value = name,
-                        label = "Name",
-                        errorMessage = state.nameMessage.toText()
-                    )
-                    TextFieldEditBlock(
-                        state = nameState,
-                        onFieldValueChange = { name = it },
+                    RequiredDialogTextField(
+                        state = DialogTextFieldState(
+                            value = state.name,
+                            label = "Name",
+                            errorMessage = state.nameMessage.toText()
+                        ),
+                        onFieldValueChange = { onAction(AddProfileScreenAction.SetName(it)) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = PaddingMedium)
                     )
                     MaterialSpacer()
 
-                    var info by remember { mutableStateOf("") }
-                    val infoState = TextFieldEditBlockState(value = info, label = "Info", optional = true)
-                    TextFieldEditBlock(
-                        state = infoState,
-                        onFieldValueChange = { info = it },
+                    OptionalDialogTextField(
+                        visible = state.infoOptional.not(),
+                        onVisibilityChange = {
+                            onAction(AddProfileScreenAction.SetInfoType(state.infoOptional.not()))
+                        },
+                        state = DialogTextFieldState(
+                            value = state.info,
+                            label = "Info"
+                        ),
+                        onFieldValueChange = { onAction(AddProfileScreenAction.SetInfo(it)) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = PaddingMedium)
                     )
                     MaterialSpacer()
 
-                    var host by remember { mutableStateOf("") }
-                    val hostState = TextFieldEditBlockState(value = host, label = "Host")
-                    TextFieldEditBlock(
-                        state = hostState,
-                        onFieldValueChange = { host = it },
+                    RequiredDialogTextField(
+                        state = DialogTextFieldState(
+                            value = state.host,
+                            label = "Host",
+                            errorMessage = state.hostMessage.toText()
+                        ),
+                        onFieldValueChange = { onAction(AddProfileScreenAction.SetHost(it)) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = PaddingMedium)
                     )
                     MaterialSpacer()
 
-                    var port by remember { mutableStateOf("") }
-                    val portState = TextFieldEditBlockState(value = port, label = "Port")
-                    TextFieldEditBlock(
-                        state = portState,
-                        onFieldValueChange = { port = it },
+                    RequiredDialogTextField(
+                        state = DialogTextFieldState(
+                            value = state.port,
+                            label = "Port",
+                            errorMessage = state.portMessage.toText()
+                        ),
+                        onFieldValueChange = { onAction(AddProfileScreenAction.SetPort(it)) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = PaddingMedium)
                     )
                     MaterialSpacer()
 
-                    var login by remember { mutableStateOf("") }
-                    val loginState = TextFieldEditBlockState(value = login, label = "Port")
-                    TextFieldEditBlock(
-                        state = loginState,
-                        onFieldValueChange = { login = it },
+                    OptionalDialogTextField(
+                        visible = state.loginOptional.not(),
+                        onVisibilityChange = { onAction(AddProfileScreenAction.SetLoginType(state.loginOptional.not())) },
+                        state = DialogTextFieldState(value = state.login, label = "Login"),
+                        onFieldValueChange = { onAction(AddProfileScreenAction.SetLogin(it)) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = PaddingMedium)
                     )
                     MaterialSpacer()
 
-                    var password by remember { mutableStateOf("") }
-                    val passwordState = TextFieldEditBlockState(value = password, label = "Port")
-                    TextFieldEditBlock(
-                        state = passwordState,
-                        onFieldValueChange = { password = it },
+                    OptionalDialogTextField(
+                        visible = state.passwordOptional.not(),
+                        onVisibilityChange = { onAction(AddProfileScreenAction.SetPasswordType(state.passwordOptional.not())) },
+                        state = DialogTextFieldState(value = state.password, label = "Password"),
+                        onFieldValueChange = { onAction(AddProfileScreenAction.SetPassword(it)) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = PaddingMedium)
                     )
                 }
             }
-            AddProfileScreenState.Completed -> LoadingPlaceholder(
-                modifier = paddingModifier.fillMaxSize(),
-                title = {
-                    Text(text = "Updating skeletons")
+            AddProfileScreenState.Completed -> {
+                LoadingPlaceholder(
+                    modifier = paddingModifier.fillMaxSize(),
+                    title = {
+                        Text(text = "Updating skeletons")
+                    }
+                )
+                LaunchedEffect(key1 = null) {
+                    onNavigateBack()
                 }
-            )
+            }
         }
     }
 }

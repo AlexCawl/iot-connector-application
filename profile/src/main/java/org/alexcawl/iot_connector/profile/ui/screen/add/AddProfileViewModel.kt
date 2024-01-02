@@ -14,12 +14,11 @@ import org.alexcawl.iot_connector.ui.util.StateViewModel
 import java.lang.IllegalStateException
 import javax.inject.Inject
 
-class AddProfileScreenViewModel @Inject constructor(
+class AddProfileViewModel @Inject constructor(
     private val service: IProfileService
 ) : StateViewModel<AddProfileScreenState, AddProfileScreenAction>() {
-    private val _state: MutableStateFlow<AddProfileScreenState> = MutableStateFlow(
-        AddProfileScreenState.Initial
-    )
+    private val _state: MutableStateFlow<AddProfileScreenState> =
+        MutableStateFlow(AddProfileScreenState.Initial)
     override val state: StateFlow<AddProfileScreenState> = _state.asStateFlow()
 
     override fun handle(action: AddProfileScreenAction) {
@@ -32,6 +31,11 @@ class AddProfileScreenViewModel @Inject constructor(
 
                 is AddProfileScreenAction.SetInfo -> when (val currentState = state.value) {
                     is AddProfileScreenState.Building -> _state.emit(currentState.copy(info = action.info))
+                    else -> throw IllegalStateException()
+                }
+
+                is AddProfileScreenAction.SetInfoType -> when (val currentState = state.value) {
+                    is AddProfileScreenState.Building -> _state.emit(currentState.copy(infoOptional = action.optional))
                     else -> throw IllegalStateException()
                 }
 
@@ -50,8 +54,18 @@ class AddProfileScreenViewModel @Inject constructor(
                     else -> throw IllegalStateException()
                 }
 
+                is AddProfileScreenAction.SetLoginType -> when (val currentState = state.value) {
+                    is AddProfileScreenState.Building -> _state.emit(currentState.copy(loginOptional = action.optional))
+                    else -> throw IllegalStateException()
+                }
+
                 is AddProfileScreenAction.SetPassword -> when (val currentState = state.value) {
                     is AddProfileScreenState.Building -> _state.emit(currentState.copy(password = action.password))
+                    else -> throw IllegalStateException()
+                }
+
+                is AddProfileScreenAction.SetPasswordType -> when (val currentState = state.value) {
+                    is AddProfileScreenState.Building -> _state.emit(currentState.copy(passwordOptional = action.optional))
                     else -> throw IllegalStateException()
                 }
 
@@ -59,11 +73,11 @@ class AddProfileScreenViewModel @Inject constructor(
                     is AddProfileScreenState.Building -> {
                         val builder = ProfileBuilder(
                             name = currentState.name,
-                            info = currentState.info,
+                            info = if (currentState.infoOptional) null else currentState.info,
                             host = currentState.host,
                             port = currentState.port,
-                            login = currentState.login,
-                            password = currentState.password
+                            login = if (currentState.loginOptional) null else currentState.login,
+                            password = if (currentState.passwordOptional) null else currentState.password
                         )
                         _state.emit(
                             try {

@@ -7,7 +7,7 @@ import dagger.multibindings.IntoMap
 import org.alexcawl.iot_connector.di.ViewModelKey
 import org.alexcawl.iot_connector.profile.data.ProfileService
 import org.alexcawl.iot_connector.profile.domain.IProfileService
-import org.alexcawl.iot_connector.profile.ui.screen.add.AddProfileScreenViewModel
+import org.alexcawl.iot_connector.profile.ui.screen.add.AddProfileViewModel
 import org.alexcawl.iot_connector.profile.ui.screen.show.ShowProfilesViewModel
 import org.alexcawl.iot_connector.profile.ui.screen.edit.EditProfileViewModel
 import org.alexcawl.iot_connector.profile.util.IProfileMapper
@@ -33,6 +33,6 @@ interface ProfileModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(AddProfileScreenViewModel::class)
-    fun bindAddProfileScreenViewModel(viewModel: AddProfileScreenViewModel): ViewModel
+    @ViewModelKey(AddProfileViewModel::class)
+    fun bindAddProfileScreenViewModel(viewModel: AddProfileViewModel): ViewModel
 }
