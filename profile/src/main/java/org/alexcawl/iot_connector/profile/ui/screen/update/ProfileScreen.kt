@@ -2,119 +2,174 @@ package org.alexcawl.iot_connector.profile.ui.screen.update
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.profile.R
+import org.alexcawl.iot_connector.ui.components.LoadingPlaceholder
 import org.alexcawl.iot_connector.ui.components.MaterialSpacer
+import org.alexcawl.iot_connector.ui.components.PaddingLarge
 import org.alexcawl.iot_connector.ui.components.PaddingMedium
 import org.alexcawl.iot_connector.ui.components.input.DialogTextFieldState
 import org.alexcawl.iot_connector.ui.components.input.OptionalDialogTextField
 import org.alexcawl.iot_connector.ui.components.input.RequiredDialogTextField
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen(
+internal fun ProfileScreen(
     state: ProfileScreenState,
-    onNameChange: (String) -> Unit,
-    onInfoChange: (String) -> Unit,
-    onInfoVisibilityChange: (Boolean) -> Unit,
-    onHostChange: (String) -> Unit,
-    onPortChange: (String) -> Unit,
-    onLoginChange: (String) -> Unit,
-    onLoginVisibilityChange: (Boolean) -> Unit,
-    onPasswordChange: (String) -> Unit,
-    onPasswordVisibilityChange: (Boolean) -> Unit,
+    onAction: (ProfileScreenAction) -> Unit,
+    onNavigateBack: () -> Unit,
+    title: @Composable () -> Unit,
+    floatingActionButton: @Composable () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier.verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.Top),
-        horizontalAlignment = Alignment.Start
-    ) {
-        RequiredDialogTextField(
-            state = DialogTextFieldState(
-                value = state.name,
-                label = "Name",
-                errorMessage = state.nameMessage.toText()
-            ),
-            onFieldValueChange = onNameChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = PaddingMedium)
-        )
-        MaterialSpacer()
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = title,
+                navigationIcon = {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
+                    }
+                },
+                actions = {
+                    TextButton(
+                        onClick = { onAction(ProfileScreenAction.Save) },
+                        shape = MaterialTheme.shapes.small,
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.save).uppercase(),
+                            style = MaterialTheme.typography.titleMedium,
+                            maxLines = 1,
+                            overflow = TextOverflow.Clip,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+            )
+        },
+        floatingActionButton = floatingActionButton
+    ) { paddingValues: PaddingValues ->
+        val paddingModifier = Modifier.padding(paddingValues)
+        when (state) {
+            is ProfileScreenState.Initial -> LoadingPlaceholder(
+                modifier = paddingModifier.fillMaxSize()
+            )
 
-        OptionalDialogTextField(
-            visible = state.infoOptional.not(),
-            onVisibilityChange = onInfoVisibilityChange,
-            state = DialogTextFieldState(
-                value = state.info,
-                label = "Info"
-            ),
-            onFieldValueChange = onInfoChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = PaddingMedium)
-        )
-        MaterialSpacer()
+            is ProfileScreenState.Builder -> {
+                Column(
+                    modifier = paddingModifier.verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.Top),
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    RequiredDialogTextField(
+                        state = DialogTextFieldState(
+                            value = state.name,
+                            label = "Name",
+                            errorMessage = state.nameMessage.toText()
+                        ),
+                        onFieldValueChange = { onAction(ProfileScreenAction.SetName(it)) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = PaddingMedium)
+                            .padding(top = PaddingMedium)
+                    )
+                    MaterialSpacer()
 
-        RequiredDialogTextField(
-            state = DialogTextFieldState(
-                value = state.host,
-                label = "Host",
-                errorMessage = state.hostMessage.toText()
-            ),
-            onFieldValueChange = onHostChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = PaddingMedium)
-        )
-        MaterialSpacer()
+                    OptionalDialogTextField(
+                        visible = state.infoOptional.not(),
+                        onVisibilityChange = { onAction(ProfileScreenAction.SetInfoType(it.not())) },
+                        state = DialogTextFieldState(
+                            value = state.info, label = "Info"
+                        ),
+                        onFieldValueChange = { onAction(ProfileScreenAction.SetInfo(it)) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = PaddingMedium)
+                    )
+                    MaterialSpacer()
 
-        RequiredDialogTextField(
-            state = DialogTextFieldState(
-                value = state.port,
-                label = "Port",
-                errorMessage = state.portMessage.toText()
-            ),
-            onFieldValueChange = onPortChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = PaddingMedium)
-        )
-        MaterialSpacer()
+                    RequiredDialogTextField(
+                        state = DialogTextFieldState(
+                            value = state.host,
+                            label = "Host",
+                            errorMessage = state.hostMessage.toText()
+                        ),
+                        onFieldValueChange = { onAction(ProfileScreenAction.SetHost(it)) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = PaddingMedium)
+                    )
+                    MaterialSpacer()
 
-        OptionalDialogTextField(
-            visible = state.loginOptional.not(),
-            onVisibilityChange = onLoginVisibilityChange,
-            state = DialogTextFieldState(value = state.login, label = "Login"),
-            onFieldValueChange = onLoginChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = PaddingMedium)
-        )
-        MaterialSpacer()
+                    RequiredDialogTextField(
+                        state = DialogTextFieldState(
+                            value = state.port,
+                            label = "Port",
+                            errorMessage = state.portMessage.toText()
+                        ),
+                        onFieldValueChange = { onAction(ProfileScreenAction.SetPort(it)) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = PaddingMedium)
+                    )
+                    MaterialSpacer()
 
-        OptionalDialogTextField(
-            visible = state.passwordOptional.not(),
-            onVisibilityChange = onPasswordVisibilityChange,
-            state = DialogTextFieldState(value = state.password, label = "Password"),
-            onFieldValueChange = onPasswordChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = PaddingMedium)
-        )
+                    OptionalDialogTextField(
+                        visible = state.loginOptional.not(),
+                        onVisibilityChange = { onAction(ProfileScreenAction.SetLoginType(it.not())) },
+                        state = DialogTextFieldState(value = state.login, label = "Login"),
+                        onFieldValueChange = { onAction(ProfileScreenAction.SetLogin(it)) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = PaddingMedium)
+                    )
+                    MaterialSpacer()
+
+                    OptionalDialogTextField(
+                        visible = state.passwordOptional.not(),
+                        onVisibilityChange = { onAction(ProfileScreenAction.SetPasswordType(it.not())) },
+                        state = DialogTextFieldState(value = state.password, label = "Password"),
+                        onFieldValueChange = { onAction(ProfileScreenAction.SetPassword(it)) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = PaddingMedium)
+                            .padding(bottom = PaddingLarge * 4)
+                    )
+                }
+            }
+
+            is ProfileScreenState.Saving -> LaunchedEffect(key1 = null) {
+                onNavigateBack()
+            }
+        }
     }
 }
 
 @Composable
-fun ProfileScreenState.Message.toText(): String? = when (this) {
-    ProfileScreenState.Message.OK -> null
-    ProfileScreenState.Message.NULL -> stringResource(id = R.string.cannot_be_null)
-    ProfileScreenState.Message.NOT_A_NUMBER -> stringResource(id = R.string.not_a_number)
+fun ProfileScreenState.Builder.Message.toText(): String? = when (this) {
+    ProfileScreenState.Builder.Message.OK -> null
+    ProfileScreenState.Builder.Message.NULL -> stringResource(id = R.string.cannot_be_null)
+    ProfileScreenState.Builder.Message.NOT_A_NUMBER -> stringResource(id = R.string.not_a_number)
 }

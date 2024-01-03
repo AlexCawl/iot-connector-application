@@ -1,5 +1,6 @@
 package org.alexcawl.iot_connector.profile.ui.screen.update.edit.component
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModelProvider
@@ -7,7 +8,6 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import org.alexcawl.iot_connector.profile.ui.screen.update.edit.EditProfileScreenAction
 import org.alexcawl.iot_connector.profile.ui.screen.update.edit.EditProfileViewModel
 import org.alexcawl.iot_connector.ui.util.composeViewModel
 import java.util.UUID
@@ -28,7 +28,7 @@ fun NavGraphBuilder.installEditProfileScreen(
         }
         val viewModel = composeViewModel(modelClass = EditProfileViewModel::class.java) { factory }
         val state by viewModel.state.collectAsState()
-        viewModel.handle(EditProfileScreenAction.SelectProfileById(profileId))
+        LaunchedEffect(key1 = null) { viewModel.setProfileId(profileId) }
         EditProfileScreen(
             state = state,
             onAction = viewModel::handle,

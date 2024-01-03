@@ -13,10 +13,10 @@ import java.util.UUID
 @Dao
 interface ProfileDatabaseDao {
     @Query("SELECT * FROM profiles")
-    fun getAllProfiles(): Flow<List<ProfileEntity>>
+    fun getProfiles(): Flow<List<ProfileEntity>>
 
     @Query("SELECT * FROM profiles WHERE id = :id")
-    fun getProfile(id: UUID): Flow<ProfileEntity?>
+    suspend fun getProfile(id: UUID): ProfileEntity?
 
     @Insert(entity = ProfileEntity::class, onConflict = OnConflictStrategy.ABORT)
     suspend fun createProfile(profileEntity: ProfileEntity)

@@ -15,28 +15,48 @@ class ProfileService @Inject constructor(
     private val databaseDao: ProfileDatabaseDao,
     private val mapper: IProfileMapper
 ) : IProfileService {
-    override fun getAllProfiles(): Flow<List<Profile>> =
-        databaseDao.getAllProfiles().map { entities ->
-            entities.map { entity ->
-                mapper.mapFirst(entity)
-            }
-        }
-
-    override fun getProfile(id: UUID): Flow<Profile?> = databaseDao.getProfile(id).map { entity ->
-        when (entity) {
-            null -> null
-            else -> mapper.mapFirst(entity)
+    override fun getAllProfiles(): Flow<List<Profile>> = databaseDao.getProfiles().map { entities ->
+        entities.map { entity ->
+            mapper.mapFirst(entity)
         }
     }
 
-    override suspend fun createProfile(model: Profile) =
-        databaseDao.createProfile(mapper.mapSecond(model))
+    override suspend fun getProfile(id: UUID): Profile? =
+        when (val entity = databaseDao.getProfile(id)) {
+            null -> null
+            else -> mapper.mapFirst(entity)
+        }
 
-    override suspend fun updateProfile(model: Profile) =
-        databaseDao.updateProfile(mapper.mapSecond(model))
+    override suspend fun createProfile(profile: Profile) =
+        databaseDao.createProfile(mapper.mapSecond(profile))
 
-    override suspend fun deleteProfile(model: Profile) =
-        databaseDao.deleteProfile(mapper.mapSecond(model))
+    override suspend fun updateProfile(id: UUID, profile: Profile) {
+        when (val entity = databaseDao.getProfile(id)) {
+            null -> databaseDao.createProfile(mapper.mapSecond(profile))
+            else -> {
+                val existingProfile = mapper.mapFirst(entity)
+                val mergedProfile = with(profile) {
+                    existingProfile.copy(
+                        name = name,
+                        info = info,
+                        host = host,
+                        port = port,
+                        login = login,
+                        password = password,
+                        changedAt = System.currentTimeMillis()
+                    )
+                }
+                databaseDao.updateProfile(mapper.mapSecond(mergedProfile))
+            }
+        }
+    }
+
+    override suspend fun deleteProfile(id: UUID) {
+        when (val entity = databaseDao.getProfile(id)) {
+            null -> Unit
+            else -> databaseDao.deleteProfile(entity)
+        }
+    }
 
     override fun getSelectedProfileId(): Flow<UUID?> = datastoreDao.getSelectedProfileId()
 

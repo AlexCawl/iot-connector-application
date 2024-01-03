@@ -4,156 +4,72 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.alexcawl.iot_connector.common.model.Profile
-import org.alexcawl.iot_connector.common.model.ProfileBuildException
-import org.alexcawl.iot_connector.common.model.ProfileBuilder
+import org.alexcawl.iot_connector.common.model.ProfileValidationException
+import org.alexcawl.iot_connector.common.util.IProfileValidator
 import org.alexcawl.iot_connector.profile.domain.IProfileService
+import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileScreenAction
 import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileScreenState
-import org.alexcawl.iot_connector.ui.util.StateViewModel
+import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileViewModel
+import org.alexcawl.iot_connector.profile.ui.screen.update.edit.component.Delete
+import org.alexcawl.iot_connector.profile.ui.screen.update.edit.component.NotFound
 import java.util.UUID
 import javax.inject.Inject
 
 class EditProfileViewModel @Inject constructor(
-    private val service: IProfileService
-) : StateViewModel<EditProfileScreenState, EditProfileScreenAction>() {
-    private val _state: MutableStateFlow<EditProfileScreenState> =
-        MutableStateFlow(EditProfileScreenState.Initial)
-    override val state: StateFlow<EditProfileScreenState> = _state.asStateFlow()
+    private val service: IProfileService, private val validator: IProfileValidator
+) : ProfileViewModel() {
     private val _profileId: MutableStateFlow<UUID?> = MutableStateFlow(null)
 
-    override fun handle(action: EditProfileScreenAction) {
+    suspend fun setProfileId(uuid: UUID) = _profileId.emit(uuid)
+
+    override fun handle(action: ProfileScreenAction) {
         viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
             when (action) {
-                is EditProfileScreenAction.SelectProfileById -> _profileId.emit(action.id)
-
-                is EditProfileScreenAction.DeleteProfile -> when (val id = _profileId.value) {
-                    null -> throw IllegalStateException()
-                    else -> service.getProfile(id).collect { profile ->
-                        when (profile) {
-                            null -> Unit
-                            else -> service.deleteProfile(profile)
+                is Delete -> _profileId.collect { profileId ->
+                    when (profileId) {
+                        null -> _state.emit(NotFound)
+                        else -> {
+                            service.deleteProfile(profileId)
+                            _state.emit(ProfileScreenState.Saving)
                         }
                     }
                 }
+                else -> super.handle(action)
+            }
+        }
+    }
 
-                is EditProfileScreenAction.SetName -> when (val currentState = state.value) {
-                    is EditProfileScreenState.Building -> {
-                        val profile = currentState.profileScreenState
-                        _state.emit(currentState.copy(profile.copy(name = action.name)))
-                    }
-                    else -> throw IllegalStateException()
-                }
-
-                is EditProfileScreenAction.SetInfo -> when (val currentState = state.value) {
-                    is EditProfileScreenState.Building -> {
-                        val profile = currentState.profileScreenState
-                        _state.emit(currentState.copy(profile.copy(info = action.info)))
-                    }
-                    else -> throw IllegalStateException()
-                }
-
-                is EditProfileScreenAction.SetInfoType -> when (val currentState = state.value) {
-                    is EditProfileScreenState.Building -> {
-                        val profile = currentState.profileScreenState
-                        _state.emit(currentState.copy(profile.copy(infoOptional = action.optional)))
-                    }
-                    else -> throw IllegalStateException()
-                }
-
-                is EditProfileScreenAction.SetHost -> when (val currentState = state.value) {
-                    is EditProfileScreenState.Building -> {
-                        val profile = currentState.profileScreenState
-                        _state.emit(currentState.copy(profile.copy(host = action.host)))
-                    }
-                    else -> throw IllegalStateException()
-                }
-
-                is EditProfileScreenAction.SetPort -> when (val currentState = state.value) {
-                    is EditProfileScreenState.Building -> {
-                        val profile = currentState.profileScreenState
-                        _state.emit(currentState.copy(profile.copy(port = action.port)))
-                    }
-                    else -> throw IllegalStateException()
-                }
-
-                is EditProfileScreenAction.SetLogin -> when (val currentState = state.value) {
-                    is EditProfileScreenState.Building -> {
-                        val profile = currentState.profileScreenState
-                        _state.emit(currentState.copy(profile.copy(login = action.login)))
-                    }
-                    else -> throw IllegalStateException()
-                }
-
-                is EditProfileScreenAction.SetLoginType -> when (val currentState = state.value) {
-                    is EditProfileScreenState.Building -> {
-                        val profile = currentState.profileScreenState
-                        _state.emit(currentState.copy(profile.copy(loginOptional = action.optional)))
-                    }
-                    else -> throw IllegalStateException()
-                }
-
-                is EditProfileScreenAction.SetPassword -> when (val currentState = state.value) {
-                    is EditProfileScreenState.Building -> {
-                        val profile = currentState.profileScreenState
-                        _state.emit(currentState.copy(profile.copy(password = action.password)))
-                    }
-                    else -> throw IllegalStateException()
-                }
-
-                is EditProfileScreenAction.SetPasswordType -> when (val currentState = state.value) {
-                    is EditProfileScreenState.Building -> {
-                        val profile = currentState.profileScreenState
-                        _state.emit(currentState.copy(profile.copy(passwordOptional = action.optional)))
-                    }
-                    else -> throw IllegalStateException()
-                }
-
-                is EditProfileScreenAction.EditProfile -> when (val currentState = state.value) {
-                    is EditProfileScreenState.Building -> {
-                        val profileState = currentState.profileScreenState
-                        val builder = ProfileBuilder(
-                            name = profileState.name,
-                            info = if (profileState.infoOptional) null else profileState.info,
-                            host = profileState.host,
-                            port = profileState.port,
-                            login = if (profileState.loginOptional) null else profileState.login,
-                            password = if (profileState.passwordOptional) null else profileState.password
-                        )
-                        _state.emit(
-                            try {
-                                val profile = builder.build()
-                                service.createProfile(profile)
-                                EditProfileScreenState.Completed
-                            } catch (exception: ProfileBuildException) {
-                                when (exception) {
-                                    ProfileBuildException.ProfileNameException -> currentState.copy(
-                                        profileState.copy(nameMessage = ProfileScreenState.Message.NULL)
-                                    )
-
-                                    ProfileBuildException.ConfigurationHostIsEmpty -> currentState.copy(
-                                        profileState.copy(hostMessage = ProfileScreenState.Message.NULL)
-                                    )
-
-                                    ProfileBuildException.ConfigurationPortIsEmpty -> currentState.copy(
-                                        profileState.copy(portMessage = ProfileScreenState.Message.NULL)
-                                    )
-
-                                    ProfileBuildException.ConfigurationPortIsNotNumber -> currentState.copy(
-                                        profileState.copy(portMessage = ProfileScreenState.Message.NOT_A_NUMBER)
-                                    )
-                                }
-                            }
-                        )
-                    }
-                    is EditProfileScreenState.Completed -> Unit
-                    is EditProfileScreenState.Initial -> throw IllegalStateException()
-                    is EditProfileScreenState.ProfileNotFound -> throw IllegalStateException()
+    override suspend fun saveProfile(screenState: ProfileScreenState.Builder) = try {
+        val updatedProfile = validator.validate(
+            name = screenState.name,
+            host = screenState.host,
+            port = screenState.port,
+            info = if (screenState.infoOptional) null else screenState.info,
+            login = if (screenState.loginOptional) null else screenState.login,
+            password = if (screenState.passwordOptional) null else screenState.password
+        )
+        _profileId.collect { profileId ->
+            when (profileId) {
+                null -> _state.emit(NotFound)
+                else -> {
+                    service.updateProfile(profileId, updatedProfile)
+                    _state.emit(ProfileScreenState.Saving)
                 }
             }
         }
+    } catch (exception: ProfileValidationException) {
+        _state.emit(
+            when (exception) {
+                ProfileValidationException.ProfileNameIsEmpty -> screenState.copy(nameMessage = ProfileScreenState.Builder.Message.NULL)
+                ProfileValidationException.ConfigurationHostIsEmpty -> screenState.copy(hostMessage = ProfileScreenState.Builder.Message.NULL)
+                ProfileValidationException.ConfigurationPortIsEmpty -> screenState.copy(portMessage = ProfileScreenState.Builder.Message.NULL)
+                ProfileValidationException.ConfigurationPortIsNotNumber -> screenState.copy(
+                    portMessage = ProfileScreenState.Builder.Message.NOT_A_NUMBER
+                )
+            }
+        )
     }
 
     init {
@@ -161,31 +77,31 @@ class EditProfileViewModel @Inject constructor(
             _profileId.collect { id ->
                 when (id) {
                     null -> Unit
-                    else -> service.getProfile(id).collect { profile ->
-                        when (profile) {
-                            null -> _state.emit(EditProfileScreenState.ProfileNotFound)
-                            else -> _state.emit(EditProfileScreenState.Building(profile.toState()))
-                        }
+                    else -> when (val profile = service.getProfile(id)) {
+                        null -> _state.emit(NotFound)
+                        else -> _state.emit(profile.toState())
                     }
                 }
             }
         }
     }
-}
 
-private fun Profile.toState(): ProfileScreenState {
-    return ProfileScreenState(
-        name = name,
-        nameMessage = ProfileScreenState.Message.OK,
-        info = info ?: "",
-        infoOptional = info == null,
-        host = host,
-        hostMessage = ProfileScreenState.Message.OK,
-        port = port.toString(),
-        portMessage = ProfileScreenState.Message.OK,
-        login = login ?: "",
-        loginOptional = login == null,
-        password = password ?: "",
-        passwordOptional = password == null
-    )
+    private companion object {
+        fun Profile.toState(): ProfileScreenState {
+            return ProfileScreenState.Builder(
+                name = name,
+                nameMessage = ProfileScreenState.Builder.Message.OK,
+                info = info ?: "",
+                infoOptional = info == null,
+                host = host,
+                hostMessage = ProfileScreenState.Builder.Message.OK,
+                port = port.toString(),
+                portMessage = ProfileScreenState.Builder.Message.OK,
+                login = login ?: "",
+                loginOptional = login == null,
+                password = password ?: "",
+                passwordOptional = password == null
+            )
+        }
+    }
 }
