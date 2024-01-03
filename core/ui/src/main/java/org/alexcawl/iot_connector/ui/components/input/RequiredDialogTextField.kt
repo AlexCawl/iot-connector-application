@@ -2,11 +2,10 @@ package org.alexcawl.iot_connector.ui.components.input
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -28,24 +27,30 @@ fun RequiredDialogTextField(
     onFieldValueChange: (fieldValue: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier.width(IntrinsicSize.Max),
-        verticalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.Top),
-        horizontalAlignment = Alignment.Start
+    Card(
+        modifier = modifier
     ) {
-        Text(
-            text = state.label,
-            minLines = 1,
-            maxLines = 1,
-            style = MaterialTheme.typography.titleLarge,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.fillMaxWidth()
-        )
-        DialogTextField(
-            state = state,
-            onFieldValueChange = onFieldValueChange,
-            modifier = Modifier.fillMaxWidth()
-        )
+        Column(
+            modifier = Modifier
+                .padding(PaddingMedium)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.Top),
+            horizontalAlignment = Alignment.Start
+        ) {
+            Text(
+                text = state.label,
+                minLines = 1,
+                maxLines = 1,
+                style = MaterialTheme.typography.titleLarge,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.fillMaxWidth()
+            )
+            DialogTextField(
+                state = state,
+                onFieldValueChange = onFieldValueChange,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
     }
 }
 

@@ -1,17 +1,16 @@
-package org.alexcawl.iot_connector.profile.util
+package org.alexcawl.iot_connector.profile.domain.usecase
 
 import org.alexcawl.iot_connector.common.model.Profile
-import org.alexcawl.iot_connector.common.model.ProfileValidationException
-import org.alexcawl.iot_connector.common.util.IProfileValidator
+import org.alexcawl.iot_connector.profile.domain.ProfileValidationException
 import java.util.UUID
 import javax.inject.Inject
 import kotlin.jvm.Throws
 
-class ProfileValidator @Inject constructor() : IProfileValidator {
+class ValidateProfileUseCase @Inject constructor() {
     @Throws(ProfileValidationException::class)
-    override fun validate(
+    operator fun invoke(
         name: String, info: String?, host: String, port: String, login: String?, password: String?
-    ): Profile {
+    ): Profile  {
         val validName: String = when (name.isBlank()) {
             true -> throw ProfileValidationException.ProfileNameIsEmpty
             false -> name

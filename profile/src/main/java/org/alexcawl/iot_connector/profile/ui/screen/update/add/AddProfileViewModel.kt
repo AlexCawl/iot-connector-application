@@ -4,16 +4,16 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import org.alexcawl.iot_connector.common.model.ProfileValidationException
-import org.alexcawl.iot_connector.profile.domain.IProfileService
+import org.alexcawl.iot_connector.profile.domain.ProfileValidationException
+import org.alexcawl.iot_connector.profile.domain.usecase.CreateProfileUseCase
+import org.alexcawl.iot_connector.profile.domain.usecase.ValidateProfileUseCase
 import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileScreenState
-import org.alexcawl.iot_connector.common.util.IProfileValidator
 import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileViewModel
 import javax.inject.Inject
 
 class AddProfileViewModel @Inject constructor(
-    private val service: IProfileService,
-    private val validator: IProfileValidator
+    private val createProfile: CreateProfileUseCase,
+    private val validateProfile: ValidateProfileUseCase
 ) : ProfileViewModel() {
     init {
         viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
@@ -22,7 +22,7 @@ class AddProfileViewModel @Inject constructor(
     }
 
     override suspend fun saveProfile(screenState: ProfileScreenState.Builder) = try {
-        val profile = validator.validate(
+        val profile = validateProfile(
             name = screenState.name,
             host = screenState.host,
             port = screenState.port,
@@ -30,7 +30,7 @@ class AddProfileViewModel @Inject constructor(
             login = if (screenState.loginOptional) null else screenState.login,
             password = if (screenState.passwordOptional) null else screenState.password
         )
-        service.createProfile(profile)
+        createProfile(profile)
         _state.emit(ProfileScreenState.Saving)
     } catch (exception: ProfileValidationException) {
         _state.emit(

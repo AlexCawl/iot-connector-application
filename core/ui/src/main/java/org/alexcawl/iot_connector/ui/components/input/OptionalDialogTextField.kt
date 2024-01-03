@@ -1,13 +1,15 @@
 package org.alexcawl.iot_connector.ui.components.input
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -33,31 +35,41 @@ fun OptionalDialogTextField(
     onFieldValueChange: (fieldValue: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier.width(IntrinsicSize.Max),
-        verticalArrangement = Arrangement.spacedBy(PaddingSmall, Alignment.Top),
-        horizontalAlignment = Alignment.Start
+    Card(
+        modifier = modifier
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier
+                .padding(PaddingMedium)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(PaddingSmall, Alignment.Top),
+            horizontalAlignment = Alignment.Start
         ) {
-            Text(
-                text = state.label,
-                minLines = 1,
-                maxLines = 1,
-                style = MaterialTheme.typography.titleLarge,
-                overflow = TextOverflow.Ellipsis
-            )
-            Checkbox(checked = visible, onCheckedChange = onVisibilityChange)
-        }
-        if (visible) {
-            DialogTextField(
-                state = state,
-                onFieldValueChange = onFieldValueChange,
-                modifier = Modifier.fillMaxWidth()
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = state.label,
+                    minLines = 1,
+                    maxLines = 1,
+                    style = MaterialTheme.typography.titleLarge,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Checkbox(checked = visible, onCheckedChange = onVisibilityChange)
+            }
+            AnimatedVisibility(
+                visible = visible,
+                enter = fadeIn(),
+                exit = fadeOut()
+            ) {
+                DialogTextField(
+                    state = state,
+                    onFieldValueChange = onFieldValueChange,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
     }
 }

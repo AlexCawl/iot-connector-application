@@ -6,9 +6,11 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.alexcawl.iot_connector.common.model.Profile
-import org.alexcawl.iot_connector.common.model.ProfileValidationException
-import org.alexcawl.iot_connector.common.util.IProfileValidator
-import org.alexcawl.iot_connector.profile.domain.IProfileService
+import org.alexcawl.iot_connector.profile.domain.ProfileValidationException
+import org.alexcawl.iot_connector.profile.domain.usecase.DeleteProfileByIdUseCase
+import org.alexcawl.iot_connector.profile.domain.usecase.GetProfileByIdUseCase
+import org.alexcawl.iot_connector.profile.domain.usecase.UpdateProfileByIdUseCase
+import org.alexcawl.iot_connector.profile.domain.usecase.ValidateProfileUseCase
 import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileScreenAction
 import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileScreenState
 import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileViewModel
@@ -18,7 +20,10 @@ import java.util.UUID
 import javax.inject.Inject
 
 class EditProfileViewModel @Inject constructor(
-    private val service: IProfileService, private val validator: IProfileValidator
+    private val getProfile: GetProfileByIdUseCase,
+    private val updateProfile: UpdateProfileByIdUseCase,
+    private val deleteProfile: DeleteProfileByIdUseCase,
+    private val validateProfile: ValidateProfileUseCase
 ) : ProfileViewModel() {
     private val _profileId: MutableStateFlow<UUID?> = MutableStateFlow(null)
 
@@ -31,7 +36,7 @@ class EditProfileViewModel @Inject constructor(
                     when (profileId) {
                         null -> _state.emit(NotFound)
                         else -> {
-                            service.deleteProfile(profileId)
+                            deleteProfile(profileId)
                             _state.emit(ProfileScreenState.Saving)
                         }
                     }
@@ -42,7 +47,7 @@ class EditProfileViewModel @Inject constructor(
     }
 
     override suspend fun saveProfile(screenState: ProfileScreenState.Builder) = try {
-        val updatedProfile = validator.validate(
+        val updatedProfile = validateProfile(
             name = screenState.name,
             host = screenState.host,
             port = screenState.port,
@@ -54,7 +59,7 @@ class EditProfileViewModel @Inject constructor(
             when (profileId) {
                 null -> _state.emit(NotFound)
                 else -> {
-                    service.updateProfile(profileId, updatedProfile)
+                    updateProfile(profileId, updatedProfile)
                     _state.emit(ProfileScreenState.Saving)
                 }
             }
@@ -77,7 +82,7 @@ class EditProfileViewModel @Inject constructor(
             _profileId.collect { id ->
                 when (id) {
                     null -> Unit
-                    else -> when (val profile = service.getProfile(id)) {
+                    else -> when (val profile = getProfile(id)) {
                         null -> _state.emit(NotFound)
                         else -> _state.emit(profile.toState())
                     }

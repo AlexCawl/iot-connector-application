@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.common.model
+package org.alexcawl.iot_connector.profile.domain
 
 sealed class ProfileValidationException : RuntimeException() {
     data object ProfileNameIsEmpty : ProfileValidationException()

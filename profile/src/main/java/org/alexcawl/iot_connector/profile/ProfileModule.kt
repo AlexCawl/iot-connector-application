@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import org.alexcawl.iot_connector.common.util.IProfileValidator
 import org.alexcawl.iot_connector.di.ViewModelKey
 import org.alexcawl.iot_connector.profile.data.ProfileService
 import org.alexcawl.iot_connector.profile.domain.IProfileService
@@ -13,7 +12,6 @@ import org.alexcawl.iot_connector.profile.ui.screen.show.ShowProfilesViewModel
 import org.alexcawl.iot_connector.profile.ui.screen.update.edit.EditProfileViewModel
 import org.alexcawl.iot_connector.profile.util.IProfileMapper
 import org.alexcawl.iot_connector.profile.util.ProfileMapper
-import org.alexcawl.iot_connector.profile.util.ProfileValidator
 
 @Module
 interface ProfileModule {
@@ -22,9 +20,6 @@ interface ProfileModule {
 
     @Binds
     fun bindProfileDatasource(profileDatasource: ProfileService): IProfileService
-
-    @Binds
-    fun bindProfileValidator(profileValidator: ProfileValidator): IProfileValidator
 
     @Binds
     @IntoMap

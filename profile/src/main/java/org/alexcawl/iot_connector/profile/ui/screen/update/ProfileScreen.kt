@@ -1,10 +1,12 @@
 package org.alexcawl.iot_connector.profile.ui.screen.update
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -22,16 +24,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.profile.R
 import org.alexcawl.iot_connector.ui.components.LoadingPlaceholder
-import org.alexcawl.iot_connector.ui.components.MaterialSpacer
 import org.alexcawl.iot_connector.ui.components.PaddingLarge
 import org.alexcawl.iot_connector.ui.components.PaddingMedium
+import org.alexcawl.iot_connector.ui.components.Spacer
 import org.alexcawl.iot_connector.ui.components.input.DialogTextFieldState
 import org.alexcawl.iot_connector.ui.components.input.OptionalDialogTextField
 import org.alexcawl.iot_connector.ui.components.input.RequiredDialogTextField
+import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,32 +48,26 @@ internal fun ProfileScreen(
     modifier: Modifier = Modifier
 ) {
     Scaffold(
-        modifier = modifier,
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = title,
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
-                    }
-                },
-                actions = {
-                    TextButton(
-                        onClick = { onAction(ProfileScreenAction.Save) },
-                        shape = MaterialTheme.shapes.small,
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.save).uppercase(),
-                            style = MaterialTheme.typography.titleMedium,
-                            maxLines = 1,
-                            overflow = TextOverflow.Clip,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    }
+        modifier = modifier, topBar = {
+            CenterAlignedTopAppBar(title = title, navigationIcon = {
+                IconButton(onClick = onNavigateBack) {
+                    Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
                 }
-            )
-        },
-        floatingActionButton = floatingActionButton
+            }, actions = {
+                TextButton(
+                    onClick = { onAction(ProfileScreenAction.Save) },
+                    shape = MaterialTheme.shapes.small,
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.save).uppercase(),
+                        style = MaterialTheme.typography.titleMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Clip,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+            })
+        }, floatingActionButton = floatingActionButton
     ) { paddingValues: PaddingValues ->
         val paddingModifier = Modifier.padding(paddingValues)
         when (state) {
@@ -79,7 +77,9 @@ internal fun ProfileScreen(
 
             is ProfileScreenState.Builder -> {
                 Column(
-                    modifier = paddingModifier.verticalScroll(rememberScrollState()),
+                    modifier = paddingModifier
+                        .verticalScroll(rememberScrollState())
+                        .padding(PaddingMedium),
                     verticalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.Top),
                     horizontalAlignment = Alignment.Start
                 ) {
@@ -90,12 +90,8 @@ internal fun ProfileScreen(
                             errorMessage = state.nameMessage.toText()
                         ),
                         onFieldValueChange = { onAction(ProfileScreenAction.SetName(it)) },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = PaddingMedium)
-                            .padding(top = PaddingMedium)
+                        modifier = Modifier.fillMaxWidth()
                     )
-                    MaterialSpacer()
 
                     OptionalDialogTextField(
                         visible = state.infoOptional.not(),
@@ -104,11 +100,8 @@ internal fun ProfileScreen(
                             value = state.info, label = "Info"
                         ),
                         onFieldValueChange = { onAction(ProfileScreenAction.SetInfo(it)) },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = PaddingMedium)
+                        modifier = Modifier.fillMaxWidth()
                     )
-                    MaterialSpacer()
 
                     RequiredDialogTextField(
                         state = DialogTextFieldState(
@@ -117,11 +110,8 @@ internal fun ProfileScreen(
                             errorMessage = state.hostMessage.toText()
                         ),
                         onFieldValueChange = { onAction(ProfileScreenAction.SetHost(it)) },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = PaddingMedium)
+                        modifier = Modifier.fillMaxWidth()
                     )
-                    MaterialSpacer()
 
                     RequiredDialogTextField(
                         state = DialogTextFieldState(
@@ -130,32 +120,29 @@ internal fun ProfileScreen(
                             errorMessage = state.portMessage.toText()
                         ),
                         onFieldValueChange = { onAction(ProfileScreenAction.SetPort(it)) },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = PaddingMedium)
+                        modifier = Modifier.fillMaxWidth()
                     )
-                    MaterialSpacer()
 
                     OptionalDialogTextField(
                         visible = state.loginOptional.not(),
                         onVisibilityChange = { onAction(ProfileScreenAction.SetLoginType(it.not())) },
                         state = DialogTextFieldState(value = state.login, label = "Login"),
                         onFieldValueChange = { onAction(ProfileScreenAction.SetLogin(it)) },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = PaddingMedium)
+                        modifier = Modifier.fillMaxWidth()
                     )
-                    MaterialSpacer()
 
                     OptionalDialogTextField(
                         visible = state.passwordOptional.not(),
                         onVisibilityChange = { onAction(ProfileScreenAction.SetPasswordType(it.not())) },
                         state = DialogTextFieldState(value = state.password, label = "Password"),
                         onFieldValueChange = { onAction(ProfileScreenAction.SetPassword(it)) },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    Spacer(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = PaddingMedium)
-                            .padding(bottom = PaddingLarge * 4)
+                            .height(PaddingLarge * 2)
+                            .background(color = Color.Transparent)
                     )
                 }
             }
@@ -168,8 +155,20 @@ internal fun ProfileScreen(
 }
 
 @Composable
-fun ProfileScreenState.Builder.Message.toText(): String? = when (this) {
+internal fun ProfileScreenState.Builder.Message.toText(): String? = when (this) {
     ProfileScreenState.Builder.Message.OK -> null
     ProfileScreenState.Builder.Message.NULL -> stringResource(id = R.string.cannot_be_null)
     ProfileScreenState.Builder.Message.NOT_A_NUMBER -> stringResource(id = R.string.not_a_number)
+}
+
+@ThemedPreview
+@Composable
+private fun Preview() {
+    val state = ProfileScreenState.Builder()
+
+    ProfileScreen(state = state,
+        onAction = {},
+        onNavigateBack = {},
+        title = {},
+        floatingActionButton = {})
 }
