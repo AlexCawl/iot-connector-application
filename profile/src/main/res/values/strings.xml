@@ -2,9 +2,15 @@
 <resources>
     <string name="profiles_title">Your profiles</string>
     <string name="no_profiles_title">You have no profiles!</string>
-    <string name="no_profiles_subtitle">Add them by using a button below.</string>
-    <string name="no_profiles_selected">"No profile selected!"</string>
-    <string name="save">"Save"</string>
-    <string name="cannot_be_null">"This field cannot be empty!"</string>
-    <string name="not_a_number">"This should be a number!"</string>
+    <string name="no_profiles_subtitle">Add them by using a button below</string>
+    <string name="no_profiles_selected">No profile selected!</string>
+    <string name="save">Save</string>
+    <string name="cannot_be_null">This field cannot be empty!</string>
+    <string name="not_a_number">This should be a number!</string>
+    <string name="profile_name">Username</string>
+    <string name="profile_info">Info</string>
+    <string name="profile_host">Host</string>
+    <string name="profile_port">Port</string>
+    <string name="profile_login">Login</string>
+    <string name="profile_password">Password</string>
 </resources>

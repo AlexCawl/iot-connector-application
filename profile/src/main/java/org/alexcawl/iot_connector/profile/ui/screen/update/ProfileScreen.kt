@@ -35,6 +35,7 @@ import org.alexcawl.iot_connector.ui.components.Spacer
 import org.alexcawl.iot_connector.ui.components.input.DialogTextFieldState
 import org.alexcawl.iot_connector.ui.components.input.OptionalDialogTextField
 import org.alexcawl.iot_connector.ui.components.input.RequiredDialogTextField
+import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -86,7 +87,7 @@ internal fun ProfileScreen(
                     RequiredDialogTextField(
                         state = DialogTextFieldState(
                             value = state.name,
-                            label = "Name",
+                            label = stringResource(id = R.string.profile_name),
                             errorMessage = state.nameMessage.toText()
                         ),
                         onFieldValueChange = { onAction(ProfileScreenAction.SetName(it)) },
@@ -97,7 +98,8 @@ internal fun ProfileScreen(
                         visible = state.infoOptional.not(),
                         onVisibilityChange = { onAction(ProfileScreenAction.SetInfoType(it.not())) },
                         state = DialogTextFieldState(
-                            value = state.info, label = "Info"
+                            value = state.info,
+                            label = stringResource(id = R.string.profile_info)
                         ),
                         onFieldValueChange = { onAction(ProfileScreenAction.SetInfo(it)) },
                         modifier = Modifier.fillMaxWidth()
@@ -106,7 +108,7 @@ internal fun ProfileScreen(
                     RequiredDialogTextField(
                         state = DialogTextFieldState(
                             value = state.host,
-                            label = "Host",
+                            label = stringResource(id = R.string.profile_host),
                             errorMessage = state.hostMessage.toText()
                         ),
                         onFieldValueChange = { onAction(ProfileScreenAction.SetHost(it)) },
@@ -116,7 +118,7 @@ internal fun ProfileScreen(
                     RequiredDialogTextField(
                         state = DialogTextFieldState(
                             value = state.port,
-                            label = "Port",
+                            label = stringResource(id = R.string.profile_port),
                             errorMessage = state.portMessage.toText()
                         ),
                         onFieldValueChange = { onAction(ProfileScreenAction.SetPort(it)) },
@@ -126,7 +128,10 @@ internal fun ProfileScreen(
                     OptionalDialogTextField(
                         visible = state.loginOptional.not(),
                         onVisibilityChange = { onAction(ProfileScreenAction.SetLoginType(it.not())) },
-                        state = DialogTextFieldState(value = state.login, label = "Login"),
+                        state = DialogTextFieldState(
+                            value = state.login,
+                            label = stringResource(id = R.string.profile_login)
+                        ),
                         onFieldValueChange = { onAction(ProfileScreenAction.SetLogin(it)) },
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -134,7 +139,10 @@ internal fun ProfileScreen(
                     OptionalDialogTextField(
                         visible = state.passwordOptional.not(),
                         onVisibilityChange = { onAction(ProfileScreenAction.SetPasswordType(it.not())) },
-                        state = DialogTextFieldState(value = state.password, label = "Password"),
+                        state = DialogTextFieldState(
+                            value = state.password,
+                            label = stringResource(id = R.string.profile_password)
+                        ),
                         onFieldValueChange = { onAction(ProfileScreenAction.SetPassword(it)) },
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -166,9 +174,13 @@ internal fun ProfileScreenState.Builder.Message.toText(): String? = when (this) 
 private fun Preview() {
     val state = ProfileScreenState.Builder()
 
-    ProfileScreen(state = state,
-        onAction = {},
-        onNavigateBack = {},
-        title = {},
-        floatingActionButton = {})
+    IoTConnectorTheme {
+        ProfileScreen(
+            state = state,
+            onAction = {},
+            onNavigateBack = {},
+            title = {},
+            floatingActionButton = {}
+        )
+    }
 }
