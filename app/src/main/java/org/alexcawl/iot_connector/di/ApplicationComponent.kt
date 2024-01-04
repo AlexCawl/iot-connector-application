@@ -5,7 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import org.alexcawl.iot_connector.IoTConnectorApplication
 import org.alexcawl.iot_connector.MainActivity
-import org.alexcawl.iot_connector.connections.dependencies.ConnectionDependencies
+import org.alexcawl.iot_connector.connection.dependencies.ConnectionDependencies
 import org.alexcawl.iot_connector.profile.dependencies.ProfileDependencies
 
 @ApplicationScope

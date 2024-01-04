@@ -10,9 +10,9 @@ dependencies {
     implementation(project(":core:network"))
     implementation(project(":core:persistence"))
 
-    // connections module
-    implementation(project(":connections"))
-    implementation(project(":connections:dependencies"))
+    // connection module
+    implementation(project(":connection"))
+    implementation(project(":connection:dependencies"))
 
     // profile module
     implementation(project(":profile"))

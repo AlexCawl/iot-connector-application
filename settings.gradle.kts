@@ -22,8 +22,8 @@ include(":core:ui")
 include(":core:network")
 include(":core:persistence")
 
-include(":connections")
-include(":connections:dependencies")
+include(":connection")
+include(":connection:dependencies")
 
 include(":profile")
 include(":profile:dependencies")
