@@ -1,5 +1,6 @@
 package org.alexcawl.iot_connector.profile.ui.screen.show.component
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -118,14 +119,19 @@ internal fun ShowProfileScreen(
                         start = PaddingMedium,
                         top = PaddingMedium,
                         end = PaddingMedium,
-                        bottom = PaddingLarge
+                        bottom = PaddingLarge * 3
                     )
                 ) {
-                    item(key = null) {
-                        SelectedProfileCard(
-                            profile = state.selectedProfile,
-                            onClick = { onAction(ShowProfilesScreenAction.SelectProfileById(it?.id)) }
-                        )
+                    item(key = SELECTED_PROFILE_LABEL) {
+                        AnimatedContent(
+                            targetState = state.selectedProfile,
+                            label = SELECTED_PROFILE_LABEL
+                        ) { selectedProfile ->
+                            SelectedProfileCard(
+                                profile = selectedProfile,
+                                onClick = { onAction(ShowProfilesScreenAction.SelectProfileById(it?.id)) }
+                            )
+                        }
                     }
                     items(state.availableProfiles, key = { it.id }) { profile ->
                         ProfileCard(
@@ -139,6 +145,8 @@ internal fun ShowProfileScreen(
         }
     }
 }
+
+private const val SELECTED_PROFILE_LABEL: String = "SelectedProfile"
 
 
 @ThemedPreview
