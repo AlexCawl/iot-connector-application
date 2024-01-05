@@ -25,7 +25,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
@@ -73,7 +72,7 @@ fun BottomSheet(
 
 @ThemedPreview
 @Composable
-private fun DynamicPreview() {
+private fun Preview() {
     var state by remember { mutableStateOf(false) }
     Button(onClick = { state = state.not() }) {
         Text(text = "Change state")

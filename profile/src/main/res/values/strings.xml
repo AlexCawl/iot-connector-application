@@ -4,6 +4,8 @@
     <string name="no_profiles_title">You have no profiles!</string>
     <string name="no_profiles_subtitle">Add them by using a button below</string>
     <string name="no_profiles_selected">No profile selected!</string>
+    <string name="select_profile_clicking">Select one by clicking on it</string>
+    <string name="no_description">No description</string>
     <string name="save">Save</string>
     <string name="cannot_be_null">This field cannot be empty!</string>
     <string name="not_a_number">This should be a number!</string>

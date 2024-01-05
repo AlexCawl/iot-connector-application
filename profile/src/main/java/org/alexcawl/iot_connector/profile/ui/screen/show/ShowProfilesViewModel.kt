@@ -7,14 +7,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.alexcawl.iot_connector.profile.domain.usecase.GetAllProfilesWithSelectionUseCase
-import org.alexcawl.iot_connector.profile.domain.usecase.SetSelectedProfileByIdUseCase
+import org.alexcawl.iot_connector.common.model.Profile
+import org.alexcawl.iot_connector.profile.domain.usecase.GetProfilesUseCase
+import org.alexcawl.iot_connector.profile.domain.usecase.UpdateSelectedProfileIdUseCase
 import org.alexcawl.iot_connector.ui.util.StateViewModel
 import javax.inject.Inject
 
 class ShowProfilesViewModel @Inject constructor(
-    private val getAllProfilesWithSelection: GetAllProfilesWithSelectionUseCase,
-    private val setSelectedProfileByIdUseCase: SetSelectedProfileByIdUseCase
+    private val getProfiles: GetProfilesUseCase,
+    private val updateSelectedID: UpdateSelectedProfileIdUseCase
 ) : StateViewModel<ShowProfilesScreenState, ShowProfilesScreenAction>() {
     private val _state: MutableStateFlow<ShowProfilesScreenState> =
         MutableStateFlow(ShowProfilesScreenState.Initial)
@@ -23,15 +24,21 @@ class ShowProfilesViewModel @Inject constructor(
     override fun handle(action: ShowProfilesScreenAction) {
         viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
             when (action) {
-                is ShowProfilesScreenAction.SelectProfileById -> setSelectedProfileByIdUseCase(action.id)
+                is ShowProfilesScreenAction.SelectProfileById -> when (val current = _state.value) {
+                    is ShowProfilesScreenState.Initial -> throw IllegalStateException()
+                    is ShowProfilesScreenState.Viewing -> updateSelectedID(
+                        current.selectedProfile?.id,
+                        action.id
+                    )
+                }
             }
         }
     }
 
     init {
         viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
-            getAllProfilesWithSelection.invoke().collect {
-                _state.emit(ShowProfilesScreenState.Successful(it.second, it.first))
+            getProfiles().collect { (selectedProfile: Profile?, profiles: List<Profile>) ->
+                _state.emit(ShowProfilesScreenState.Viewing(selectedProfile, profiles))
             }
         }
     }

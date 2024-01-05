@@ -11,6 +11,7 @@ import java.util.UUID
 
 internal fun NavGraphBuilder.installShowProfilesScreen(
     screenRoute: String,
+    onNavigateBack: () -> Unit,
     onNavigateToAddProfile: () -> Unit,
     onNavigateToEditProfile: (UUID) -> Unit,
     factory: ViewModelProvider.Factory
@@ -19,11 +20,12 @@ internal fun NavGraphBuilder.installShowProfilesScreen(
         val viewModel = composeViewModel(modelClass = ShowProfilesViewModel::class.java) { factory }
         val state by viewModel.state.collectAsState()
 
-        ShowProfilesScreen(
+        ShowProfileScreen(
             state = state,
             onAction = viewModel::handle,
             onNavigateToAddProfile = onNavigateToAddProfile,
-            onNavigateToEditProfile = onNavigateToEditProfile
+            onNavigateToEditProfile = onNavigateToEditProfile,
+            onNavigateBack = onNavigateBack
         )
     }
 }

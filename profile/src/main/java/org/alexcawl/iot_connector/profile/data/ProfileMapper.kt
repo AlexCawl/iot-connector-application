@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.profile.util
+package org.alexcawl.iot_connector.profile.data
 
 import org.alexcawl.iot_connector.common.model.Profile
 import org.alexcawl.iot_connector.persistence.db.entities.MQTTConfigurationEntity

@@ -41,7 +41,8 @@ fun NavGraphBuilder.installProfileNavigation(navController: NavController) {
         screenRoute = ProfileNavLocator.ProfileShowScreen.route,
         onNavigateToAddProfile = { navController.navigate(ProfileNavLocator.ProfileAddScreen.route) },
         onNavigateToEditProfile = { navController.navigate("edit_profile/${it}") },
-        factory = factory
+        factory = factory,
+        onNavigateBack = { navController.navigateUp() }
     )
     installAddProfileScreen(
         screenRoute = ProfileNavLocator.ProfileAddScreen.route,

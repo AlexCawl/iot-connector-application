@@ -1,122 +1,174 @@
 package org.alexcawl.iot_connector.profile.ui.screen.show.component
 
-import android.content.res.Configuration
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import org.alexcawl.iot_connector.common.model.Profile
 import org.alexcawl.iot_connector.profile.R
 import org.alexcawl.iot_connector.profile.ui.screen.show.ShowProfilesScreenAction
 import org.alexcawl.iot_connector.profile.ui.screen.show.ShowProfilesScreenState
-import org.alexcawl.iot_connector.ui.components.LoadingPlaceholder
+import org.alexcawl.iot_connector.ui.components.PaddingLarge
+import org.alexcawl.iot_connector.ui.components.PaddingMedium
+import org.alexcawl.iot_connector.ui.components.placeholder.EmptyScreen
+import org.alexcawl.iot_connector.ui.components.placeholder.LoadingScreen
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ShowProfilesScreen(
+internal fun ShowProfileScreen(
     state: ShowProfilesScreenState,
     onAction: (ShowProfilesScreenAction) -> Unit,
+    onNavigateBack: () -> Unit,
     onNavigateToAddProfile: () -> Unit,
     onNavigateToEditProfile: (UUID) -> Unit,
     modifier: Modifier = Modifier
-) {
-    Scaffold(modifier = modifier, topBar = {
-        CenterAlignedTopAppBar(colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary
-        ), title = {
-            Text(
-                text = stringResource(id = R.string.profiles_title),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.titleLarge
-            )
-        })
-    }, floatingActionButton = {
-        FloatingActionButton(onClick = onNavigateToAddProfile) {
-            Icon(imageVector = Icons.Filled.Add, contentDescription = "Add profile")
-        }
-    }) {
-        Box(modifier = Modifier.padding(it)) {
-            when (state) {
-                is ShowProfilesScreenState.Initial -> {
-                    LoadingPlaceholder(modifier = Modifier.fillMaxSize())
+) = Scaffold(
+    modifier = modifier,
+    topBar = {
+        CenterAlignedTopAppBar(
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary
+            ),
+            title = {
+                Text(
+                    text = stringResource(id = R.string.profiles_title),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.titleLarge
+                )
+            },
+            navigationIcon = {
+                IconButton(onClick = onNavigateBack) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
                 }
+            }
+        )
+    },
+    floatingActionButton = {
+        FloatingActionButton(onClick = onNavigateToAddProfile) {
+            Icon(imageVector = Icons.Filled.Add, contentDescription = null)
+        }
+    }
+) { paddingValues: PaddingValues ->
+    val paddingModifier = Modifier.padding(paddingValues)
+    when (state) {
+        is ShowProfilesScreenState.Initial -> LoadingScreen(
+            modifier = paddingModifier.fillMaxSize(),
+            title = {
+                Text(
+                    text = "Loading profiles",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
+        )
 
-                is ShowProfilesScreenState.Successful -> {
-                    when (state.profiles.size) {
-                        0 -> {
-                            ProfilesEmptyScreen(modifier = Modifier.fillMaxSize())
-                        }
+        is ShowProfilesScreenState.Viewing -> when (state.availableProfiles.size) {
+            0 -> EmptyScreen(
+                modifier = paddingModifier.fillMaxSize(),
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.no_profiles_title),
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                },
+                subtitle = {
+                    Text(
+                        text = stringResource(id = R.string.no_profiles_subtitle),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            )
 
-                        else -> {
-                            ProfilesScreen(
-                                profiles = state.profiles,
-                                selected = state.selectedProfileId,
-                                onSelectProfile = { id ->
-                                    onAction(
-                                        ShowProfilesScreenAction.SelectProfileById(
-                                            when (id) {
-                                                state.selectedProfileId -> null
-                                                else -> id
-                                            }
-                                        )
-                                    )
-                                },
-                                onEditProfile = onNavigateToEditProfile,
-                                modifier = Modifier.fillMaxSize()
-                            )
-                        }
+            else -> {
+                LazyColumn(
+                    modifier = paddingModifier,
+                    verticalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.Top),
+                    horizontalAlignment = Alignment.Start,
+                    contentPadding = PaddingValues(
+                        start = PaddingMedium,
+                        top = PaddingMedium,
+                        end = PaddingMedium,
+                        bottom = PaddingLarge
+                    )
+                ) {
+                    item(key = null) {
+                        SelectedProfileCard(
+                            profile = state.selectedProfile,
+                            onClick = { onAction(ShowProfilesScreenAction.SelectProfileById(it?.id)) }
+                        )
+                    }
+                    items(state.availableProfiles, key = { it.id }) { profile ->
+                        ProfileCard(
+                            profile = profile,
+                            onClicked = { onAction(ShowProfilesScreenAction.SelectProfileById(it.id)) },
+                            onEditClicked = { onNavigateToEditProfile(it.id) }
+                        )
                     }
                 }
-
-                is ShowProfilesScreenState.Fail -> TODO()
             }
         }
     }
 }
 
-@Preview(name = "Light Theme", uiMode = Configuration.UI_MODE_NIGHT_NO)
-@Preview(name = "Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
+
+@ThemedPreview
 @Composable
 private fun PreviewLoading() {
     val state: ShowProfilesScreenState = ShowProfilesScreenState.Initial
 
     IoTConnectorTheme {
-        ShowProfilesScreen(state = state,
+        ShowProfileScreen(state = state,
             onAction = {},
             onNavigateToAddProfile = {},
-            onNavigateToEditProfile = {})
+            onNavigateToEditProfile = {},
+            onNavigateBack = {}
+        )
     }
 }
 
 @ThemedPreview
 @Composable
 private fun PreviewEmpty() {
-    val state: ShowProfilesScreenState = ShowProfilesScreenState.Successful(listOf(), null)
+    val state: ShowProfilesScreenState = ShowProfilesScreenState.Viewing(null, listOf())
 
     IoTConnectorTheme {
-        ShowProfilesScreen(state = state,
+        ShowProfileScreen(
+            state = state,
             onAction = {},
             onNavigateToAddProfile = {},
-            onNavigateToEditProfile = {})
+            onNavigateToEditProfile = {},
+            onNavigateBack = {}
+        )
     }
 }
 
@@ -147,16 +199,19 @@ private fun Preview() {
             id = UUID.randomUUID(),
             name = "default",
             createdAt = System.currentTimeMillis(),
-            host = "localhost", port = 8000,
+            host = "localhost",
+            port = 8000
         )
     )
-    val selected: UUID = profiles.first().id
-    val state = ShowProfilesScreenState.Successful(profiles, selected)
+    val selected = profiles.first()
+    val state = ShowProfilesScreenState.Viewing(selected, profiles)
 
     IoTConnectorTheme {
-        ShowProfilesScreen(state = state,
+        ShowProfileScreen(state = state,
             onAction = {},
             onNavigateToAddProfile = {},
-            onNavigateToEditProfile = {})
+            onNavigateToEditProfile = {},
+            onNavigateBack = {}
+        )
     }
 }

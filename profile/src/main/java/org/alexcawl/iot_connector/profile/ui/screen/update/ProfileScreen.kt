@@ -28,7 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.profile.R
-import org.alexcawl.iot_connector.ui.components.LoadingPlaceholder
+import org.alexcawl.iot_connector.ui.components.placeholder.LoadingScreen
 import org.alexcawl.iot_connector.ui.components.PaddingLarge
 import org.alexcawl.iot_connector.ui.components.PaddingMedium
 import org.alexcawl.iot_connector.ui.components.Spacer
@@ -72,7 +72,7 @@ internal fun ProfileScreen(
     ) { paddingValues: PaddingValues ->
         val paddingModifier = Modifier.padding(paddingValues)
         when (state) {
-            is ProfileScreenState.Initial -> LoadingPlaceholder(
+            is ProfileScreenState.Initial -> LoadingScreen(
                 modifier = paddingModifier.fillMaxSize()
             )
 

@@ -6,7 +6,6 @@ import org.alexcawl.iot_connector.common.model.Profile
 import org.alexcawl.iot_connector.persistence.db.dao.ProfileDatabaseDao
 import org.alexcawl.iot_connector.persistence.pref.dao.ProfileDatastoreDao
 import org.alexcawl.iot_connector.profile.domain.IProfileService
-import org.alexcawl.iot_connector.profile.util.IProfileMapper
 import java.util.UUID
 import javax.inject.Inject
 
