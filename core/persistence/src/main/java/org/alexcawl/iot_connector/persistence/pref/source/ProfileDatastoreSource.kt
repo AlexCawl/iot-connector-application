@@ -30,7 +30,10 @@ class ProfileDatastoreSource @Inject constructor(
 
     override suspend fun setSelectedProfileId(id: UUID?) {
         datastore.edit { prefs: MutablePreferences ->
-            prefs[selectedProfileKey] = id.toString()
+            prefs[selectedProfileKey] = when (id) {
+                null -> ""
+                else -> id.toString()
+            }
         }
     }
 }

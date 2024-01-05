@@ -2,7 +2,7 @@ package org.alexcawl.iot_connector.common.model
 
 import java.util.UUID
 
-data class Profile(
+data class ProfileModel(
     val id: UUID,
     val name: String,
     val host: String,

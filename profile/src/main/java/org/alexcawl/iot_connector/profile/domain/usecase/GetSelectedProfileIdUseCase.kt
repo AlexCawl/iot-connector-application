@@ -1,7 +1,7 @@
 package org.alexcawl.iot_connector.profile.domain.usecase
 
 import kotlinx.coroutines.flow.Flow
-import org.alexcawl.iot_connector.profile.domain.IProfileService
+import org.alexcawl.iot_connector.profile.data.IProfileService
 import java.util.UUID
 import javax.inject.Inject
 

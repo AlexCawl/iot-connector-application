@@ -17,10 +17,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import org.alexcawl.iot_connector.common.model.Profile
 import org.alexcawl.iot_connector.ui.components.IconSmall
 import org.alexcawl.iot_connector.ui.components.ItemCard
 import org.alexcawl.iot_connector.ui.components.PaddingSmall
+import org.alexcawl.iot_connector.ui.data.ProfileState
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 import org.alexcawl.iot_connector.ui.util.toDateFormat
@@ -28,9 +28,9 @@ import java.util.UUID
 
 @Composable
 internal fun ProfileCard(
-    profile: Profile,
-    onClicked: (Profile) -> Unit,
-    onEditClicked: (Profile) -> Unit,
+    profile: ProfileState,
+    onClicked: (UUID) -> Unit,
+    onEditClicked: (UUID) -> Unit,
     modifier: Modifier = Modifier,
     showType: ProfileShowType = ProfileShowType.NONE
 ) = ItemCard(
@@ -53,11 +53,11 @@ internal fun ProfileCard(
             )
         }
     },
-    onClick = { onClicked(profile) },
+    onClick = { onClicked(profile.id) },
     statusIcon = {},
     configurationIcon = {
         IconButton(
-            onClick = { onEditClicked(profile) }, modifier = Modifier.fillMaxHeight()
+            onClick = { onEditClicked(profile.id) }, modifier = Modifier.fillMaxHeight()
         ) {
             Icon(
                 imageVector = Icons.Default.Edit,
@@ -106,7 +106,7 @@ enum class ProfileShowType {
 @ThemedPreview
 @Composable
 private fun Preview() {
-    val profile = Profile(
+    val profile = ProfileState(
         id = UUID.randomUUID(),
         name = "home",
         createdAt = System.currentTimeMillis(),
@@ -119,7 +119,8 @@ private fun Preview() {
 
     IoTConnectorTheme {
         Box(Modifier.fillMaxWidth()) {
-            ProfileCard(profile = profile,
+            ProfileCard(
+                profile = profile,
                 onClicked = {},
                 onEditClicked = {},
                 showType = ProfileShowType.CHANGED_AT

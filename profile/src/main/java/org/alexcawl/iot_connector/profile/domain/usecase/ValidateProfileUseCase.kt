@@ -1,7 +1,7 @@
 package org.alexcawl.iot_connector.profile.domain.usecase
 
-import org.alexcawl.iot_connector.common.model.Profile
 import org.alexcawl.iot_connector.profile.domain.ProfileValidationException
+import org.alexcawl.iot_connector.ui.data.ProfileState
 import java.util.UUID
 import javax.inject.Inject
 import kotlin.jvm.Throws
@@ -10,7 +10,7 @@ class ValidateProfileUseCase @Inject constructor() {
     @Throws(ProfileValidationException::class)
     operator fun invoke(
         name: String, info: String?, host: String, port: String, login: String?, password: String?
-    ): Profile  {
+    ): ProfileState  {
         val validName: String = when (name.isBlank()) {
             true -> throw ProfileValidationException.ProfileNameIsEmpty
             false -> name
@@ -28,7 +28,7 @@ class ValidateProfileUseCase @Inject constructor() {
             }
         }
 
-        return Profile(
+        return ProfileState(
             id = UUID.randomUUID(),
             name = validName,
             createdAt = System.currentTimeMillis(),

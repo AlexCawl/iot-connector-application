@@ -1,12 +1,12 @@
 package org.alexcawl.iot_connector.profile.ui.screen.show
 
-import org.alexcawl.iot_connector.common.model.Profile
+import org.alexcawl.iot_connector.ui.data.ProfileState
 
 sealed interface ShowProfilesScreenState {
     data object Initial : ShowProfilesScreenState
 
     data class Viewing(
-        val selectedProfile: Profile?,
-        val availableProfiles: List<Profile>
+        val selectedProfile: ProfileState?,
+        val availableProfiles: List<ProfileState>
     ) : ShowProfilesScreenState
 }

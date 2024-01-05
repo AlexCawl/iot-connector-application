@@ -15,19 +15,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import org.alexcawl.iot_connector.common.model.Profile
 import org.alexcawl.iot_connector.profile.R
 import org.alexcawl.iot_connector.ui.components.IconSmall
 import org.alexcawl.iot_connector.ui.components.ItemCard
 import org.alexcawl.iot_connector.ui.components.PaddingSmall
+import org.alexcawl.iot_connector.ui.data.ProfileState
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 import java.util.UUID
 
 @Composable
 internal fun SelectedProfileCard(
-    profile: Profile?,
-    onClick: (Profile?) -> Unit,
+    profile: ProfileState?,
+    onClick: (ProfileState?) -> Unit,
     modifier: Modifier = Modifier
 ) = ItemCard(
     modifier = modifier,
@@ -77,7 +77,7 @@ internal fun SelectedProfileCard(
 @Composable
 private fun Preview() {
     val profiles = listOf(
-        Profile(
+        ProfileState(
             id = UUID.randomUUID(),
             name = "home",
             createdAt = System.currentTimeMillis(),
@@ -87,7 +87,7 @@ private fun Preview() {
             password = "admin",
             info = "my home profile",
             changedAt = System.currentTimeMillis() + 1000L
-        ), Profile(
+        ), ProfileState(
             id = UUID.randomUUID(),
             name = "work",
             createdAt = System.currentTimeMillis(),
@@ -96,7 +96,7 @@ private fun Preview() {
             login = "user",
             info = "my work profile",
             changedAt = System.currentTimeMillis() + 5000L
-        ), null, Profile(
+        ), null, ProfileState(
             id = UUID.randomUUID(),
             name = "work",
             createdAt = System.currentTimeMillis(),

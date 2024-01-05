@@ -7,9 +7,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.alexcawl.iot_connector.common.model.Profile
 import org.alexcawl.iot_connector.profile.domain.usecase.GetProfilesUseCase
 import org.alexcawl.iot_connector.profile.domain.usecase.UpdateSelectedProfileIdUseCase
+import org.alexcawl.iot_connector.ui.data.ProfileState
 import org.alexcawl.iot_connector.ui.util.StateViewModel
 import javax.inject.Inject
 
@@ -37,7 +37,7 @@ class ShowProfilesViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
-            getProfiles().collect { (selectedProfile: Profile?, profiles: List<Profile>) ->
+            getProfiles().collect { (selectedProfile: ProfileState?, profiles: List<ProfileState>) ->
                 _state.emit(ShowProfilesScreenState.Viewing(selectedProfile, profiles))
             }
         }

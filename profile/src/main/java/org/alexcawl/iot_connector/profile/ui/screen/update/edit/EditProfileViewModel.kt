@@ -5,7 +5,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import org.alexcawl.iot_connector.common.model.Profile
 import org.alexcawl.iot_connector.profile.domain.ProfileValidationException
 import org.alexcawl.iot_connector.profile.domain.usecase.DeleteProfileByIdUseCase
 import org.alexcawl.iot_connector.profile.domain.usecase.GetProfileByIdUseCase
@@ -16,6 +15,7 @@ import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileScreenState
 import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileViewModel
 import org.alexcawl.iot_connector.profile.ui.screen.update.edit.component.Delete
 import org.alexcawl.iot_connector.profile.ui.screen.update.edit.component.NotFound
+import org.alexcawl.iot_connector.ui.data.ProfileState
 import java.util.UUID
 import javax.inject.Inject
 
@@ -84,7 +84,7 @@ class EditProfileViewModel @Inject constructor(
                     null -> Unit
                     else -> when (val profile = getProfile(id)) {
                         null -> _state.emit(NotFound)
-                        else -> _state.emit(profile.toState())
+                        else -> _state.emit(profile.asScreenState())
                     }
                 }
             }
@@ -92,7 +92,7 @@ class EditProfileViewModel @Inject constructor(
     }
 
     private companion object {
-        fun Profile.toState(): ProfileScreenState {
+        fun ProfileState.asScreenState(): ProfileScreenState {
             return ProfileScreenState.Builder(
                 name = name,
                 nameMessage = ProfileScreenState.Builder.Message.OK,
