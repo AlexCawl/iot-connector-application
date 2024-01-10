@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.profile.domain
+package org.alexcawl.iot_connector.profile.domain.usecases
 
 import org.alexcawl.iot_connector.ui.state.ProfileState
 import java.util.UUID

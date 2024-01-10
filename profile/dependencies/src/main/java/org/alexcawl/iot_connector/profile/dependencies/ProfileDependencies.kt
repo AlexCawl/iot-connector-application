@@ -1,11 +1,11 @@
 package org.alexcawl.iot_connector.profile.dependencies
 
 import androidx.lifecycle.ViewModelProvider
-import org.alexcawl.iot_connector.persistence.repository.IProfileRepository
-import org.alexcawl.iot_connector.ui.mappers.IProfileStateMapper
+import org.alexcawl.iot_connector.persistence.dao.ProfileDatabaseDao
+import org.alexcawl.iot_connector.persistence.dao.ProfileDatastoreDao
 
 interface ProfileDependencies {
-    val profileRepository: IProfileRepository
-    val profileStateMapper: IProfileStateMapper
+    val profileDatabaseDao: ProfileDatabaseDao
+    val profileDatastoreDao: ProfileDatastoreDao
     val viewModelFactory: ViewModelProvider.Factory
 }

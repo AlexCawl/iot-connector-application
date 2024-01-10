@@ -14,10 +14,6 @@ import org.alexcawl.iot_connector.persistence.dao.ConnectionDatabaseDao
 import org.alexcawl.iot_connector.persistence.dao.ProfileDatabaseDao
 import org.alexcawl.iot_connector.persistence.dao.ProfileDatastoreDao
 import org.alexcawl.iot_connector.persistence.dao.impl.ProfileDatastoreDaoImpl
-import org.alexcawl.iot_connector.persistence.mappers.IProfileEntityMapper
-import org.alexcawl.iot_connector.persistence.mappers.impl.ProfileEntityMapper
-import org.alexcawl.iot_connector.persistence.repository.IProfileRepository
-import org.alexcawl.iot_connector.persistence.repository.impl.ProfileRepository
 
 @Module
 interface PersistenceModule {
@@ -48,10 +44,4 @@ interface PersistenceModule {
 
     @Binds
     fun bindProfileDatastoreDao(profileDatastoreDaoImpl: ProfileDatastoreDaoImpl): ProfileDatastoreDao
-
-    @Binds
-    fun bindProfileRepository(repository: ProfileRepository): IProfileRepository
-
-    @Binds
-    fun bindProfileEntityMapper(mapper: ProfileEntityMapper): IProfileEntityMapper
 }

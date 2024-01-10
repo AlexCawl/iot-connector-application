@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.alexcawl.iot_connector.profile.domain.GetProfilesUseCase
-import org.alexcawl.iot_connector.profile.domain.UpdateSelectedProfileIdUseCase
+import org.alexcawl.iot_connector.profile.domain.usecases.GetProfilesUseCase
+import org.alexcawl.iot_connector.profile.domain.usecases.UpdateSelectedProfileIdUseCase
 import org.alexcawl.iot_connector.ui.state.ProfileState
 import org.alexcawl.iot_connector.ui.util.StateViewModel
 import javax.inject.Inject

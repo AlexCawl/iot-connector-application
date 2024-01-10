@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.persistence.repository
+package org.alexcawl.iot_connector.profile.domain
 
 import kotlinx.coroutines.flow.Flow
 import org.alexcawl.iot_connector.common.model.ProfileModel

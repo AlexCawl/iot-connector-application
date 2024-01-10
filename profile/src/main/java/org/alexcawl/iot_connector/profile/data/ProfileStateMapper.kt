@@ -1,7 +1,7 @@
-package org.alexcawl.iot_connector.ui.mappers.impl
+package org.alexcawl.iot_connector.profile.data
 
 import org.alexcawl.iot_connector.common.model.ProfileModel
-import org.alexcawl.iot_connector.ui.mappers.IProfileStateMapper
+import org.alexcawl.iot_connector.profile.domain.IProfileStateMapper
 import org.alexcawl.iot_connector.ui.state.ProfileState
 import javax.inject.Inject
 

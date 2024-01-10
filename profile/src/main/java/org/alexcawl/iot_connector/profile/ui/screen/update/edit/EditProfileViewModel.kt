@@ -5,11 +5,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import org.alexcawl.iot_connector.profile.domain.ProfileValidationException
-import org.alexcawl.iot_connector.profile.domain.DeleteProfileByIdUseCase
-import org.alexcawl.iot_connector.profile.domain.GetProfileByIdUseCase
-import org.alexcawl.iot_connector.profile.domain.UpdateProfileByIdUseCase
-import org.alexcawl.iot_connector.profile.domain.ValidateProfileUseCase
+import org.alexcawl.iot_connector.profile.domain.usecases.ProfileValidationException
+import org.alexcawl.iot_connector.profile.domain.usecases.DeleteProfileByIdUseCase
+import org.alexcawl.iot_connector.profile.domain.usecases.GetProfileByIdUseCase
+import org.alexcawl.iot_connector.profile.domain.usecases.UpdateProfileByIdUseCase
+import org.alexcawl.iot_connector.profile.domain.usecases.ValidateProfileUseCase
 import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileScreenAction
 import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileScreenState
 import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileViewModel

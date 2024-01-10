@@ -1,9 +1,9 @@
-package org.alexcawl.iot_connector.persistence.mappers.impl
+package org.alexcawl.iot_connector.profile.data
 
 import org.alexcawl.iot_connector.common.model.ProfileModel
 import org.alexcawl.iot_connector.persistence.entity.MQTTConfigurationEntity
 import org.alexcawl.iot_connector.persistence.entity.ProfileEntity
-import org.alexcawl.iot_connector.persistence.mappers.IProfileEntityMapper
+import org.alexcawl.iot_connector.profile.domain.IProfileEntityMapper
 import javax.inject.Inject
 
 class ProfileEntityMapper @Inject constructor() : IProfileEntityMapper {

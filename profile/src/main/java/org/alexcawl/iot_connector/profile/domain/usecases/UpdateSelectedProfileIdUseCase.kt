@@ -1,6 +1,6 @@
-package org.alexcawl.iot_connector.profile.domain
+package org.alexcawl.iot_connector.profile.domain.usecases
 
-import org.alexcawl.iot_connector.persistence.repository.IProfileRepository
+import org.alexcawl.iot_connector.profile.domain.IProfileRepository
 import java.util.UUID
 import javax.inject.Inject
 

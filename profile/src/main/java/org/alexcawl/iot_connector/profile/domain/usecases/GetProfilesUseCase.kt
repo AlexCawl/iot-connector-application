@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.profile.domain
+package org.alexcawl.iot_connector.profile.domain.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
