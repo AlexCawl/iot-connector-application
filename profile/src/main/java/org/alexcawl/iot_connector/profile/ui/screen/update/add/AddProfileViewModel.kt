@@ -5,8 +5,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.alexcawl.iot_connector.profile.domain.ProfileValidationException
-import org.alexcawl.iot_connector.profile.domain.usecase.CreateProfileUseCase
-import org.alexcawl.iot_connector.profile.domain.usecase.ValidateProfileUseCase
+import org.alexcawl.iot_connector.profile.domain.CreateProfileUseCase
+import org.alexcawl.iot_connector.profile.domain.ValidateProfileUseCase
 import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileScreenState
 import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileViewModel
 import javax.inject.Inject

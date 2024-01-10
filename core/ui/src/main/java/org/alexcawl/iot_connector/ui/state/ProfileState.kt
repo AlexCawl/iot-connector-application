@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.ui.data
+package org.alexcawl.iot_connector.ui.state
 
 import androidx.compose.runtime.Immutable
 import java.util.UUID

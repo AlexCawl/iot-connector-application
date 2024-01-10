@@ -6,16 +6,16 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.alexcawl.iot_connector.profile.domain.ProfileValidationException
-import org.alexcawl.iot_connector.profile.domain.usecase.DeleteProfileByIdUseCase
-import org.alexcawl.iot_connector.profile.domain.usecase.GetProfileByIdUseCase
-import org.alexcawl.iot_connector.profile.domain.usecase.UpdateProfileByIdUseCase
-import org.alexcawl.iot_connector.profile.domain.usecase.ValidateProfileUseCase
+import org.alexcawl.iot_connector.profile.domain.DeleteProfileByIdUseCase
+import org.alexcawl.iot_connector.profile.domain.GetProfileByIdUseCase
+import org.alexcawl.iot_connector.profile.domain.UpdateProfileByIdUseCase
+import org.alexcawl.iot_connector.profile.domain.ValidateProfileUseCase
 import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileScreenAction
 import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileScreenState
 import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileViewModel
 import org.alexcawl.iot_connector.profile.ui.screen.update.edit.component.Delete
 import org.alexcawl.iot_connector.profile.ui.screen.update.edit.component.NotFound
-import org.alexcawl.iot_connector.ui.data.ProfileState
+import org.alexcawl.iot_connector.ui.state.ProfileState
 import java.util.UUID
 import javax.inject.Inject
 

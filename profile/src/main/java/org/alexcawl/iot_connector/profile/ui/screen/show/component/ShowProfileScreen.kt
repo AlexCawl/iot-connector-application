@@ -31,7 +31,7 @@ import org.alexcawl.iot_connector.ui.components.PaddingLarge
 import org.alexcawl.iot_connector.ui.components.PaddingMedium
 import org.alexcawl.iot_connector.ui.components.placeholder.EmptyScreen
 import org.alexcawl.iot_connector.ui.components.placeholder.LoadingScreen
-import org.alexcawl.iot_connector.ui.data.ProfileState
+import org.alexcawl.iot_connector.ui.state.ProfileState
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 import java.util.UUID

@@ -1,7 +1,6 @@
-package org.alexcawl.iot_connector.profile.domain.usecase
+package org.alexcawl.iot_connector.profile.domain
 
-import org.alexcawl.iot_connector.profile.domain.ProfileValidationException
-import org.alexcawl.iot_connector.ui.data.ProfileState
+import org.alexcawl.iot_connector.ui.state.ProfileState
 import java.util.UUID
 import javax.inject.Inject
 import kotlin.jvm.Throws
@@ -40,4 +39,14 @@ class ValidateProfileUseCase @Inject constructor() {
             changedAt = null
         )
     }
+}
+
+sealed class ProfileValidationException : RuntimeException() {
+    data object ProfileNameIsEmpty : ProfileValidationException()
+
+    data object ConfigurationHostIsEmpty : ProfileValidationException()
+
+    data object ConfigurationPortIsEmpty : ProfileValidationException()
+
+    data object ConfigurationPortIsNotNumber : ProfileValidationException()
 }

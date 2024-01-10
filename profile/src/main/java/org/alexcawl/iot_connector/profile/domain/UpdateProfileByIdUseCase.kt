@@ -1,8 +1,8 @@
-package org.alexcawl.iot_connector.profile.domain.usecase
+package org.alexcawl.iot_connector.profile.domain
 
 import org.alexcawl.iot_connector.persistence.repository.IProfileRepository
-import org.alexcawl.iot_connector.ui.data.IProfileStateMapper
-import org.alexcawl.iot_connector.ui.data.ProfileState
+import org.alexcawl.iot_connector.ui.mappers.IProfileStateMapper
+import org.alexcawl.iot_connector.ui.state.ProfileState
 import java.util.UUID
 import javax.inject.Inject
 

@@ -19,7 +19,7 @@ import org.alexcawl.iot_connector.profile.R
 import org.alexcawl.iot_connector.ui.components.IconSmall
 import org.alexcawl.iot_connector.ui.components.ItemCard
 import org.alexcawl.iot_connector.ui.components.PaddingSmall
-import org.alexcawl.iot_connector.ui.data.ProfileState
+import org.alexcawl.iot_connector.ui.state.ProfileState
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 import java.util.UUID

@@ -8,14 +8,9 @@ import org.alexcawl.iot_connector.di.ViewModelKey
 import org.alexcawl.iot_connector.profile.ui.screen.update.add.AddProfileViewModel
 import org.alexcawl.iot_connector.profile.ui.screen.show.ShowProfilesViewModel
 import org.alexcawl.iot_connector.profile.ui.screen.update.edit.EditProfileViewModel
-import org.alexcawl.iot_connector.profile.domain.ProfileStateMapper
-import org.alexcawl.iot_connector.ui.data.IProfileStateMapper
 
 @Module
 interface ProfileModule {
-    @Binds
-    fun bindProfileStateMapper(mapper: ProfileStateMapper): IProfileStateMapper
-
     @Binds
     @IntoMap
     @ViewModelKey(ShowProfilesViewModel::class)
