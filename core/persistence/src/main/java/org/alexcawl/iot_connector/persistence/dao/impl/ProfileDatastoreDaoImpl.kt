@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.persistence.pref.source
+package org.alexcawl.iot_connector.persistence.dao.impl
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.MutablePreferences
@@ -7,11 +7,11 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import org.alexcawl.iot_connector.persistence.pref.dao.ProfileDatastoreDao
+import org.alexcawl.iot_connector.persistence.dao.ProfileDatastoreDao
 import java.util.UUID
 import javax.inject.Inject
 
-class ProfileDatastoreSource @Inject constructor(
+class ProfileDatastoreDaoImpl @Inject constructor(
     private val datastore: DataStore<Preferences>
 ) : ProfileDatastoreDao {
     private companion object {

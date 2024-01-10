@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.persistence.db.dao
+package org.alexcawl.iot_connector.persistence.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
-import org.alexcawl.iot_connector.persistence.db.entities.ConnectionEntity
+import org.alexcawl.iot_connector.persistence.entity.ConnectionEntity
 import java.util.UUID
 
 @Dao

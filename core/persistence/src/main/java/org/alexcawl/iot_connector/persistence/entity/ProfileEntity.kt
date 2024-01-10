@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.persistence.db.entities
+package org.alexcawl.iot_connector.persistence.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
@@ -25,4 +25,11 @@ data class ProfileEntity(
 
     @ColumnInfo("changed_at")
     val changedAt: Long? = null
+)
+
+data class MQTTConfigurationEntity(
+    val host: String,
+    val port: Int,
+    val login: String? = null,
+    val password: String? = null
 )

@@ -1,9 +1,9 @@
 package org.alexcawl.iot_connector.connection.dependencies
 
 import androidx.lifecycle.ViewModelProvider
-import org.alexcawl.iot_connector.persistence.db.dao.ConnectionDatabaseDao
-import org.alexcawl.iot_connector.persistence.db.dao.ProfileDatabaseDao
-import org.alexcawl.iot_connector.persistence.pref.dao.ProfileDatastoreDao
+import org.alexcawl.iot_connector.persistence.dao.ConnectionDatabaseDao
+import org.alexcawl.iot_connector.persistence.dao.ProfileDatabaseDao
+import org.alexcawl.iot_connector.persistence.dao.ProfileDatastoreDao
 
 interface ConnectionDependencies {
     val profileDatastoreDao: ProfileDatastoreDao

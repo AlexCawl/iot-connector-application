@@ -1,9 +1,9 @@
-package org.alexcawl.iot_connector.profile.domain
+package org.alexcawl.iot_connector.persistence.mappers.impl
 
 import org.alexcawl.iot_connector.common.model.ProfileModel
-import org.alexcawl.iot_connector.persistence.db.entities.MQTTConfigurationEntity
-import org.alexcawl.iot_connector.persistence.db.entities.ProfileEntity
-import org.alexcawl.iot_connector.persistence.util.IProfileEntityMapper
+import org.alexcawl.iot_connector.persistence.entity.MQTTConfigurationEntity
+import org.alexcawl.iot_connector.persistence.entity.ProfileEntity
+import org.alexcawl.iot_connector.persistence.mappers.IProfileEntityMapper
 import javax.inject.Inject
 
 class ProfileEntityMapper @Inject constructor() : IProfileEntityMapper {
@@ -23,17 +23,9 @@ class ProfileEntityMapper @Inject constructor() : IProfileEntityMapper {
 
     override fun mapSecond(from: ProfileModel): ProfileEntity = with(from) {
         ProfileEntity(
-            id = id,
-            name = name,
-            createdAt = createdAt,
-            configuration = MQTTConfigurationEntity(
-                host = host,
-                port = port,
-                login = login,
-                password = password
-            ),
-            info = info,
-            changedAt = changedAt
+            id = id, name = name, createdAt = createdAt, configuration = MQTTConfigurationEntity(
+                host = host, port = port, login = login, password = password
+            ), info = info, changedAt = changedAt
         )
     }
 }

@@ -3,9 +3,9 @@ package org.alexcawl.iot_connector.profile.data
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.alexcawl.iot_connector.common.model.ProfileModel
-import org.alexcawl.iot_connector.persistence.db.dao.ProfileDatabaseDao
-import org.alexcawl.iot_connector.persistence.pref.dao.ProfileDatastoreDao
-import org.alexcawl.iot_connector.persistence.util.IProfileEntityMapper
+import org.alexcawl.iot_connector.persistence.dao.ProfileDatabaseDao
+import org.alexcawl.iot_connector.persistence.dao.ProfileDatastoreDao
+import org.alexcawl.iot_connector.persistence.mappers.IProfileEntityMapper
 import java.util.UUID
 import javax.inject.Inject
 

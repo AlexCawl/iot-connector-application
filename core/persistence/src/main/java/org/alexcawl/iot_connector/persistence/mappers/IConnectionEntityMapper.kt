@@ -1,6 +1,6 @@
-package org.alexcawl.iot_connector.persistence.util
+package org.alexcawl.iot_connector.persistence.mappers
 
 import org.alexcawl.iot_connector.common.model.IConnectionMapper
-import org.alexcawl.iot_connector.persistence.db.entities.ConnectionEntity
+import org.alexcawl.iot_connector.persistence.entity.ConnectionEntity
 
 interface IConnectionEntityMapper : IConnectionMapper<ConnectionEntity>

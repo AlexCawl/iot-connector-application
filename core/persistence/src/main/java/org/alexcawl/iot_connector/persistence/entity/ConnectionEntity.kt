@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.persistence.db.entities
+package org.alexcawl.iot_connector.persistence.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -9,11 +9,11 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import org.alexcawl.iot_connector.di.ApplicationScope
-import org.alexcawl.iot_connector.persistence.db.IoTConnectorDatabase
-import org.alexcawl.iot_connector.persistence.db.dao.ConnectionDatabaseDao
-import org.alexcawl.iot_connector.persistence.db.dao.ProfileDatabaseDao
-import org.alexcawl.iot_connector.persistence.pref.dao.ProfileDatastoreDao
-import org.alexcawl.iot_connector.persistence.pref.source.ProfileDatastoreSource
+import org.alexcawl.iot_connector.persistence.IoTConnectorDatabase
+import org.alexcawl.iot_connector.persistence.dao.ConnectionDatabaseDao
+import org.alexcawl.iot_connector.persistence.dao.ProfileDatabaseDao
+import org.alexcawl.iot_connector.persistence.dao.ProfileDatastoreDao
+import org.alexcawl.iot_connector.persistence.dao.impl.ProfileDatastoreDaoImpl
 
 @Module
 interface PersistenceModule {
@@ -43,5 +43,5 @@ interface PersistenceModule {
     }
 
     @Binds
-    fun bindProfileDatastoreDao(profileDatastoreSource: ProfileDatastoreSource): ProfileDatastoreDao
+    fun bindProfileDatastoreDao(profileDatastoreDaoImpl: ProfileDatastoreDaoImpl): ProfileDatastoreDao
 }

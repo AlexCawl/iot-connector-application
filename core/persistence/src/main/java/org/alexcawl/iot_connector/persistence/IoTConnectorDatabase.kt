@@ -1,11 +1,11 @@
-package org.alexcawl.iot_connector.persistence.db
+package org.alexcawl.iot_connector.persistence
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import org.alexcawl.iot_connector.persistence.db.dao.ConnectionDatabaseDao
-import org.alexcawl.iot_connector.persistence.db.dao.ProfileDatabaseDao
-import org.alexcawl.iot_connector.persistence.db.entities.ConnectionEntity
-import org.alexcawl.iot_connector.persistence.db.entities.ProfileEntity
+import org.alexcawl.iot_connector.persistence.dao.ConnectionDatabaseDao
+import org.alexcawl.iot_connector.persistence.dao.ProfileDatabaseDao
+import org.alexcawl.iot_connector.persistence.entity.ConnectionEntity
+import org.alexcawl.iot_connector.persistence.entity.ProfileEntity
 
 @Database(
     entities = [ProfileEntity::class, ConnectionEntity::class],
