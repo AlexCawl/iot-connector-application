@@ -19,6 +19,7 @@ include(":app")
 include(":core:common")
 include(":core:di")
 include(":core:ui")
+include(":core:network")
 include(":core:persistence")
 
 include(":connection")
