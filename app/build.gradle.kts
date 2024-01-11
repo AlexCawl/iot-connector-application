@@ -17,4 +17,8 @@ dependencies {
     // profile module
     implementation(project(":profile"))
     implementation(project(":profile:dependencies"))
+
+    // network module
+    implementation(project(":network"))
+    implementation(project(":network:dependencies"))
 }
