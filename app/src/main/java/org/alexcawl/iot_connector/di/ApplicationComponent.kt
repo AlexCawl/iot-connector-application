@@ -6,12 +6,11 @@ import dagger.Component
 import org.alexcawl.iot_connector.IoTConnectorApplication
 import org.alexcawl.iot_connector.MainActivity
 import org.alexcawl.iot_connector.connection.dependencies.ConnectionDependencies
-import org.alexcawl.iot_connector.network.dependencies.NetworkDependencies
 import org.alexcawl.iot_connector.profile.dependencies.ProfileDependencies
 
 @ApplicationScope
 @Component(modules = [ApplicationModule::class])
-interface ApplicationComponent : ConnectionDependencies, ProfileDependencies, NetworkDependencies {
+interface ApplicationComponent : ConnectionDependencies, ProfileDependencies {
     @Component.Builder
     interface Builder {
         fun context(@BindsInstance context: Context): Builder

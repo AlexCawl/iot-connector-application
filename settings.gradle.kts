@@ -27,6 +27,3 @@ include(":connection:dependencies")
 
 include(":profile")
 include(":profile:dependencies")
-
-include(":network")
-include(":network:dependencies")
