@@ -2,6 +2,23 @@ plugins {
     id("application-module-setup")
 }
 
+android {
+    buildTypes {
+        debug {
+            isMinifyEnabled = false
+            applicationIdSuffix = ".debug"
+            isDebuggable = true
+        }
+
+        release {
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            )
+        }
+    }
+}
+
 dependencies {
     // core module
     implementation(project(":core:common"))

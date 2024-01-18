@@ -21,21 +21,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        debug {
-            isMinifyEnabled = false
-            applicationIdSuffix = ".debug"
-            isDebuggable = true
-        }
-
-        release {
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-            )
-        }
-    }
-
     compileOptions {
         sourceCompatibility = ApplicationConfig.javaVersion
         targetCompatibility = ApplicationConfig.javaVersion
