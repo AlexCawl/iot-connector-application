@@ -1,10 +1,10 @@
-package org.alexcawl.iot_connector.network
+package org.alexcawl.iot_connector.network.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ThermalData(
+data class ThermalResponse(
     @SerialName("device")
     val device: String,
     @SerialName("sensor_type")
@@ -13,4 +13,4 @@ data class ThermalData(
     val offset: Int,
     @SerialName("values")
     val temperatures: List<Int>
-)
+) : MqttNetworkResponse

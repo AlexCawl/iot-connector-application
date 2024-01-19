@@ -3,6 +3,7 @@ package org.alexcawl.iot_connector.di
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
+import org.alexcawl.iot_connector.DebugActivity
 import org.alexcawl.iot_connector.IoTConnectorApplication
 import org.alexcawl.iot_connector.MainActivity
 import org.alexcawl.iot_connector.connection.dependencies.ConnectionDependencies
@@ -21,4 +22,6 @@ interface ApplicationComponent : ConnectionDependencies, ProfileDependencies {
     fun inject(application: IoTConnectorApplication)
 
     fun inject(activity: MainActivity)
+
+    fun inject(activity: DebugActivity)
 }
