@@ -34,4 +34,8 @@ dependencies {
     // profile module
     implementation(project(":profile"))
     implementation(project(":profile:dependencies"))
+
+    // viewer
+    implementation(project(":viewer"))
+    implementation(project(":viewer:dependencies"))
 }
