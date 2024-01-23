@@ -18,7 +18,6 @@
         <activity
             android:name=".DebugActivity"
             android:exported="true"
-            android:label="@string/title_activity_debug"
             android:theme="@style/Theme.IoTConnector">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

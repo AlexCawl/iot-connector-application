@@ -13,4 +13,7 @@ data class ThermalResponse(
     val offset: Int,
     @SerialName("values")
     val temperatures: List<Int>
-) : MqttNetworkResponse
+) : ConnectionResponse {
+    override val text: String
+        get() = ""
+}

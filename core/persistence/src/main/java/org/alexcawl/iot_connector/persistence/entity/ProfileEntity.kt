@@ -18,18 +18,11 @@ data class ProfileEntity(
     val createdAt: Long,
 
     @Embedded(prefix = "conf_")
-    val configuration: MQTTConfigurationEntity,
+    val configuration: MQTTConfigurationHolder,
 
     @ColumnInfo("info")
     val info: String? = null,
 
     @ColumnInfo("changed_at")
     val changedAt: Long? = null
-)
-
-data class MQTTConfigurationEntity(
-    val host: String,
-    val port: Int,
-    val login: String? = null,
-    val password: String? = null
 )

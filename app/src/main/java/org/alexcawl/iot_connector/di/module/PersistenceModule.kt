@@ -34,7 +34,7 @@ interface PersistenceModule {
 
         @Provides
         @ApplicationScope
-        fun provideConnectionDatastoreDao(database: IoTConnectorDatabase): ConnectionDatabaseDao = database.connectionDao()
+        fun provideConnectionDatabaseDao(database: IoTConnectorDatabase): ConnectionDatabaseDao = database.connectionDao()
 
         @Provides
         @ApplicationScope
