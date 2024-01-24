@@ -14,6 +14,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileScreen
 import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileScreenAction
 import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileScreenState
+import org.alexcawl.iot_connector.profile.ui.screen.update.edit.Delete
+import org.alexcawl.iot_connector.profile.ui.screen.update.edit.NotFound
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
@@ -50,10 +52,6 @@ fun EditProfileScreen(
         )
     }
 }
-
-data object NotFound : ProfileScreenState
-
-data object Delete : ProfileScreenAction
 
 @ThemedPreview
 @Composable

@@ -9,7 +9,7 @@ interface IConnectionRepository {
 
     suspend fun createConnection(model: ConnectionModel)
 
-    suspend fun getConnection(id: UUID): ConnectionModel
+    suspend fun getConnection(id: UUID): ConnectionModel?
 
     suspend fun updateConnection(model: ConnectionModel)
 

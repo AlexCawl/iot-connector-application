@@ -13,10 +13,10 @@ import java.util.UUID
 @Dao
 interface ConnectionDatabaseDao {
     @Query("SELECT * from connections")
-    fun getConnections(): Flow<ConnectionEntity>
+    fun getConnections(): Flow<List<ConnectionEntity>>
 
     @Query("SELECT * FROM connections WHERE id = :id")
-    suspend fun getConnection(id: UUID): ConnectionEntity
+    suspend fun getConnection(id: UUID): ConnectionEntity?
 
     @Insert(entity = ConnectionEntity::class, onConflict = OnConflictStrategy.ABORT)
     suspend fun createConnection(connectionEntity: ConnectionEntity)

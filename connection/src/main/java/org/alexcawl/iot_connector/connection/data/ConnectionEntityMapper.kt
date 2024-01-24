@@ -5,11 +5,11 @@ import org.alexcawl.iot_connector.connection.domain.IConnectionEntityMapper
 import org.alexcawl.iot_connector.persistence.entity.ConnectionEntity
 
 class ConnectionEntityMapper : IConnectionEntityMapper {
-    override fun mapFirst(from: ConnectionEntity): ConnectionModel {
-        TODO("Not yet implemented")
+    override fun mapFirst(from: ConnectionEntity): ConnectionModel = with(from) {
+        ConnectionModel(id, endpoint, name)
     }
 
-    override fun mapSecond(from: ConnectionModel): ConnectionEntity {
-        TODO("Not yet implemented")
+    override fun mapSecond(from: ConnectionModel): ConnectionEntity = with(from) {
+        ConnectionEntity(id, endpoint, name)
     }
 }

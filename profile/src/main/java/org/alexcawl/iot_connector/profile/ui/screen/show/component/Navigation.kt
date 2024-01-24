@@ -20,7 +20,7 @@ internal fun NavGraphBuilder.installShowProfilesScreen(
         val viewModel = composeViewModel(modelClass = ShowProfilesViewModel::class.java) { factory }
         val state by viewModel.state.collectAsState()
 
-        ShowProfileScreen(
+        ShowProfilesScreen(
             state = state,
             onAction = viewModel::handle,
             onNavigateToAddProfile = onNavigateToAddProfile,

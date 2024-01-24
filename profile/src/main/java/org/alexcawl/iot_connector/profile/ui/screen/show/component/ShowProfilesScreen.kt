@@ -38,7 +38,7 @@ import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun ShowProfileScreen(
+internal fun ShowProfilesScreen(
     state: ShowProfilesScreenState,
     onAction: (ShowProfilesScreenAction) -> Unit,
     onNavigateBack: () -> Unit,
@@ -155,7 +155,7 @@ private fun PreviewLoading() {
     val state: ShowProfilesScreenState = ShowProfilesScreenState.Initial
 
     IoTConnectorTheme {
-        ShowProfileScreen(state = state,
+        ShowProfilesScreen(state = state,
             onAction = {},
             onNavigateToAddProfile = {},
             onNavigateToEditProfile = {},
@@ -170,7 +170,7 @@ private fun PreviewEmpty() {
     val state: ShowProfilesScreenState = ShowProfilesScreenState.Viewing(null, listOf())
 
     IoTConnectorTheme {
-        ShowProfileScreen(
+        ShowProfilesScreen(
             state = state,
             onAction = {},
             onNavigateToAddProfile = {},
@@ -217,7 +217,7 @@ private fun Preview() {
     val state = ShowProfilesScreenState.Viewing(selected, profiles)
 
     IoTConnectorTheme {
-        ShowProfileScreen(state = state,
+        ShowProfilesScreen(state = state,
             onAction = {},
             onNavigateToAddProfile = {},
             onNavigateToEditProfile = {},

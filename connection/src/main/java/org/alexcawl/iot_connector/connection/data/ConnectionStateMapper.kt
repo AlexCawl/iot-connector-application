@@ -5,11 +5,11 @@ import org.alexcawl.iot_connector.connection.domain.IConnectionStateMapper
 import org.alexcawl.iot_connector.ui.state.ConnectionState
 
 class ConnectionStateMapper : IConnectionStateMapper {
-    override fun mapFirst(from: ConnectionState): ConnectionModel {
-        TODO("Not yet implemented")
+    override fun mapFirst(from: ConnectionState): ConnectionModel = with(from) {
+        ConnectionModel(id, endpoint, name)
     }
 
-    override fun mapSecond(from: ConnectionModel): ConnectionState {
-        TODO("Not yet implemented")
+    override fun mapSecond(from: ConnectionModel): ConnectionState = with(from) {
+        ConnectionState(id, endpoint, name)
     }
 }

@@ -40,9 +40,46 @@ fun ItemCard(
 ) = Card(
     onClick = onClick, modifier = modifier
 ) {
+    ItemCardContent(
+        title = title,
+        subtitle = subtitle,
+        statusIcon = statusIcon,
+        configurationIcon = configurationIcon,
+        body = body
+    )
+}
+
+@Composable
+fun ItemCard(
+    title: @Composable () -> Unit,
+    subtitle: @Composable () -> Unit,
+    statusIcon: @Composable () -> Unit,
+    configurationIcon: @Composable () -> Unit,
+    body: @Composable () -> Unit,
+    modifier: Modifier = Modifier
+) = Card(
+    modifier = modifier
+) {
+    ItemCardContent(
+        title = title,
+        subtitle = subtitle,
+        statusIcon = statusIcon,
+        configurationIcon = configurationIcon,
+        body = body
+    )
+}
+
+@Composable
+internal fun ItemCardContent(
+    title: @Composable () -> Unit,
+    subtitle: @Composable () -> Unit,
+    statusIcon: @Composable () -> Unit,
+    configurationIcon: @Composable () -> Unit,
+    body: @Composable () -> Unit
+) {
     Column(
         modifier = Modifier.padding(PaddingMedium),
-        verticalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.Top),
+        verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.Start
     ) {
         Row(
@@ -54,13 +91,13 @@ fun ItemCard(
         ) {
             statusIcon()
             Column(
+                modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(PaddingSmall, Alignment.Top),
                 horizontalAlignment = Alignment.Start
             ) {
                 title()
                 subtitle()
             }
-            Spacer(modifier = Modifier.weight(1f))
             configurationIcon()
         }
         body()
@@ -110,6 +147,7 @@ private fun Preview() {
                         }
                     },
                     body = {
+                        Spacer(modifier = Modifier.height(PaddingMedium))
                         Text(
                             text = loremIpsum(2),
                             modifier = Modifier.fillMaxWidth(),

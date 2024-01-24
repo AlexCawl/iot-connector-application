@@ -3,8 +3,10 @@ package org.alexcawl.iot_connector.profile.ui.screen.show.component
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
@@ -19,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.ui.components.IconSmall
 import org.alexcawl.iot_connector.ui.components.ItemCard
+import org.alexcawl.iot_connector.ui.components.PaddingMedium
 import org.alexcawl.iot_connector.ui.components.PaddingSmall
 import org.alexcawl.iot_connector.ui.state.ProfileState
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
@@ -67,6 +70,7 @@ internal fun ProfileCard(
         }
     },
     body = {
+        Spacer(modifier = Modifier.height(PaddingMedium))
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(PaddingSmall, Alignment.Top),
