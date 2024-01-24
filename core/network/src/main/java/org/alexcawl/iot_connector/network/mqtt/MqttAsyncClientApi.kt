@@ -14,7 +14,7 @@ import org.alexcawl.iot_connector.network.subscribe
 import javax.inject.Inject
 
 class MqttAsyncClientApi @Inject constructor(
-    private val client: StateFlow<Product<Mqtt5AsyncClient>>
+    private val client: StateFlow<@JvmSuppressWildcards Product<Mqtt5AsyncClient>>
 ) : IMqttClientApi<Mqtt5Publish> {
     override suspend fun publish(endpoint: String, publish: Mqtt5Publish) {
         try {

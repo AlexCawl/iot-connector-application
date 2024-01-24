@@ -8,7 +8,7 @@ import org.alexcawl.iot_connector.common.util.Product
 import javax.inject.Inject
 
 class GetNetworkAvailabilityUseCase @Inject constructor(
-    private val client: StateFlow<Product<Mqtt5AsyncClient>>
+    private val client: StateFlow<@JvmSuppressWildcards Product<Mqtt5AsyncClient>>
 ) {
     operator fun invoke(): Flow<Result<Boolean>> = client.map {
         when (it) {

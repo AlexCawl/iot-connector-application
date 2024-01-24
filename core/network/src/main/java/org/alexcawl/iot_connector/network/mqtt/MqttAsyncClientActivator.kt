@@ -19,7 +19,7 @@ import java.util.UUID
 import javax.inject.Inject
 
 class MqttAsyncClientActivator @Inject constructor(
-    private val client: Flow<Product<Mqtt5AsyncClient>>,
+    private val client: Flow<@JvmSuppressWildcards Product<Mqtt5AsyncClient>>,
     private val key: Flow<UUID>
 ) : IMqttClientActivator<Mqtt5AsyncClient> {
     private val mutableActivatedClient: MutableStateFlow<Product<Mqtt5AsyncClient>> =

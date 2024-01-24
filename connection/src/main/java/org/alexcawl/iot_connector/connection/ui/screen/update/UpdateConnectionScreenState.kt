@@ -1,14 +1,14 @@
 package org.alexcawl.iot_connector.connection.ui.screen.update
 
-interface ConnectionScreenState {
-    data object Initial : ConnectionScreenState
+interface UpdateConnectionScreenState {
+    data object Initial : UpdateConnectionScreenState
 
     data class Builder(
         val endpoint: String = "",
         val endpointMessage: Message = Message.OK,
         val name: String = "",
         val nameOptional: Boolean = true
-    ) : ConnectionScreenState {
+    ) : UpdateConnectionScreenState {
         enum class Message {
             OK,
             EMPTY,
@@ -16,5 +16,5 @@ interface ConnectionScreenState {
         }
     }
 
-    data object Saving : ConnectionScreenState
+    data object Saving : UpdateConnectionScreenState
 }

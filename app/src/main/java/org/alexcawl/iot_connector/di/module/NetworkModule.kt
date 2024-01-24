@@ -1,7 +1,9 @@
 package org.alexcawl.iot_connector.di.module
 
 import com.hivemq.client.mqtt.mqtt5.Mqtt5AsyncClient
+import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
@@ -11,6 +13,7 @@ import org.alexcawl.iot_connector.common.model.Login
 import org.alexcawl.iot_connector.common.model.Password
 import org.alexcawl.iot_connector.common.util.Product
 import org.alexcawl.iot_connector.common.util.runProducing
+import org.alexcawl.iot_connector.di.ApplicationScope
 import org.alexcawl.iot_connector.network.mqtt.IMqttClientActivator
 import org.alexcawl.iot_connector.network.mqtt.IMqttClientFactory
 import org.alexcawl.iot_connector.network.mqtt.MqttAsyncClientActivator
@@ -21,11 +24,15 @@ import java.util.UUID
 
 @Module
 interface NetworkModule {
+    @Binds
     fun bindMqttFactory(asyncFactory: MqttAsyncClientFactory): IMqttClientFactory<Mqtt5AsyncClient>
 
+    @Binds
     fun bindMqttActivator(activator: MqttAsyncClientActivator): IMqttClientActivator<Mqtt5AsyncClient>
 
     companion object {
+        @Provides
+        @ApplicationScope
         fun provideMqttAsyncClientFlow(
             profileDatabaseDao: ProfileDatabaseDao,
             profileDatastoreDao: ProfileDatastoreDao,
@@ -58,10 +65,14 @@ interface NetworkModule {
                 }
             }
 
+        @Provides
+        @ApplicationScope
         fun provideMqttAsyncClientActivatedFlow(
             activator: IMqttClientActivator<Mqtt5AsyncClient>
         ): StateFlow<Product<Mqtt5AsyncClient>> = activator.activatedClient
 
+        @Provides
+        @ApplicationScope
         fun provideKeyFlow(): Flow<UUID> = flow { emit(UUID.randomUUID()) }
     }
 }
