@@ -1,9 +1,8 @@
-package org.alexcawl.iot_connector.profile.ui.screen.update
+package org.alexcawl.iot_connector.connection.ui.screen.update
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -27,22 +26,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import org.alexcawl.iot_connector.profile.R
-import org.alexcawl.iot_connector.ui.components.placeholder.LoadingScreen
+import org.alexcawl.iot_connector.connection.R
 import org.alexcawl.iot_connector.ui.components.PaddingLarge
 import org.alexcawl.iot_connector.ui.components.PaddingMedium
 import org.alexcawl.iot_connector.ui.components.Spacer
 import org.alexcawl.iot_connector.ui.components.input.DialogTextFieldState
 import org.alexcawl.iot_connector.ui.components.input.OptionalDialogTextField
 import org.alexcawl.iot_connector.ui.components.input.RequiredDialogTextField
+import org.alexcawl.iot_connector.ui.components.placeholder.LoadingScreen
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun ProfileScreen(
-    state: ProfileScreenState,
-    onAction: (ProfileScreenAction) -> Unit,
+internal fun UpdateConnectionScreen(
+    state: UpdateConnectionScreenState,
+    onAction: (UpdateConnectionScreenAction) -> Unit,
     onNavigateBack: () -> Unit,
     title: @Composable () -> Unit,
     floatingActionButton: @Composable () -> Unit,
@@ -59,7 +58,7 @@ internal fun ProfileScreen(
             },
             actions = {
                 TextButton(
-                    onClick = { onAction(ProfileScreenAction.Save) },
+                    onClick = { onAction(UpdateConnectionScreenAction.Save) },
                     shape = MaterialTheme.shapes.small,
                 ) {
                     Text(
@@ -74,14 +73,14 @@ internal fun ProfileScreen(
         )
     },
     floatingActionButton = floatingActionButton
-) { paddingValues: PaddingValues ->
+) { paddingValues ->
     val paddingModifier = Modifier.padding(paddingValues)
     when (state) {
-        is ProfileScreenState.Initial -> LoadingScreen(
+        is UpdateConnectionScreenState.Initial -> LoadingScreen(
             modifier = paddingModifier.fillMaxSize()
         )
 
-        is ProfileScreenState.Builder -> {
+        is UpdateConnectionScreenState.Builder -> {
             Column(
                 modifier = paddingModifier
                     .verticalScroll(rememberScrollState())
@@ -91,64 +90,22 @@ internal fun ProfileScreen(
             ) {
                 RequiredDialogTextField(
                     state = DialogTextFieldState(
+                        value = state.endpoint,
+                        label = stringResource(id = R.string.connection_endpoint),
+                        errorMessage = state.endpointMessage.toText()
+                    ),
+                    onFieldValueChange = { onAction(UpdateConnectionScreenAction.SetEndpoint(it)) },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                OptionalDialogTextField(
+                    visible = state.nameOptional.not(),
+                    onVisibilityChange = { onAction(UpdateConnectionScreenAction.SetNameType(it.not())) },
+                    state = DialogTextFieldState(
                         value = state.name,
-                        label = stringResource(id = R.string.profile_name),
-                        errorMessage = state.nameMessage.toText()
+                        label = stringResource(id = R.string.connection_name)
                     ),
-                    onFieldValueChange = { onAction(ProfileScreenAction.SetName(it)) },
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                OptionalDialogTextField(
-                    visible = state.infoOptional.not(),
-                    onVisibilityChange = { onAction(ProfileScreenAction.SetInfoType(it.not())) },
-                    state = DialogTextFieldState(
-                        value = state.info,
-                        label = stringResource(id = R.string.profile_info)
-                    ),
-                    onFieldValueChange = { onAction(ProfileScreenAction.SetInfo(it)) },
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                RequiredDialogTextField(
-                    state = DialogTextFieldState(
-                        value = state.host,
-                        label = stringResource(id = R.string.profile_host),
-                        errorMessage = state.hostMessage.toText()
-                    ),
-                    onFieldValueChange = { onAction(ProfileScreenAction.SetHost(it)) },
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                RequiredDialogTextField(
-                    state = DialogTextFieldState(
-                        value = state.port,
-                        label = stringResource(id = R.string.profile_port),
-                        errorMessage = state.portMessage.toText()
-                    ),
-                    onFieldValueChange = { onAction(ProfileScreenAction.SetPort(it)) },
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                OptionalDialogTextField(
-                    visible = state.loginOptional.not(),
-                    onVisibilityChange = { onAction(ProfileScreenAction.SetLoginType(it.not())) },
-                    state = DialogTextFieldState(
-                        value = state.login,
-                        label = stringResource(id = R.string.profile_login)
-                    ),
-                    onFieldValueChange = { onAction(ProfileScreenAction.SetLogin(it)) },
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                OptionalDialogTextField(
-                    visible = state.passwordOptional.not(),
-                    onVisibilityChange = { onAction(ProfileScreenAction.SetPasswordType(it.not())) },
-                    state = DialogTextFieldState(
-                        value = state.password,
-                        label = stringResource(id = R.string.profile_password)
-                    ),
-                    onFieldValueChange = { onAction(ProfileScreenAction.SetPassword(it)) },
+                    onFieldValueChange = { onAction(UpdateConnectionScreenAction.SetName(it)) },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -160,26 +117,26 @@ internal fun ProfileScreen(
             }
         }
 
-        is ProfileScreenState.Saving -> LaunchedEffect(key1 = null) {
+        is UpdateConnectionScreenState.Saving -> LaunchedEffect(key1 = null) {
             onNavigateBack()
         }
     }
 }
 
 @Composable
-internal fun ProfileScreenState.Builder.Message.toText(): String? = when (this) {
-    ProfileScreenState.Builder.Message.OK -> null
-    ProfileScreenState.Builder.Message.NULL -> stringResource(id = R.string.cannot_be_null)
-    ProfileScreenState.Builder.Message.NOT_A_NUMBER -> stringResource(id = R.string.not_a_number)
+private fun UpdateConnectionScreenState.Builder.Message.toText(): String? = when (this) {
+    UpdateConnectionScreenState.Builder.Message.OK -> null
+    UpdateConnectionScreenState.Builder.Message.EMPTY -> stringResource(id = R.string.endpoint_empty)
+    UpdateConnectionScreenState.Builder.Message.WRONG_PATTERN -> stringResource(id = R.string.endpoint_wrong_pattern)
 }
 
-@ThemedPreview
 @Composable
+@ThemedPreview
 private fun Preview() {
-    val state = ProfileScreenState.Builder()
+    val state = UpdateConnectionScreenState.Builder()
 
     IoTConnectorTheme {
-        ProfileScreen(
+        UpdateConnectionScreen(
             state = state,
             onAction = {},
             onNavigateBack = {},

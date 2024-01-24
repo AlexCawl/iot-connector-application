@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.profile.ui.screen.update.add.component
+package org.alexcawl.iot_connector.connection.ui.screen.update.add.component
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -7,26 +7,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import org.alexcawl.iot_connector.profile.R
-import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileScreen
-import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileScreenAction
-import org.alexcawl.iot_connector.profile.ui.screen.update.ProfileScreenState
+import org.alexcawl.iot_connector.connection.R
+import org.alexcawl.iot_connector.connection.ui.screen.update.UpdateConnectionScreen
+import org.alexcawl.iot_connector.connection.ui.screen.update.UpdateConnectionScreenAction
+import org.alexcawl.iot_connector.connection.ui.screen.update.UpdateConnectionScreenState
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
 @Composable
-fun AddProfileScreen(
-    state: ProfileScreenState,
-    onAction: (ProfileScreenAction) -> Unit,
+fun AddConnectionScreen(
+    state: UpdateConnectionScreenState,
+    onAction: (UpdateConnectionScreenAction) -> Unit,
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
-) = ProfileScreen(
+) = UpdateConnectionScreen(
     state = state,
     onAction = onAction,
     onNavigateBack = onNavigateBack,
     title = {
         Text(
-            text = stringResource(id = R.string.add_profile_title),
+            text = stringResource(id = R.string.add_connection_title),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             style = MaterialTheme.typography.titleLarge
@@ -36,12 +36,12 @@ fun AddProfileScreen(
     modifier = modifier
 )
 
-@ThemedPreview
 @Composable
+@ThemedPreview
 private fun Preview() {
     IoTConnectorTheme {
-        AddProfileScreen(
-            state = ProfileScreenState.Builder(),
+        AddConnectionScreen(
+            state = UpdateConnectionScreenState.Builder(),
             onAction = {},
             onNavigateBack = {},
             modifier = Modifier.fillMaxSize()

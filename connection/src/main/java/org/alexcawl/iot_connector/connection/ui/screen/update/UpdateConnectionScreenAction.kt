@@ -6,4 +6,6 @@ interface UpdateConnectionScreenAction {
     data class SetName(val name: String): UpdateConnectionScreenAction
 
     data class SetNameType(val optional: Boolean) : UpdateConnectionScreenAction
+
+    data object Save : UpdateConnectionScreenAction
 }

@@ -10,6 +10,7 @@ import org.alexcawl.iot_connector.profile.dependencies.ProfileDependenciesStore
 import org.alexcawl.iot_connector.profile.ui.screen.update.add.component.installAddProfileScreen
 import org.alexcawl.iot_connector.profile.ui.screen.update.edit.component.installEditProfileScreen
 import org.alexcawl.iot_connector.profile.ui.screen.show.component.installShowProfilesScreen
+import java.util.UUID
 
 sealed interface ProfileNavLocator {
     val route: String
@@ -24,6 +25,8 @@ sealed interface ProfileNavLocator {
         override val route: String = "edit_profile/{id}"
         override val arguments: List<NamedNavArgument> =
             listOf(navArgument("id") { type = NavType.StringType })
+
+        fun buildRoute(id: UUID): String = "edit_profile/${id}"
     }
 
     data object ProfileAddScreen : ProfileNavLocator {
@@ -32,7 +35,7 @@ sealed interface ProfileNavLocator {
     }
 }
 
-fun NavGraphBuilder.installProfileNavigation(navController: NavController) {
+fun NavGraphBuilder.profileNavigation(navController: NavController) {
     val factory = DaggerProfileComponent.builder()
         .dependencies(ProfileDependenciesStore.dependencies).build()
             .provideFactory()
@@ -40,7 +43,7 @@ fun NavGraphBuilder.installProfileNavigation(navController: NavController) {
     installShowProfilesScreen(
         screenRoute = ProfileNavLocator.ProfileShowScreen.route,
         onNavigateToAddProfile = { navController.navigate(ProfileNavLocator.ProfileAddScreen.route) },
-        onNavigateToEditProfile = { navController.navigate("edit_profile/${it}") },
+        onNavigateToEditProfile = { navController.navigate(ProfileNavLocator.ProfileEditScreen.buildRoute(it)) },
         factory = factory,
         onNavigateBack = { navController.navigateUp() }
     )

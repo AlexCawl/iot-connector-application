@@ -8,4 +8,11 @@
     <string name="no_connections_title">You have no connections</string>
     <string name="no_connections_subtitle">You can add them using button below</string>
     <string name="connections_screen_title">Your connections</string>
+    <string name="save">Save</string>
+    <string name="connection_endpoint">Endpoint</string>
+    <string name="connection_name">Name</string>
+    <string name="endpoint_empty">Field is empty!</string>
+    <string name="endpoint_wrong_pattern">Wrong pattern for endpoint!</string>
+    <string name="add_connection_title">Add connection</string>
+    <string name="edit_connection_title">Edit connection</string>
 </resources>

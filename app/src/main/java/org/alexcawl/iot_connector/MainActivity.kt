@@ -6,8 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import org.alexcawl.iot_connector.profile.ui.ProfileNavLocator
-import org.alexcawl.iot_connector.profile.ui.installProfileNavigation
+import org.alexcawl.iot_connector.connection.ui.ConnectionNavLocator
+import org.alexcawl.iot_connector.connection.ui.connectionNavigation
+import org.alexcawl.iot_connector.profile.ui.profileNavigation
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import javax.inject.Inject
 
@@ -24,9 +25,10 @@ class MainActivity : ComponentActivity() {
 
                 NavHost(
                     navController = navController,
-                    startDestination = ProfileNavLocator.ProfileShowScreen.route
+                    startDestination = ConnectionNavLocator.ConnectionsShowScreen.route
                 ) {
-                    installProfileNavigation(navController)
+                    profileNavigation(navController)
+                    connectionNavigation(navController) {}
                 }
             }
         }

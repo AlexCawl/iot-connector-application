@@ -30,6 +30,13 @@ abstract class UpdateConnectionViewModel : StateViewModel<UpdateConnectionScreen
                     is UpdateConnectionScreenState.Builder -> _state.emit(screenState.copy(nameOptional = action.optional))
                     else -> throw IllegalStateException()
                 }
+
+                is UpdateConnectionScreenAction.Save -> when (val screenState = state.first()) {
+                    is UpdateConnectionScreenState.Builder -> saveConnection(screenState)
+                    else -> throw IllegalStateException()
+                }
+
+                else -> throw IllegalStateException()
             }
         }
     }
