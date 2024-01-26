@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ThermalResponse(
+data class LargeMatrixThermalData(
     @SerialName("device")
     val device: String,
     @SerialName("sensor_type")
@@ -13,7 +13,4 @@ data class ThermalResponse(
     val offset: Int,
     @SerialName("values")
     val temperatures: List<Int>
-) : ConnectionResponse {
-    override val text: String
-        get() = ""
-}
+)
