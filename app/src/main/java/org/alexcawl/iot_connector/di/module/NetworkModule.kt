@@ -16,8 +16,8 @@ import org.alexcawl.iot_connector.network.mqtt.MqttAsyncClientDao
 import org.alexcawl.iot_connector.network.mqtt.MqttAsyncClientHolder
 import org.alexcawl.iot_connector.network.mqtt.MqttAsyncClientFactory
 import org.alexcawl.iot_connector.network.transcriber.IMqttResponseTranscriber
-import org.alexcawl.iot_connector.network.transcriber.LargeMatrixThermalResponseTranscriber
-import org.alexcawl.iot_connector.network.transcriber.SmallMatrixThermalResponseTranscriber
+import org.alexcawl.iot_connector.network.transcriber.LargeThermalResponseTranscriber
+import org.alexcawl.iot_connector.network.transcriber.SmallThermalResponseTranscriber
 import org.alexcawl.iot_connector.network.transcriber.TextResponseTranscriber
 import java.util.UUID
 
@@ -38,11 +38,11 @@ interface NetworkModule {
 
     @Binds
     @IntoSet
-    fun bindSmallMatrixTranscriber(transcriber: SmallMatrixThermalResponseTranscriber): IMqttResponseTranscriber<Mqtt5Publish>
+    fun bindSmallMatrixTranscriber(transcriber: SmallThermalResponseTranscriber): IMqttResponseTranscriber<Mqtt5Publish>
 
     @Binds
     @IntoSet
-    fun bindLargeMatrixTranscriber(transcriber: LargeMatrixThermalResponseTranscriber): IMqttResponseTranscriber<Mqtt5Publish>
+    fun bindLargeMatrixTranscriber(transcriber: LargeThermalResponseTranscriber): IMqttResponseTranscriber<Mqtt5Publish>
 
     companion object {
         @Provides

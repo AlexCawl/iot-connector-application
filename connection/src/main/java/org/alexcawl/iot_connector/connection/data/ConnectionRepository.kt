@@ -14,7 +14,7 @@ class ConnectionRepository @Inject constructor(
     private val mapper: IConnectionEntityMapper
 ) : IConnectionRepository {
     override fun getConnectionsAsFlow(): Flow<List<ConnectionModel>> =
-        databaseDao.getConnections().map { it.map(mapper::mapFirst) }
+        databaseDao.subscribeAtConnections().map { it.map(mapper::mapFirst) }
 
     override suspend fun createConnection(model: ConnectionModel) =
         databaseDao.createConnection(mapper.mapSecond(model))

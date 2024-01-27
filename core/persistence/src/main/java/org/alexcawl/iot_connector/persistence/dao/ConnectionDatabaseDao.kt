@@ -13,7 +13,7 @@ import java.util.UUID
 @Dao
 interface ConnectionDatabaseDao {
     @Query("SELECT * from connections")
-    fun getConnections(): Flow<List<ConnectionEntity>>
+    fun getConnections(): List<ConnectionEntity>
 
     @Query("SELECT * FROM connections WHERE id = :id")
     suspend fun getConnection(id: UUID): ConnectionEntity?
@@ -26,4 +26,10 @@ interface ConnectionDatabaseDao {
 
     @Delete(entity = ConnectionEntity::class)
     suspend fun deleteConnection(connectionEntity: ConnectionEntity)
+
+    @Query("SELECT * from connections")
+    fun subscribeAtConnections(): Flow<List<ConnectionEntity>>
+
+    @Query("SELECT * FROM connections WHERE id = :id")
+    suspend fun subscribeAtConnection(id: UUID): Flow<ConnectionEntity?>
 }
