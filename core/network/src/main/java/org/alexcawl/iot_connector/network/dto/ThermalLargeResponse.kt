@@ -9,7 +9,7 @@ import kotlin.jvm.Throws
 data class ThermalLargeResponse(
     @SerialName("device")
     val device: String,
-    @SerialName("sensor_type")
+    @SerialName("sensorType")
     val sensorType: String,
     @SerialName("offset")
     val offset: Int,

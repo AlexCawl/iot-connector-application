@@ -6,10 +6,10 @@ import org.alexcawl.iot_connector.network.dto.TextResponse
 import org.alexcawl.iot_connector.network.dto.ThermalLargeResponse
 import org.alexcawl.iot_connector.network.dto.UserParamsResponse
 import org.alexcawl.iot_connector.ui.state.ViewerState
-import org.alexcawl.iot_connector.ui.state.data.DefaultViewerData
-import org.alexcawl.iot_connector.ui.state.data.ParamsViewerData
-import org.alexcawl.iot_connector.ui.state.data.TextViewerData
-import org.alexcawl.iot_connector.ui.state.data.ThermalViewerData
+import org.alexcawl.iot_connector.ui.state.data.DefaultRepresentationModel
+import org.alexcawl.iot_connector.ui.state.data.ParametersRepresentationModel
+import org.alexcawl.iot_connector.ui.state.data.TextRepresentationModel
+import org.alexcawl.iot_connector.ui.state.data.ThermalRepresentationModel
 import org.alexcawl.iot_connector.viewer.domain.IViewerStateMapper
 import javax.inject.Inject
 
@@ -21,29 +21,38 @@ class ViewerStateMapper @Inject constructor() : IViewerStateMapper {
             name = name,
             viewsData = payloads.map {
                 when (it) {
-                    is TextResponse -> TextViewerData(it.text)
-                    is UserParamsResponse -> ParamsViewerData(it.params)
-                    is ThermalLargeResponse -> ThermalViewerData(
+                    is TextResponse -> TextRepresentationModel(it.text)
+                    is UserParamsResponse -> ParametersRepresentationModel(it.params)
+                    is ThermalLargeResponse -> ThermalRepresentationModel(
                         device = it.device,
                         sensorType = it.sensorType,
                         temperatures = mapSmallThermalMatrix(it.temperatures)
                     )
 
-                    is ThermalSmallResponse -> ThermalViewerData(
+                    is ThermalSmallResponse -> ThermalRepresentationModel(
                         device = it.device,
                         sensorType = it.sensorType,
                         temperatures = mapLargeThermalMatrix(it.temperatures)
                     )
 
-                    else -> DefaultViewerData(it.raw)
+                    else -> DefaultRepresentationModel(it.raw)
                 }
-            }
+            }.sortedBy { it.priority }
         )
     }
 
     private companion object {
-        fun mapSmallThermalMatrix(temperatures: List<Int>): Array<Array<Int>> = TODO()
+        fun mapSmallThermalMatrix(temperatures: List<Int>): Array<Array<Int>> = emptyArray()
 
-        fun mapLargeThermalMatrix(temperatures: List<Int>): Array<Array<Int>> = TODO()
+        fun mapLargeThermalMatrix(temperatures: List<Int>): Array<Array<Int>> = Array(24) {
+            Array(32) { 0 }
+        }.also {
+            var counter = 0
+            it.forEachIndexed { i, array ->
+                array.forEachIndexed { j, _ ->
+                    it[i][j] = temperatures[counter++]
+                }
+            }
+        }
     }
 }

@@ -31,5 +31,5 @@ interface ConnectionDatabaseDao {
     fun subscribeAtConnections(): Flow<List<ConnectionEntity>>
 
     @Query("SELECT * FROM connections WHERE id = :id")
-    suspend fun subscribeAtConnection(id: UUID): Flow<ConnectionEntity?>
+    fun subscribeAtConnection(id: UUID): Flow<ConnectionEntity?>
 }

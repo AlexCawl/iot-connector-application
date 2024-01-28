@@ -7,7 +7,7 @@ import kotlin.jvm.Throws
 data class ThermalSmallResponse(
     @SerialName("device")
     val device: String,
-    @SerialName("sensor_type")
+    @SerialName("sensorType")
     val sensorType: String,
     @SerialName("values")
     val temperatures: List<Int>

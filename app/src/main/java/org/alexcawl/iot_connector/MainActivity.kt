@@ -10,6 +10,8 @@ import org.alexcawl.iot_connector.connection.ui.ConnectionNavLocator
 import org.alexcawl.iot_connector.connection.ui.connectionNavigation
 import org.alexcawl.iot_connector.profile.ui.profileNavigation
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
+import org.alexcawl.iot_connector.viewer.ui.ViewerNavLocator
+import org.alexcawl.iot_connector.viewer.ui.viewerNavigation
 import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
@@ -28,7 +30,14 @@ class MainActivity : ComponentActivity() {
                     startDestination = ConnectionNavLocator.ConnectionsShowScreen.route
                 ) {
                     profileNavigation(navController)
-                    connectionNavigation(navController) {}
+                    connectionNavigation(navController) {
+                        navController.navigate(
+                            ViewerNavLocator.buildRoute(
+                                it
+                            )
+                        )
+                    }
+                    viewerNavigation(navController)
                 }
             }
         }

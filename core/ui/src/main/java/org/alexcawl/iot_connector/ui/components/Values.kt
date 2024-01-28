@@ -18,4 +18,4 @@ val SizeSmall: Dp = 48.dp
 val SizeMedium: Dp = 96.dp
 val SizeLarge: Dp = 192.dp
 
-internal fun loremIpsum(words: Int): String = LoremIpsum(words).values.joinToString(" ")
+fun loremIpsum(words: Int): String = LoremIpsum(words).values.joinToString(" ")

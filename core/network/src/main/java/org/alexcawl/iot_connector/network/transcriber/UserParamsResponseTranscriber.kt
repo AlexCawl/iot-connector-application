@@ -13,7 +13,7 @@ class UserParamsResponseTranscriber @Inject constructor() : IMqttResponseTranscr
                     it.name.toString(),
                     it.value.toString()
                 )
-            },
+            }
         )
     }
 }
