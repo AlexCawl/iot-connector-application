@@ -30,7 +30,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.connection.R
-import org.alexcawl.iot_connector.ui.components.ItemCard
+import org.alexcawl.iot_connector.ui.components.CardScaffold
 import org.alexcawl.iot_connector.ui.components.PaddingMedium
 import org.alexcawl.iot_connector.ui.components.PaddingSmall
 import org.alexcawl.iot_connector.ui.components.SizeLarge
@@ -45,7 +45,7 @@ fun NetworkStatusCard(
     val isError: Boolean = (type == NetworkStatusIconType.EXCEPTION)
     var isShown: Boolean by remember { mutableStateOf(false) }
 
-    ItemCard(
+    CardScaffold(
         modifier = modifier,
         title = {
             Text(

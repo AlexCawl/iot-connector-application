@@ -1,9 +1,8 @@
 package org.alexcawl.iot_connector.viewer.data
 
 import org.alexcawl.iot_connector.common.model.MqttResponse
-import org.alexcawl.iot_connector.network.dto.ThermalSmallResponse
 import org.alexcawl.iot_connector.network.dto.TextResponse
-import org.alexcawl.iot_connector.network.dto.ThermalLargeResponse
+import org.alexcawl.iot_connector.network.dto.ThermalResponse
 import org.alexcawl.iot_connector.network.dto.UserParamsResponse
 import org.alexcawl.iot_connector.ui.state.ViewerState
 import org.alexcawl.iot_connector.ui.state.data.DefaultRepresentationModel
@@ -23,18 +22,11 @@ class ViewerStateMapper @Inject constructor() : IViewerStateMapper {
                 when (it) {
                     is TextResponse -> TextRepresentationModel(it.text)
                     is UserParamsResponse -> ParametersRepresentationModel(it.params)
-                    is ThermalLargeResponse -> ThermalRepresentationModel(
+                    is ThermalResponse -> ThermalRepresentationModel(
                         device = it.device,
                         sensorType = it.sensorType,
-                        temperatures = mapSmallThermalMatrix(it.temperatures)
+                        temperatures = mapThermalMatrix(it.temperatures)
                     )
-
-                    is ThermalSmallResponse -> ThermalRepresentationModel(
-                        device = it.device,
-                        sensorType = it.sensorType,
-                        temperatures = mapLargeThermalMatrix(it.temperatures)
-                    )
-
                     else -> DefaultRepresentationModel(it.raw)
                 }
             }.sortedBy { it.priority }
@@ -42,17 +34,30 @@ class ViewerStateMapper @Inject constructor() : IViewerStateMapper {
     }
 
     private companion object {
-        fun mapSmallThermalMatrix(temperatures: List<Int>): Array<Array<Int>> = emptyArray()
-
-        fun mapLargeThermalMatrix(temperatures: List<Int>): Array<Array<Int>> = Array(24) {
-            Array(32) { 0 }
-        }.also {
-            var counter = 0
-            it.forEachIndexed { i, array ->
-                array.forEachIndexed { j, _ ->
-                    it[i][j] = temperatures[counter++]
+        fun mapThermalMatrix(temperatures: List<Int>): Array<Array<Int>> = try {
+            Array(32) {
+                Array(24) { 0 }
+            }.also {
+                var counter = 0
+                it.forEachIndexed { i, array ->
+                    array.forEachIndexed { j, _ ->
+                        it[i][j] = temperatures[counter++]
+                    }
                 }
             }
+        } catch (exception: IndexOutOfBoundsException) {
+            Array(8) {
+                Array(8) { 0 }
+            }.also {
+                var counter = 0
+                it.forEachIndexed { i, array ->
+                    array.forEachIndexed { j, _ ->
+                        it[i][j] = temperatures[counter++]
+                    }
+                }
+            }
+        } catch (exception: IndexOutOfBoundsException) {
+            emptyArray()
         }
     }
 }

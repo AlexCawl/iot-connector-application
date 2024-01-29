@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.profile.R
 import org.alexcawl.iot_connector.ui.components.IconSmall
-import org.alexcawl.iot_connector.ui.components.ItemCard
+import org.alexcawl.iot_connector.ui.components.CardScaffold
 import org.alexcawl.iot_connector.ui.components.PaddingSmall
 import org.alexcawl.iot_connector.ui.state.ProfileState
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
@@ -29,7 +29,7 @@ internal fun SelectedProfileCard(
     profile: ProfileState?,
     onClick: (ProfileState?) -> Unit,
     modifier: Modifier = Modifier
-) = ItemCard(
+) = CardScaffold(
     modifier = modifier,
     title = {
         Text(

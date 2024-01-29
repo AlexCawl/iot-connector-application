@@ -29,7 +29,7 @@ import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ItemCard(
+fun CardScaffold(
     title: @Composable () -> Unit,
     subtitle: @Composable () -> Unit,
     onClick: () -> Unit,
@@ -50,7 +50,7 @@ fun ItemCard(
 }
 
 @Composable
-fun ItemCard(
+fun CardScaffold(
     title: @Composable () -> Unit,
     subtitle: @Composable () -> Unit,
     statusIcon: @Composable () -> Unit,
@@ -112,7 +112,7 @@ private fun Preview() {
             Column(modifier = Modifier
                 .padding(it)
                 .padding(PaddingMedium)) {
-                ItemCard(
+                CardScaffold(
                     title = {
                         Text(
                             text = loremIpsum(3),

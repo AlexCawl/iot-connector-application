@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.ui.components.IconSmall
-import org.alexcawl.iot_connector.ui.components.ItemCard
+import org.alexcawl.iot_connector.ui.components.CardScaffold
 import org.alexcawl.iot_connector.ui.components.PaddingMedium
 import org.alexcawl.iot_connector.ui.state.ConnectionState
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
@@ -28,7 +28,7 @@ fun ConnectionCard(
     onClicked: (UUID) -> Unit,
     onEditClicked: (UUID) -> Unit,
     modifier: Modifier = Modifier
-) = ItemCard(
+) = CardScaffold(
     modifier = modifier,
     title = {
         Text(

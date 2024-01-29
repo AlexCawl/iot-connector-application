@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.ui.components.IconSmall
-import org.alexcawl.iot_connector.ui.components.ItemCard
+import org.alexcawl.iot_connector.ui.components.CardScaffold
 import org.alexcawl.iot_connector.ui.components.PaddingMedium
 import org.alexcawl.iot_connector.ui.components.PaddingSmall
 import org.alexcawl.iot_connector.ui.state.ProfileState
@@ -36,7 +36,7 @@ internal fun ProfileCard(
     onEditClicked: (UUID) -> Unit,
     modifier: Modifier = Modifier,
     showType: ProfileShowType = ProfileShowType.NONE
-) = ItemCard(
+) = CardScaffold(
     modifier = modifier,
     title = {
         Text(

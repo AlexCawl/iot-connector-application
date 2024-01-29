@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.ui.components.IconSmall
-import org.alexcawl.iot_connector.ui.components.ItemCard
+import org.alexcawl.iot_connector.ui.components.CardScaffold
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
@@ -20,7 +20,7 @@ fun ParameterCard(
     key: String,
     value: String,
     modifier: Modifier = Modifier
-) = ItemCard(
+) = CardScaffold(
     title = {
         Text(
             text = key,
