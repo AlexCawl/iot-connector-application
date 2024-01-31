@@ -37,9 +37,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.common.DEBUG_LOG_TAG
-import org.alexcawl.iot_connector.ui.components.IconBig
-import org.alexcawl.iot_connector.ui.components.SizeLarge
-import org.alexcawl.iot_connector.ui.components.SizeMedium
 import org.alexcawl.iot_connector.ui.components.placeholder.EmptyScreen
 import org.alexcawl.iot_connector.ui.components.placeholder.LoadingScreen
 import org.alexcawl.iot_connector.ui.state.data.DefaultRepresentationModel
@@ -47,6 +44,7 @@ import org.alexcawl.iot_connector.ui.state.data.ParametersRepresentationModel
 import org.alexcawl.iot_connector.ui.state.data.TextRepresentationModel
 import org.alexcawl.iot_connector.ui.state.data.ThermalRepresentationModel
 import org.alexcawl.iot_connector.ui.state.data.ViewerDataRepresentationModel
+import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.util.shimmerEffect
 import org.alexcawl.iot_connector.viewer.ui.screens.params.ParametersViewerScreen
 import org.alexcawl.iot_connector.viewer.ui.screens.text.TextViewerScreen
@@ -73,8 +71,8 @@ fun ViewerScreen(
                     )
                     else -> Box(
                         modifier = Modifier
-                            .height(SizeMedium)
-                            .width(SizeLarge * 2)
+                            .height(ExtendedTheme.size.small)
+                            .width(ExtendedTheme.size.large)
                             .shimmerEffect()
                     )
                 }
@@ -119,7 +117,7 @@ fun ViewerScreen(
                 Icon(
                     imageVector = Icons.Default.Refresh,
                     contentDescription = null,
-                    modifier = Modifier.size(IconBig)
+                    modifier = Modifier.size(ExtendedTheme.iconSize.big)
                 )
             },
             modifier = paddingModifier

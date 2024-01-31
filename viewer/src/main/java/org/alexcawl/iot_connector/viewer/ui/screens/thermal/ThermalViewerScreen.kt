@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import org.alexcawl.iot_connector.ui.components.HeatMap
 import org.alexcawl.iot_connector.ui.components.InfoCard
-import org.alexcawl.iot_connector.ui.components.PaddingMedium
 import org.alexcawl.iot_connector.ui.state.data.ThermalRepresentationModel
+import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 import kotlin.random.Random
@@ -22,12 +22,12 @@ fun ThermalViewerScreen(
     state: ThermalRepresentationModel,
     modifier: Modifier = Modifier
 ) = Column(
-    modifier = modifier.padding(PaddingMedium),
-    verticalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.Top),
+    modifier = modifier.padding(ExtendedTheme.padding.medium),
+    verticalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.medium, Alignment.Top),
     horizontalAlignment = Alignment.CenterHorizontally
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.CenterHorizontally),
+        horizontalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.medium, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically
     ) {
         InfoCard(
@@ -56,7 +56,7 @@ fun ThermalViewerScreen(
 
     val temperatures = state.temperatures.flatMap { it.asIterable() }
     Row(
-        horizontalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.CenterHorizontally),
+        horizontalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.medium, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically
     ) {
         InfoCard(

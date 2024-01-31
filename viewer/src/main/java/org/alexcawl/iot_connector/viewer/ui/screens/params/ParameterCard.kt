@@ -10,8 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
-import org.alexcawl.iot_connector.ui.components.IconSmall
 import org.alexcawl.iot_connector.ui.components.CardScaffold
+import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
@@ -41,7 +41,7 @@ fun ParameterCard(
         Icon(
             imageVector = Icons.Default.Info,
             contentDescription = null,
-            modifier = Modifier.size(IconSmall)
+            modifier = Modifier.size(ExtendedTheme.iconSize.small)
         )
     },
     configurationIcon = {},

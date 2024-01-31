@@ -16,10 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.profile.R
-import org.alexcawl.iot_connector.ui.components.IconSmall
 import org.alexcawl.iot_connector.ui.components.CardScaffold
-import org.alexcawl.iot_connector.ui.components.PaddingSmall
 import org.alexcawl.iot_connector.ui.state.ProfileState
+import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 import java.util.UUID
@@ -65,7 +64,7 @@ internal fun SelectedProfileCard(
                 imageVector = Icons.Default.Star,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(IconSmall)
+                modifier = Modifier.size(ExtendedTheme.iconSize.small)
             )
         }
     },
@@ -110,7 +109,7 @@ private fun Preview() {
     IoTConnectorTheme {
         Column(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(PaddingSmall, Alignment.Top),
+            verticalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.small, Alignment.Top),
             horizontalAlignment = Alignment.Start
         ) {
             for (profile in profiles) {

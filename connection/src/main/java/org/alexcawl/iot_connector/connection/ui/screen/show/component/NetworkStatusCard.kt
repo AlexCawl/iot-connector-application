@@ -25,15 +25,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.connection.R
 import org.alexcawl.iot_connector.ui.components.CardScaffold
-import org.alexcawl.iot_connector.ui.components.PaddingMedium
-import org.alexcawl.iot_connector.ui.components.PaddingSmall
-import org.alexcawl.iot_connector.ui.components.SizeLarge
+import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
@@ -106,16 +105,16 @@ fun NetworkStatusCard(
             AnimatedVisibility(visible = visible) {
                 if (stackTrace != null) {
                     Column {
-                        Spacer(modifier = Modifier.height(PaddingMedium))
+                        Spacer(modifier = Modifier.height(ExtendedTheme.padding.medium))
                         Text(
                             text = stackTrace.stackTraceToString(),
                             style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier
-                                .height(SizeLarge)
+                                .height(ExtendedTheme.size.large)
                                 .fillMaxWidth()
                                 .background(color = MaterialTheme.colorScheme.surface)
                                 .verticalScroll(state = rememberScrollState())
-                                .padding(PaddingSmall)
+                                .padding(ExtendedTheme.padding.small)
                         )
                     }
                 }
@@ -148,7 +147,7 @@ private fun LoadingPreview() {
 
     IoTConnectorTheme {
         Column(
-            verticalArrangement = Arrangement.spacedBy(PaddingMedium)
+            verticalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.medium, Alignment.Top)
         ) {
             NetworkStatusCard(isNetworkAvailable = loadingState)
             NetworkStatusCard(isNetworkAvailable = okState)

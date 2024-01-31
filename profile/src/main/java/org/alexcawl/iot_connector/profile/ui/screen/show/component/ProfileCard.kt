@@ -19,11 +19,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import org.alexcawl.iot_connector.ui.components.IconSmall
 import org.alexcawl.iot_connector.ui.components.CardScaffold
-import org.alexcawl.iot_connector.ui.components.PaddingMedium
-import org.alexcawl.iot_connector.ui.components.PaddingSmall
 import org.alexcawl.iot_connector.ui.state.ProfileState
+import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 import org.alexcawl.iot_connector.ui.util.toDateFormat
@@ -65,15 +63,15 @@ internal fun ProfileCard(
             Icon(
                 imageVector = Icons.Default.Edit,
                 contentDescription = null,
-                modifier = Modifier.size(IconSmall)
+                modifier = Modifier.size(ExtendedTheme.iconSize.small)
             )
         }
     },
     body = {
-        Spacer(modifier = Modifier.height(PaddingMedium))
+        Spacer(modifier = Modifier.height(ExtendedTheme.padding.medium))
         Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(PaddingSmall, Alignment.Top),
+            verticalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.small, Alignment.Top),
             horizontalAlignment = Alignment.Start
         ) {
             Text(

@@ -24,8 +24,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
+import org.alexcawl.iot_connector.ui.util.loremIpsum
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -78,7 +80,7 @@ internal fun ItemCardContent(
     body: @Composable () -> Unit
 ) {
     Column(
-        modifier = Modifier.padding(PaddingMedium),
+        modifier = Modifier.padding(ExtendedTheme.padding.medium),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.Start
     ) {
@@ -86,13 +88,13 @@ internal fun ItemCardContent(
             modifier = Modifier
                 .height(IntrinsicSize.Max)
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.Start),
+            horizontalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.medium, Alignment.Start),
             verticalAlignment = Alignment.CenterVertically
         ) {
             statusIcon()
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(PaddingSmall, Alignment.Top),
+                verticalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.small, Alignment.Top),
                 horizontalAlignment = Alignment.Start
             ) {
                 title()
@@ -111,7 +113,7 @@ private fun Preview() {
         Scaffold {
             Column(modifier = Modifier
                 .padding(it)
-                .padding(PaddingMedium)) {
+                .padding(ExtendedTheme.padding.medium)) {
                 CardScaffold(
                     title = {
                         Text(
@@ -134,7 +136,7 @@ private fun Preview() {
                         Icon(
                             imageVector = Icons.Default.Star,
                             contentDescription = null,
-                            modifier = Modifier.size(IconMedium)
+                            modifier = Modifier.size(ExtendedTheme.iconSize.medium)
                         )
                     },
                     configurationIcon = {
@@ -142,12 +144,12 @@ private fun Preview() {
                             Icon(
                                 imageVector = Icons.Default.Edit,
                                 contentDescription = null,
-                                modifier = Modifier.size(IconLittle)
+                                modifier = Modifier.size(ExtendedTheme.iconSize.little)
                             )
                         }
                     },
                     body = {
-                        Spacer(modifier = Modifier.height(PaddingMedium))
+                        Spacer(modifier = Modifier.height(ExtendedTheme.padding.medium))
                         Text(
                             text = loremIpsum(2),
                             modifier = Modifier.fillMaxWidth(),

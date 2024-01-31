@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,8 +46,8 @@ fun BottomSheet(
     content: @Composable (ColumnScope.() -> Unit)
 ) {
     val topPadding = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
-    val bottomPadding = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() + PaddingLarge
-    val imePadding = WindowInsets.ime.asPaddingValues().calculateBottomPadding() + PaddingLarge
+    val bottomPadding = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() + ExtendedTheme.padding.large
+    val imePadding = WindowInsets.ime.asPaddingValues().calculateBottomPadding() + ExtendedTheme.padding.large
 
     if (expanded) {
         ModalBottomSheet(

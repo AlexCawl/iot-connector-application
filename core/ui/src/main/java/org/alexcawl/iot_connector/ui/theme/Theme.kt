@@ -15,10 +15,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import org.alexcawl.iot_connector.ui.theme.extended.ExtendedPalettes
-import org.alexcawl.iot_connector.ui.theme.extended.ExtendedSizes
+import org.alexcawl.iot_connector.ui.theme.extended.sizes.CommonSizes
+import org.alexcawl.iot_connector.ui.theme.extended.sizes.IconSizes
+import org.alexcawl.iot_connector.ui.theme.extended.sizes.PaddingSizes
 
-
-internal val LocalExtendedSizes = staticCompositionLocalOf { ExtendedSizes() }
+internal val LocalExtendedSizes = staticCompositionLocalOf { CommonSizes() }
+internal val LocalExtendedIconSizes = staticCompositionLocalOf { IconSizes() }
+internal val LocalExtendedPaddings = staticCompositionLocalOf { PaddingSizes() }
 internal val LocalExtendedPalettes = staticCompositionLocalOf { ExtendedPalettes() }
 
 @Composable
@@ -27,7 +30,9 @@ fun IoTConnectorTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val extendedSizes = ExtendedSizes()
+    val extendedSizes = CommonSizes()
+    val extendedIconSizes = IconSizes()
+    val extendedPaddings = PaddingSizes()
     val extendedPalettes = ExtendedPalettes()
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
@@ -37,6 +42,7 @@ fun IoTConnectorTheme(
         darkTheme -> darkColors
         else -> lightColors
     }
+
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
@@ -51,6 +57,8 @@ fun IoTConnectorTheme(
 
     CompositionLocalProvider(
         LocalExtendedSizes provides extendedSizes,
+        LocalExtendedIconSizes provides extendedIconSizes,
+        LocalExtendedPaddings provides extendedPaddings,
         LocalExtendedPalettes provides extendedPalettes
     ) {
         MaterialTheme(
@@ -62,9 +70,15 @@ fun IoTConnectorTheme(
 }
 
 object ExtendedTheme {
-    val sizes: ExtendedSizes
-        @Composable get() = LocalExtendedSizes.current
-
     val palettes: ExtendedPalettes
         @Composable get() = LocalExtendedPalettes.current
+
+    val padding: PaddingSizes
+        @Composable get() = LocalExtendedPaddings.current
+
+    val iconSize: IconSizes
+        @Composable get() = LocalExtendedIconSizes.current
+
+    val size: CommonSizes
+        @Composable get() = LocalExtendedSizes.current
 }

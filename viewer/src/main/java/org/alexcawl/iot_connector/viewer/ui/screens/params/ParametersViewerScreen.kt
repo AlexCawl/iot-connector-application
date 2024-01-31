@@ -7,8 +7,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.alexcawl.iot_connector.ui.components.PaddingMedium
 import org.alexcawl.iot_connector.ui.state.data.ParametersRepresentationModel
+import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
@@ -18,9 +18,9 @@ fun ParametersViewerScreen(
     modifier: Modifier = Modifier
 ) = LazyColumn(
     modifier = modifier,
-    verticalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.Top),
+    verticalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.medium, Alignment.Top),
     horizontalAlignment = Alignment.Start,
-    contentPadding = PaddingValues(PaddingMedium)
+    contentPadding = PaddingValues(ExtendedTheme.padding.medium)
 ) {
     val params = state.parameters.toList()
     items(params, key = Pair<String, String>::first) {

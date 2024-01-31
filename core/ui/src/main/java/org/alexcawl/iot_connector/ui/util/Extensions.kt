@@ -15,6 +15,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.IntSize
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -54,3 +55,5 @@ fun Modifier.shimmerEffect(): Modifier = composed {
         size = it.size
     }
 }
+
+fun loremIpsum(words: Int): String = LoremIpsum(words).values.joinToString(" ")

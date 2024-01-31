@@ -5,8 +5,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Immutable
-data object CommonSizes {
-    val Small: Dp = 48.dp
-    val Medium: Dp = 96.dp
-    val Large: Dp = 192.dp
-}
+data class CommonSizes(
+    val small: Dp = 48.dp,
+    val medium: Dp = 96.dp,
+    val large: Dp = 192.dp
+)

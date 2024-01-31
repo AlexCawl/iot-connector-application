@@ -14,10 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
-import org.alexcawl.iot_connector.ui.components.IconSmall
 import org.alexcawl.iot_connector.ui.components.CardScaffold
-import org.alexcawl.iot_connector.ui.components.PaddingMedium
 import org.alexcawl.iot_connector.ui.state.ConnectionState
+import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 import java.util.UUID
@@ -58,7 +57,7 @@ fun ConnectionCard(
             Icon(
                 imageVector = Icons.Default.Edit,
                 contentDescription = null,
-                modifier = Modifier.size(IconSmall)
+                modifier = Modifier.size(ExtendedTheme.iconSize.small)
             )
         }
     },
@@ -80,7 +79,7 @@ private fun Preview() {
 
     IoTConnectorTheme {
         Column(
-            verticalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.Top)
+            verticalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.medium, Alignment.Top)
         ) {
             ConnectionCard(
                 connection = connectionWithName,

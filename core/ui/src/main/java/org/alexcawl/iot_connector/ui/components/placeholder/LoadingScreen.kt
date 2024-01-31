@@ -13,9 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import org.alexcawl.iot_connector.ui.components.IconBig
-import org.alexcawl.iot_connector.ui.components.PaddingSmall
-import org.alexcawl.iot_connector.ui.components.loremIpsum
+import org.alexcawl.iot_connector.ui.util.loremIpsum
+import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
@@ -26,11 +25,11 @@ fun LoadingScreen(
     modifier = modifier.background(color = Color.Transparent), contentAlignment = Alignment.Center
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(PaddingSmall, Alignment.CenterVertically),
+        verticalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.small, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CircularProgressIndicator(
-            modifier = Modifier.size(IconBig),
+            modifier = Modifier.size(ExtendedTheme.iconSize.big),
             color = MaterialTheme.colorScheme.secondary,
             trackColor = MaterialTheme.colorScheme.surfaceVariant
         )

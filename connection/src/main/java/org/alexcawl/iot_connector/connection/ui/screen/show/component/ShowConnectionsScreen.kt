@@ -27,11 +27,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.connection.R
 import org.alexcawl.iot_connector.connection.ui.screen.show.ShowConnectionsScreenAction
 import org.alexcawl.iot_connector.connection.ui.screen.show.ShowConnectionsScreenState
-import org.alexcawl.iot_connector.ui.components.PaddingLarge
-import org.alexcawl.iot_connector.ui.components.PaddingMedium
 import org.alexcawl.iot_connector.ui.components.placeholder.EmptyScreen
 import org.alexcawl.iot_connector.ui.components.placeholder.LoadingScreen
 import org.alexcawl.iot_connector.ui.state.ConnectionState
+import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 import java.util.UUID
@@ -96,12 +95,12 @@ internal fun ShowConnectionsScreen(
         is ShowConnectionsScreenState.Viewer -> when (state.connections.size) {
             0 -> Column(
                 modifier = paddingModifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.Top),
+                verticalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.medium, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 NetworkStatusCard(
                     isNetworkAvailable = state.networkAvailability,
-                    modifier = Modifier.padding(PaddingMedium)
+                    modifier = Modifier.padding(ExtendedTheme.padding.medium)
                 )
                 EmptyScreen(
                     modifier = Modifier.fillMaxSize(),
@@ -124,13 +123,13 @@ internal fun ShowConnectionsScreen(
 
             else -> LazyColumn(
                 modifier = paddingModifier,
-                verticalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.Top),
+                verticalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.medium, Alignment.Top),
                 horizontalAlignment = Alignment.Start,
                 contentPadding = PaddingValues(
-                    start = PaddingMedium,
-                    top = PaddingMedium,
-                    end = PaddingMedium,
-                    bottom = PaddingLarge * 3
+                    start = ExtendedTheme.padding.medium,
+                    top = ExtendedTheme.padding.medium,
+                    end = ExtendedTheme.padding.medium,
+                    bottom = ExtendedTheme.padding.large * 3
                 )
             ) {
                 item(key = NETWORK_AVAILABILITY_LABEL) {

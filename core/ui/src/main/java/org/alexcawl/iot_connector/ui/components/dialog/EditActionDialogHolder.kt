@@ -20,7 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import org.alexcawl.iot_connector.ui.components.loremIpsum
+import org.alexcawl.iot_connector.ui.util.loremIpsum
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 
 @Composable

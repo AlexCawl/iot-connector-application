@@ -5,10 +5,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Immutable
-data object IconSizes {
-    val Little: Dp = 24.dp
-    val Small: Dp = 30.dp
-    val Medium: Dp = 36.dp
-    val Big: Dp = 48.dp
-    val Large: Dp = 96.dp
-}
+data class IconSizes(
+    val little: Dp = 24.dp,
+    val small: Dp = 30.dp,
+    val medium: Dp = 36.dp,
+    val big: Dp = 48.dp,
+    val large: Dp = 96.dp
+)

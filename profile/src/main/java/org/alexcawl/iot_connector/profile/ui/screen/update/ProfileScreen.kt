@@ -29,12 +29,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.profile.R
 import org.alexcawl.iot_connector.ui.components.placeholder.LoadingScreen
-import org.alexcawl.iot_connector.ui.components.PaddingLarge
-import org.alexcawl.iot_connector.ui.components.PaddingMedium
 import org.alexcawl.iot_connector.ui.components.Spacer
 import org.alexcawl.iot_connector.ui.components.input.DialogTextFieldState
 import org.alexcawl.iot_connector.ui.components.input.OptionalDialogTextField
 import org.alexcawl.iot_connector.ui.components.input.RequiredDialogTextField
+import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
@@ -85,8 +84,8 @@ internal fun ProfileScreen(
             Column(
                 modifier = paddingModifier
                     .verticalScroll(rememberScrollState())
-                    .padding(PaddingMedium),
-                verticalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.Top),
+                    .padding(ExtendedTheme.padding.medium),
+                verticalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.medium, Alignment.Top),
                 horizontalAlignment = Alignment.Start
             ) {
                 RequiredDialogTextField(
@@ -154,7 +153,7 @@ internal fun ProfileScreen(
 
                 Spacer(
                     modifier = Modifier
-                        .height(PaddingLarge * 2)
+                        .height(ExtendedTheme.padding.large * 2)
                         .background(color = Color.Transparent)
                 )
             }

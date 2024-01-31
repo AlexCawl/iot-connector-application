@@ -15,10 +15,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import org.alexcawl.iot_connector.ui.components.IconLarge
-import org.alexcawl.iot_connector.ui.components.PaddingLarge
-import org.alexcawl.iot_connector.ui.components.PaddingSmall
-import org.alexcawl.iot_connector.ui.components.loremIpsum
+import org.alexcawl.iot_connector.ui.util.loremIpsum
+import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
@@ -33,12 +31,12 @@ fun EmptyScreen(
 ) {
     Column(
         modifier = Modifier.background(color = Color.Transparent),
-        verticalArrangement = Arrangement.spacedBy(PaddingLarge, Alignment.CenterVertically),
+        verticalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.large, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         icon()
         Column(
-            verticalArrangement = Arrangement.spacedBy(PaddingSmall, Alignment.CenterVertically),
+            verticalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.small, Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             title()
@@ -70,7 +68,7 @@ private fun Preview() {
                 Icon(
                     imageVector = Icons.Default.Warning,
                     contentDescription = null,
-                    modifier = Modifier.size(IconLarge),
+                    modifier = Modifier.size(ExtendedTheme.iconSize.large),
                     tint = MaterialTheme.colorScheme.secondary
                 )
             },

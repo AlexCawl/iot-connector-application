@@ -5,8 +5,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Immutable
-data object PaddingSizes {
-    val Small: Dp = 8.dp
-    val Medium: Dp = 16.dp
-    val Large: Dp = 32.dp
-}
+data class PaddingSizes(
+    val small: Dp = 8.dp,
+    val medium: Dp = 16.dp,
+    val large: Dp = 32.dp
+)

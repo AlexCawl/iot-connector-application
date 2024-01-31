@@ -25,8 +25,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
-import org.alexcawl.iot_connector.ui.components.PaddingMedium
 import org.alexcawl.iot_connector.ui.components.dialog.EditActionDialogHolder
+import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
@@ -115,8 +115,8 @@ private fun StaticPreview() {
             Column(
                 modifier = Modifier
                     .padding(paddingValues)
-                    .padding(PaddingMedium),
-                verticalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.Top),
+                    .padding(ExtendedTheme.padding.medium),
+                verticalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.medium, Alignment.Top),
                 horizontalAlignment = Alignment.Start
             ) {
                 DialogTextField(
@@ -192,8 +192,8 @@ private fun DynamicPreview() {
             Column(
                 modifier = Modifier
                     .padding(paddingValues)
-                    .padding(PaddingMedium),
-                verticalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.Top),
+                    .padding(ExtendedTheme.padding.medium),
+                verticalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.medium, Alignment.Top),
                 horizontalAlignment = Alignment.Start
             ) {
                 DialogTextField(

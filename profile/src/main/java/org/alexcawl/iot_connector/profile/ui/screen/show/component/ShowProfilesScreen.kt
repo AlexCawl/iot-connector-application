@@ -27,11 +27,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.profile.R
 import org.alexcawl.iot_connector.profile.ui.screen.show.ShowProfilesScreenAction
 import org.alexcawl.iot_connector.profile.ui.screen.show.ShowProfilesScreenState
-import org.alexcawl.iot_connector.ui.components.PaddingLarge
-import org.alexcawl.iot_connector.ui.components.PaddingMedium
 import org.alexcawl.iot_connector.ui.components.placeholder.EmptyScreen
 import org.alexcawl.iot_connector.ui.components.placeholder.LoadingScreen
 import org.alexcawl.iot_connector.ui.state.ProfileState
+import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 import java.util.UUID
@@ -113,13 +112,13 @@ internal fun ShowProfilesScreen(
             else -> {
                 LazyColumn(
                     modifier = paddingModifier,
-                    verticalArrangement = Arrangement.spacedBy(PaddingMedium, Alignment.Top),
+                    verticalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.medium, Alignment.Top),
                     horizontalAlignment = Alignment.Start,
                     contentPadding = PaddingValues(
-                        start = PaddingMedium,
-                        top = PaddingMedium,
-                        end = PaddingMedium,
-                        bottom = PaddingLarge * 3
+                        start = ExtendedTheme.padding.medium,
+                        top = ExtendedTheme.padding.medium,
+                        end = ExtendedTheme.padding.medium,
+                        bottom = ExtendedTheme.padding.large * 3
                     )
                 ) {
                     item(key = SELECTED_PROFILE_LABEL) {
