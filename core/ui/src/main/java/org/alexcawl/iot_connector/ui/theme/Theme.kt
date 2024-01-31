@@ -14,10 +14,12 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import org.alexcawl.iot_connector.ui.theme.extended.ExtendedPalettes
+import org.alexcawl.iot_connector.ui.theme.extended.ExtendedSizes
 
 
-internal val LocalExtendedColors = staticCompositionLocalOf { ExtendedColors() }
-internal val LocalExtendedTypography = staticCompositionLocalOf { ExtendedTypography() }
+internal val LocalExtendedSizes = staticCompositionLocalOf { ExtendedSizes() }
+internal val LocalExtendedPalettes = staticCompositionLocalOf { ExtendedPalettes() }
 
 @Composable
 fun IoTConnectorTheme(
@@ -25,10 +27,8 @@ fun IoTConnectorTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val extendedColors = when (darkTheme) {
-        true -> extendedDarkColors
-        false -> extendedLightColors
-    }
+    val extendedSizes = ExtendedSizes()
+    val extendedPalettes = ExtendedPalettes()
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
@@ -50,8 +50,8 @@ fun IoTConnectorTheme(
     }
 
     CompositionLocalProvider(
-        LocalExtendedColors provides extendedColors,
-        LocalExtendedTypography provides extendedTypography
+        LocalExtendedSizes provides extendedSizes,
+        LocalExtendedPalettes provides extendedPalettes
     ) {
         MaterialTheme(
             colorScheme = colorScheme,
@@ -62,9 +62,9 @@ fun IoTConnectorTheme(
 }
 
 object ExtendedTheme {
-    val colors: ExtendedColors
-        @Composable get() = LocalExtendedColors.current
+    val sizes: ExtendedSizes
+        @Composable get() = LocalExtendedSizes.current
 
-    val typography: ExtendedTypography
-        @Composable get() = LocalExtendedTypography.current
+    val palettes: ExtendedPalettes
+        @Composable get() = LocalExtendedPalettes.current
 }
