@@ -34,3 +34,7 @@ include(":profile:dependencies")
 // Viewer module
 include(":viewer")
 include(":viewer:dependencies")
+
+// Title module
+include(":title")
+include(":title:dependencies")
