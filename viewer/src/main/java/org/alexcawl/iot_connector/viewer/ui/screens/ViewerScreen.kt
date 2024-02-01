@@ -13,10 +13,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Create
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -39,14 +37,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.common.DEBUG_LOG_TAG
 import org.alexcawl.iot_connector.ui.components.placeholder.EmptyScreen
 import org.alexcawl.iot_connector.ui.components.placeholder.LoadingScreen
-import org.alexcawl.iot_connector.ui.state.data.DefaultRepresentationModel
-import org.alexcawl.iot_connector.ui.state.data.ParametersRepresentationModel
 import org.alexcawl.iot_connector.ui.state.data.TextRepresentationModel
 import org.alexcawl.iot_connector.ui.state.data.ThermalRepresentationModel
 import org.alexcawl.iot_connector.ui.state.data.ViewerDataRepresentationModel
 import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.util.shimmerEffect
-import org.alexcawl.iot_connector.viewer.ui.screens.params.ParametersViewerScreen
 import org.alexcawl.iot_connector.viewer.ui.screens.text.TextViewerScreen
 import org.alexcawl.iot_connector.viewer.ui.screens.thermal.ThermalViewerScreen
 
@@ -149,10 +144,8 @@ fun ViewerScreen(
                     ) {
                         state.representations.forEachIndexed { i: Int, representation: ViewerDataRepresentationModel ->
                             val (text, icon) = when (representation) {
-                                is ParametersRepresentationModel -> Pair("Parameters", Icons.Default.AccountBox)
                                 is TextRepresentationModel -> Pair("Text", Icons.Default.Create)
                                 is ThermalRepresentationModel -> Pair("Thermal", Icons.Default.Search)
-                                is DefaultRepresentationModel -> Pair("Default", Icons.Default.Info)
                                 else -> throw IllegalStateException("Such representation is not supported: ${representation.javaClass}")
                             }
                             Tab(
@@ -176,13 +169,11 @@ fun ViewerScreen(
                         .fillMaxSize()
                 ) {
                     when (val representation = state.representations[it]) {
-                        is ParametersRepresentationModel -> ParametersViewerScreen(state = representation)
                         is TextRepresentationModel -> TextViewerScreen(state = representation)
                         is ThermalRepresentationModel -> {
                             Log.d(DEBUG_LOG_TAG, representation.toString())
                             ThermalViewerScreen(state = representation)
                         }
-                        is DefaultRepresentationModel -> Text(representation.bytes.toString())
                         else -> throw IllegalStateException("Such representation is not supported: ${representation.javaClass}")
                     }
                 }

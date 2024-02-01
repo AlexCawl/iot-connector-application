@@ -6,8 +6,10 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 import org.alexcawl.iot_connector.di.ViewModelKey
 import org.alexcawl.iot_connector.viewer.data.MqttResponseRepository
+import org.alexcawl.iot_connector.viewer.data.ThermalMatrixMapper
 import org.alexcawl.iot_connector.viewer.data.ViewerStateMapper
 import org.alexcawl.iot_connector.viewer.domain.IMqttResponseRepository
+import org.alexcawl.iot_connector.viewer.domain.IThermalMatrixMapper
 import org.alexcawl.iot_connector.viewer.domain.IViewerStateMapper
 import org.alexcawl.iot_connector.viewer.ui.screens.ViewerScreenViewModel
 
@@ -20,6 +22,9 @@ interface ViewerModule {
 
     @Binds
     fun bindStateMapper(stateMapper: ViewerStateMapper): IViewerStateMapper
+
+    @Binds
+    fun bindMatrixMapper(matrixMapper: ThermalMatrixMapper): IThermalMatrixMapper
 
     @Binds
     fun bindMqttResponseRepository(repository: MqttResponseRepository): IMqttResponseRepository

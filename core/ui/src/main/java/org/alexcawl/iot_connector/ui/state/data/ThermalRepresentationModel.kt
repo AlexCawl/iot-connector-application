@@ -6,10 +6,10 @@ import androidx.compose.runtime.Immutable
 data class ThermalRepresentationModel(
     val device: String,
     val sensorType: String,
-    val temperatures: Array<Array<Int>>
+    val temperatures: Array<Array<Float>>
 ) : ViewerDataRepresentationModel {
     override val priority: Int
-        get() = 2
+        get() = Int.MAX_VALUE
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

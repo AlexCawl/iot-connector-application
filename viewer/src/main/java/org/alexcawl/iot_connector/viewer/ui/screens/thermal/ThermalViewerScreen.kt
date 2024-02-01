@@ -8,12 +8,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import org.alexcawl.iot_connector.ui.components.HeatMap
 import org.alexcawl.iot_connector.ui.components.InfoCard
 import org.alexcawl.iot_connector.ui.state.data.ThermalRepresentationModel
 import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
+import org.alexcawl.iot_connector.ui.theme.extended.palettes.Palette
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 import kotlin.random.Random
 
@@ -50,7 +53,8 @@ fun ThermalViewerScreen(
     ) {
         HeatMap(
             values = state.temperatures,
-            onColorPick = { if (it % 2 == 0) Color.Green else Color.Red }
+            onColorPick = thermalColorPicker(ExtendedTheme.palettes.iron),
+            modifier = Modifier.blur(4.dp)
         )
     }
 
@@ -80,10 +84,27 @@ fun ThermalViewerScreen(
     }
 }
 
+private val thermalColorPicker: (Palette) -> ((Float) -> Color) = { palette ->
+    val minTemp = 10
+    val maxTemp = 40
+
+    {
+        if (it <= minTemp) {
+            palette.minColor
+        } else if (it >= maxTemp) {
+            palette.maxColor
+        } else {
+            val step: Float = (it - minTemp) / (maxTemp - minTemp)
+            palette.colors[(step * palette.length).toInt()]
+        }
+    }
+}
+
+
 @Composable
 @ThemedPreview
 private fun Preview() {
-    val temperatures = Array(32) { Array(24) { Random.nextInt(-30, 250) } }
+    val temperatures = Array(32) { Array(24) { Random.nextInt(-30, 250).toFloat() } }
     val state = ThermalRepresentationModel(
         device = "esp32",
         sensorType = "stable",

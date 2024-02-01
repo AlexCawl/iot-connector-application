@@ -5,5 +5,5 @@ import androidx.compose.runtime.Immutable
 @Immutable
 data class TextRepresentationModel(val text: String) : ViewerDataRepresentationModel {
     override val priority: Int
-        get() = 1
+        get() = Int.MIN_VALUE
 }

@@ -3,7 +3,6 @@ package org.alexcawl.iot_connector.network.dto
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.alexcawl.iot_connector.common.model.MqttResponsePayload
-import kotlin.jvm.Throws
 
 @Serializable
 data class ThermalResponse(
@@ -16,7 +15,6 @@ data class ThermalResponse(
     @SerialName("values")
     val temperatures: List<Int>
 ) : MqttResponsePayload {
-    override val raw: ByteArray
-        @Throws(IllegalStateException::class)
-        get() = throw IllegalStateException("Byte array used only for default implementation!")
+    override val raw: String
+        get() = this.toString()
 }
