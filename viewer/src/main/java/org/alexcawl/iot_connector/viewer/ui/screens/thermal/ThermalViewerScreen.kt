@@ -1,7 +1,6 @@
 package org.alexcawl.iot_connector.viewer.ui.screens.thermal
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -11,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import org.alexcawl.iot_connector.ui.components.BoxWithZoom
 import org.alexcawl.iot_connector.ui.components.HeatMap
 import org.alexcawl.iot_connector.ui.components.InfoCard
 import org.alexcawl.iot_connector.ui.state.data.ThermalRepresentationModel
@@ -47,16 +47,26 @@ fun ThermalViewerScreen(
         )
     }
 
-    BoxWithConstraints(
-        modifier = Modifier.weight(1f),
-        contentAlignment = Alignment.Center
-    ) {
-        HeatMap(
-            values = state.temperatures,
-            onColorPick = thermalColorPicker(ExtendedTheme.palettes.iron),
-            modifier = Modifier.blur(4.dp)
-        )
-    }
+    BoxWithZoom(
+        content = {
+            HeatMap(
+                values = state.temperatures,
+                onColorPick = thermalColorPicker(ExtendedTheme.palettes.iron),
+                modifier = it.blur(4.dp)
+            )
+        },
+        modifier = Modifier.weight(1f)
+    )
+//    BoxWithConstraints(
+//        modifier = Modifier.weight(1f),
+//        contentAlignment = Alignment.Center
+//    ) {
+//        HeatMap(
+//            values = state.temperatures,
+//            onColorPick = thermalColorPicker(ExtendedTheme.palettes.iron),
+//            modifier = Modifier.blur(4.dp)
+//        )
+//    }
 
     val temperatures = state.temperatures.flatMap { it.asIterable() }
     Row(
