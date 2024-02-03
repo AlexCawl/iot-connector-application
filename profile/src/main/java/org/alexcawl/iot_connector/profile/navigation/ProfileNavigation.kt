@@ -8,7 +8,7 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import org.alexcawl.iot_connector.profile.di.ProfileComponentStore
+import org.alexcawl.iot_connector.profile.ProfileComponentStore
 import org.alexcawl.iot_connector.ui.util.composeViewModel
 import java.util.UUID
 

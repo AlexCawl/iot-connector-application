@@ -1,5 +1,8 @@
-package org.alexcawl.iot_connector.connection.di
+package org.alexcawl.iot_connector.connection
 
+import org.alexcawl.iot_connector.connection.di.ConnectionComponent
+import org.alexcawl.iot_connector.connection.di.ConnectionDependencies
+import org.alexcawl.iot_connector.connection.di.DaggerConnectionComponent
 import org.alexcawl.iot_connector.di.ComponentStore
 import kotlin.properties.Delegates
 

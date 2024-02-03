@@ -8,7 +8,7 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import org.alexcawl.iot_connector.connection.di.ConnectionComponentStore
+import org.alexcawl.iot_connector.connection.ConnectionComponentStore
 import org.alexcawl.iot_connector.connection.ui.show.ShowConnectionsViewModel
 import org.alexcawl.iot_connector.connection.ui.show.component.ShowConnectionsScreen
 import org.alexcawl.iot_connector.connection.ui.update.add.AddConnectionViewModel
