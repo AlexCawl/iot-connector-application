@@ -7,7 +7,7 @@ import org.alexcawl.iot_connector.DebugActivity
 import org.alexcawl.iot_connector.IoTConnectorApplication
 import org.alexcawl.iot_connector.MainActivity
 import org.alexcawl.iot_connector.connection.dependencies.ConnectionDependencies
-import org.alexcawl.iot_connector.profile.dependencies.ProfileDependencies
+import org.alexcawl.iot_connector.profile.di.ProfileDependencies
 import org.alexcawl.iot_connector.title.dependencies.TitleDependencies
 import org.alexcawl.iot_connector.viewer.dependencies.ViewerDependencies
 

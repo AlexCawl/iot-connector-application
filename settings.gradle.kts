@@ -29,7 +29,9 @@ include(":connection:dependencies")
 
 // Profile module
 include(":profile")
-include(":profile:dependencies")
+include(":profile:data")
+include(":profile:domain")
+include(":profile:ui")
 
 // Viewer module
 include(":viewer")
@@ -38,3 +40,6 @@ include(":viewer:dependencies")
 // Title module
 include(":title")
 include(":title:dependencies")
+include(":profile:data")
+include(":profile:domain")
+include(":profile:ui")

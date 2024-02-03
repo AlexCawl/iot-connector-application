@@ -1,5 +1,6 @@
 package org.alexcawl.iot_connector.connection.ui
 
+import android.util.Log
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -8,6 +9,7 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import org.alexcawl.iot_connector.common.DEBUG_LOG_TAG
 import org.alexcawl.iot_connector.connection.DaggerConnectionsComponent
 import org.alexcawl.iot_connector.connection.dependencies.ConnectionDependenciesStore
 import org.alexcawl.iot_connector.connection.ui.screen.show.ShowConnectionsViewModel
@@ -26,6 +28,7 @@ fun NavGraphBuilder.connectionNavigation(
     val factory = DaggerConnectionsComponent.builder()
         .dependencies(ConnectionDependenciesStore.dependencies).build()
         .provideFactory()
+    Log.d(DEBUG_LOG_TAG, "component init")
 
     installShowConnectionsScreen(
         screenRoute = ConnectionNavLocator.ConnectionsShowScreen.route,

@@ -33,7 +33,9 @@ dependencies {
 
     // profile module
     implementation(project(":profile"))
-    implementation(project(":profile:dependencies"))
+    implementation(project(":profile:data"))
+    implementation(project(":profile:domain"))
+    implementation(project(":profile:ui"))
 
     // viewer module
     implementation(project(":viewer"))
