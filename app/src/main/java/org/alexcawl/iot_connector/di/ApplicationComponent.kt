@@ -8,12 +8,11 @@ import org.alexcawl.iot_connector.IoTConnectorApplication
 import org.alexcawl.iot_connector.MainActivity
 import org.alexcawl.iot_connector.connection.di.ConnectionDependencies
 import org.alexcawl.iot_connector.profile.di.ProfileDependencies
-import org.alexcawl.iot_connector.title.dependencies.TitleDependencies
 import org.alexcawl.iot_connector.viewer.dependencies.ViewerDependencies
 
 @ApplicationScope
 @Component(modules = [ApplicationModule::class])
-interface ApplicationComponent : ConnectionDependencies, ProfileDependencies, ViewerDependencies, TitleDependencies {
+interface ApplicationComponent : ConnectionDependencies, ProfileDependencies, ViewerDependencies {
     @Component.Builder
     interface Builder {
         fun context(@BindsInstance context: Context): Builder

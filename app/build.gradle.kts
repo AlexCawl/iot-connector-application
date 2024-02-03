@@ -42,8 +42,4 @@ dependencies {
     // viewer module
     implementation(project(":viewer"))
     implementation(project(":viewer:dependencies"))
-
-    // title module
-    implementation(project(":title"))
-    implementation(project(":title:dependencies"))
 }
