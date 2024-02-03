@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.ui.components
+package org.alexcawl.iot_connector.ui.components.card
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text

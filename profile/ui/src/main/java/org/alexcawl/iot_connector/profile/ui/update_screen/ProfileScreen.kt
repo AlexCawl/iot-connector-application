@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -29,7 +30,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.profile.ui.R
 import org.alexcawl.iot_connector.ui.components.placeholder.LoadingScreen
-import org.alexcawl.iot_connector.ui.components.Spacer
 import org.alexcawl.iot_connector.ui.components.input.DialogTextFieldState
 import org.alexcawl.iot_connector.ui.components.input.OptionalDialogTextField
 import org.alexcawl.iot_connector.ui.components.input.RequiredDialogTextField

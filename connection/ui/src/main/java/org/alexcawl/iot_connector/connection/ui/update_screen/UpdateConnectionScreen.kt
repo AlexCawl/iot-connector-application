@@ -3,6 +3,7 @@ package org.alexcawl.iot_connector.connection.ui.update_screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -27,7 +28,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.connection.ui.R
-import org.alexcawl.iot_connector.ui.components.Spacer
 import org.alexcawl.iot_connector.ui.components.input.DialogTextFieldState
 import org.alexcawl.iot_connector.ui.components.input.OptionalDialogTextField
 import org.alexcawl.iot_connector.ui.components.input.RequiredDialogTextField

@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import org.alexcawl.iot_connector.ui.components.BoxWithZoom
 import org.alexcawl.iot_connector.ui.components.HeatMap
-import org.alexcawl.iot_connector.ui.components.InfoCard
+import org.alexcawl.iot_connector.ui.components.card.InfoCard
 import org.alexcawl.iot_connector.ui.state.data.ThermalRepresentationModel
 import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme

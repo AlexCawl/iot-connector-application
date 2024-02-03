@@ -19,7 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import org.alexcawl.iot_connector.ui.components.CardScaffold
+import org.alexcawl.iot_connector.ui.components.card.CardScaffold
 import org.alexcawl.iot_connector.ui.state.ProfileState
 import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
