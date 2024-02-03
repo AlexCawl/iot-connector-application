@@ -1,0 +1,3 @@
+package org.alexcawl.iot_connector.connection.ui.show_screen
+
+sealed interface ShowConnectionsScreenAction

@@ -12,9 +12,9 @@ import org.alexcawl.iot_connector.connection.data.IConnectionRepository
 import org.alexcawl.iot_connector.connection.data.INetworkStateRepository
 import org.alexcawl.iot_connector.connection.data.NetworkStateRepository
 import org.alexcawl.iot_connector.connection.domain.mapper.IConnectionStateMapper
-import org.alexcawl.iot_connector.connection.ui.show.ShowConnectionsViewModel
-import org.alexcawl.iot_connector.connection.ui.update.add.AddConnectionViewModel
-import org.alexcawl.iot_connector.connection.ui.update.edit.EditConnectionViewModel
+import org.alexcawl.iot_connector.connection.ui.show_screen.ShowConnectionsViewModel
+import org.alexcawl.iot_connector.connection.ui.update_screen.add_screen.AddConnectionViewModel
+import org.alexcawl.iot_connector.connection.ui.update_screen.edit_screen.EditConnectionViewModel
 import org.alexcawl.iot_connector.di.ViewModelKey
 
 @Module

@@ -11,23 +11,26 @@ import org.alexcawl.iot_connector.profile.domain.mapper.ProfileStateMapper
 import org.alexcawl.iot_connector.profile.data.mapper.IProfileEntityMapper
 import org.alexcawl.iot_connector.profile.data.repository.IProfileRepository
 import org.alexcawl.iot_connector.profile.domain.mapper.IProfileStateMapper
+import org.alexcawl.iot_connector.profile.ui.show_screen.ShowProfilesViewModel
+import org.alexcawl.iot_connector.profile.ui.update_screen.add_screen.AddProfileViewModel
+import org.alexcawl.iot_connector.profile.ui.update_screen.edit_screen.EditProfileViewModel
 
 @Module
 interface ProfileModule {
     @Binds
     @IntoMap
-    @ViewModelKey(org.alexcawl.iot_connector.profile.ui.screen.show.ShowProfilesViewModel::class)
-    fun bindAllProfilesViewModel(viewModel: org.alexcawl.iot_connector.profile.ui.screen.show.ShowProfilesViewModel): ViewModel
+    @ViewModelKey(ShowProfilesViewModel::class)
+    fun bindAllProfilesViewModel(viewModel: ShowProfilesViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(org.alexcawl.iot_connector.profile.ui.screen.update.edit.EditProfileViewModel::class)
-    fun bindEditProfileScreenViewModel(viewModel: org.alexcawl.iot_connector.profile.ui.screen.update.edit.EditProfileViewModel): ViewModel
+    @ViewModelKey(EditProfileViewModel::class)
+    fun bindEditProfileScreenViewModel(viewModel: EditProfileViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(org.alexcawl.iot_connector.profile.ui.screen.update.add.AddProfileViewModel::class)
-    fun bindAddProfileScreenViewModel(viewModel: org.alexcawl.iot_connector.profile.ui.screen.update.add.AddProfileViewModel): ViewModel
+    @ViewModelKey(AddProfileViewModel::class)
+    fun bindAddProfileScreenViewModel(viewModel: AddProfileViewModel): ViewModel
 
     @Binds
     fun bindRepository(repository: ProfileRepository): IProfileRepository
