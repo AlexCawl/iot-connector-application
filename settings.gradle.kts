@@ -25,7 +25,9 @@ include(":core:persistence")
 
 // Connection module
 include(":connection")
-include(":connection:dependencies")
+include(":connection:data")
+include(":connection:domain")
+include(":connection:ui")
 
 // Profile module
 include(":profile")
@@ -40,6 +42,3 @@ include(":viewer:dependencies")
 // Title module
 include(":title")
 include(":title:dependencies")
-include(":profile:data")
-include(":profile:domain")
-include(":profile:ui")

@@ -29,7 +29,9 @@ dependencies {
 
     // connection module
     implementation(project(":connection"))
-    implementation(project(":connection:dependencies"))
+    implementation(project(":connection:data"))
+    implementation(project(":connection:domain"))
+    implementation(project(":connection:ui"))
 
     // profile module
     implementation(project(":profile"))

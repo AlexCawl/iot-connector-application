@@ -1,7 +1,7 @@
 package org.alexcawl.iot_connector
 
 import android.app.Application
-import org.alexcawl.iot_connector.connection.dependencies.ConnectionDependenciesStore
+import org.alexcawl.iot_connector.connection.di.ConnectionComponentStore
 import org.alexcawl.iot_connector.di.ApplicationComponent
 import org.alexcawl.iot_connector.di.DaggerApplicationComponent
 import org.alexcawl.iot_connector.profile.di.ProfileComponentStore
@@ -20,7 +20,7 @@ class IoTConnectorApplication : Application() {
         applicationComponent.apply {
             // initialize feature dependencies here
             ProfileComponentStore.inject(this)
-            ConnectionDependenciesStore.dependencies = this
+            ConnectionComponentStore.inject(this)
             ViewerDependenciesStore.dependencies = this
             TitleDependenciesStore.dependencies = this
         }

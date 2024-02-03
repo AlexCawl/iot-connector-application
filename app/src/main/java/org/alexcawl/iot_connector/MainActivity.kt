@@ -10,8 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import org.alexcawl.iot_connector.connection.ui.ConnectionNavLocator
-import org.alexcawl.iot_connector.connection.ui.connectionNavigation
+import org.alexcawl.iot_connector.connection.navigation.ConnectionNavLocator
+import org.alexcawl.iot_connector.connection.navigation.connectionNavigation
 import org.alexcawl.iot_connector.profile.navigation.ProfileNavLocator
 import org.alexcawl.iot_connector.profile.navigation.profileNavigation
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
