@@ -41,5 +41,7 @@ dependencies {
 
     // viewer module
     implementation(project(":viewer"))
-    implementation(project(":viewer:dependencies"))
+    implementation(project(":viewer:data"))
+    implementation(project(":viewer:domain"))
+    implementation(project(":viewer:ui"))
 }

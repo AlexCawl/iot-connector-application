@@ -37,4 +37,6 @@ include(":profile:ui")
 
 // Viewer module
 include(":viewer")
-include(":viewer:dependencies")
+include(":viewer:data")
+include(":viewer:domain")
+include(":viewer:ui")

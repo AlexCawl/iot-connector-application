@@ -5,7 +5,7 @@ import org.alexcawl.iot_connector.connection.di.ConnectionComponentStore
 import org.alexcawl.iot_connector.di.ApplicationComponent
 import org.alexcawl.iot_connector.di.DaggerApplicationComponent
 import org.alexcawl.iot_connector.profile.di.ProfileComponentStore
-import org.alexcawl.iot_connector.viewer.dependencies.ViewerDependenciesStore
+import org.alexcawl.iot_connector.viewer.ViewerComponentStore
 
 class IoTConnectorApplication : Application() {
     val applicationComponent: ApplicationComponent by lazy {
@@ -20,8 +20,7 @@ class IoTConnectorApplication : Application() {
             // initialize feature dependencies here
             ProfileComponentStore.inject(this)
             ConnectionComponentStore.inject(this)
-            ViewerDependenciesStore.dependencies = this
+            ViewerComponentStore.inject(this)
         }
-
     }
 }

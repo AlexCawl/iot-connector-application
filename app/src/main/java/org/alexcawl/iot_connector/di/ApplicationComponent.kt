@@ -8,7 +8,7 @@ import org.alexcawl.iot_connector.IoTConnectorApplication
 import org.alexcawl.iot_connector.MainActivity
 import org.alexcawl.iot_connector.connection.di.ConnectionDependencies
 import org.alexcawl.iot_connector.profile.di.ProfileDependencies
-import org.alexcawl.iot_connector.viewer.dependencies.ViewerDependencies
+import org.alexcawl.iot_connector.viewer.di.ViewerDependencies
 
 @ApplicationScope
 @Component(modules = [ApplicationModule::class])

@@ -12,5 +12,8 @@ dependencies {
     implementation(project(":core:network"))
     implementation(project(":core:ui"))
     implementation(project(":core:persistence"))
-    implementation(project(":viewer:dependencies"))
+
+    implementation(project(":viewer:data"))
+    implementation(project(":viewer:domain"))
+    implementation(project(":viewer:ui"))
 }

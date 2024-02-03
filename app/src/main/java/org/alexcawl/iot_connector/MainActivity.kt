@@ -15,8 +15,8 @@ import org.alexcawl.iot_connector.connection.navigation.connectionNavigation
 import org.alexcawl.iot_connector.profile.navigation.ProfileNavLocator
 import org.alexcawl.iot_connector.profile.navigation.profileNavigation
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
-import org.alexcawl.iot_connector.viewer.ui.ViewerNavLocator
-import org.alexcawl.iot_connector.viewer.ui.viewerNavigation
+import org.alexcawl.iot_connector.viewer.navigation.ViewerNavLocator
+import org.alexcawl.iot_connector.viewer.navigation.viewerNavigation
 import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
