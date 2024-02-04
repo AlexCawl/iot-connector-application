@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.connection.data
+package org.alexcawl.iot_connector.client.data
 
 import com.hivemq.client.mqtt.mqtt5.Mqtt5AsyncClient
 import kotlinx.coroutines.flow.Flow

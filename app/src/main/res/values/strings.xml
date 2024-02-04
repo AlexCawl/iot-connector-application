@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profiles_screen">Profiles</string>
+    <string name="client_screen">Client</string>
+    <string name="connections_screen">Connections</string>
+</resources>

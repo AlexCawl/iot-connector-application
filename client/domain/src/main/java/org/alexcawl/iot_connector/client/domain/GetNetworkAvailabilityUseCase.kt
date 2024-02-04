@@ -1,7 +1,7 @@
-package org.alexcawl.iot_connector.connection.domain.usecases
+package org.alexcawl.iot_connector.client.domain
 
 import kotlinx.coroutines.flow.Flow
-import org.alexcawl.iot_connector.connection.data.INetworkStateRepository
+import org.alexcawl.iot_connector.client.data.INetworkStateRepository
 import javax.inject.Inject
 
 class GetNetworkAvailabilityUseCase @Inject constructor(

@@ -6,7 +6,6 @@ sealed interface ShowConnectionsScreenState {
     data object Initial : ShowConnectionsScreenState
 
     data class Viewer(
-        val connections: List<ConnectionState>,
-        val networkAvailability: Result<Boolean>
+        val connections: List<ConnectionState>
     ) : ShowConnectionsScreenState
 }

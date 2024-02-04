@@ -20,7 +20,8 @@ import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
 @Composable
 fun LoadingScreen(
-    modifier: Modifier = Modifier, title: @Composable () -> Unit = {}
+    modifier: Modifier = Modifier,
+    title: @Composable () -> Unit = {}
 ) = Box(
     modifier = modifier.background(color = Color.Transparent), contentAlignment = Alignment.Center
 ) {

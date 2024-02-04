@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="mqtt_network_card_title">MQTT client network status</string>
-    <string name="network_type_loading">Client loading</string>
-    <string name="network_type_ok">Connection established</string>
-    <string name="network_type_error">Unable to connect</string>
     <string name="loading_connections_placeholder">Loading connections</string>
     <string name="no_connections_title">You have no connections</string>
     <string name="no_connections_subtitle">You can add them using button below</string>

@@ -1,4 +1,4 @@
-package org.alexcawl.iot_connector.connection.ui.show_screen.component
+package org.alexcawl.iot_connector.client.ui.status_screen.component
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -30,7 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import org.alexcawl.iot_connector.connection.ui.R
+import org.alexcawl.iot_connector.client.ui.R
 import org.alexcawl.iot_connector.ui.components.card.CardScaffold
 import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
@@ -38,7 +38,8 @@ import org.alexcawl.iot_connector.ui.util.ThemedPreview
 
 @Composable
 fun NetworkStatusCard(
-    isNetworkAvailable: Result<Boolean>, modifier: Modifier = Modifier
+    isNetworkAvailable: Result<Boolean>,
+    modifier: Modifier = Modifier
 ) {
     val type: NetworkStatusIconType = isNetworkAvailable.toNetworkStatus()
     val isError: Boolean = (type == NetworkStatusIconType.EXCEPTION)

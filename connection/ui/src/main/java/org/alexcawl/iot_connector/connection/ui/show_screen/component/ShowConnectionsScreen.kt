@@ -1,7 +1,6 @@
 package org.alexcawl.iot_connector.connection.ui.show_screen.component
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -60,34 +59,23 @@ fun ShowConnectionsScreen(
         )
 
         is ShowConnectionsScreenState.Viewer -> when (state.connections.size) {
-            0 -> Column(
-                modifier = paddingModifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.medium, Alignment.Top),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                NetworkStatusCard(
-                    isNetworkAvailable = state.networkAvailability,
-                    modifier = Modifier.padding(ExtendedTheme.padding.medium)
-                )
-                EmptyScreen(
-                    modifier = Modifier.fillMaxSize(),
-                    title = {
-                        Text(
-                            text = stringResource(id = R.string.no_connections_title),
-                            style = MaterialTheme.typography.titleLarge,
-                            color = MaterialTheme.colorScheme.onSurface
-                        )
-                    },
-                    subtitle = {
-                        Text(
-                            text = stringResource(id = R.string.no_connections_subtitle),
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.onSurface
-                        )
-                    }
-                )
-            }
-
+            0 -> EmptyScreen(
+                modifier = Modifier.fillMaxSize(),
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.no_connections_title),
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                },
+                subtitle = {
+                    Text(
+                        text = stringResource(id = R.string.no_connections_subtitle),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            )
             else -> LazyColumn(
                 modifier = paddingModifier,
                 verticalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.medium, Alignment.Top),
@@ -99,9 +87,6 @@ fun ShowConnectionsScreen(
                     bottom = ExtendedTheme.padding.large * 3
                 )
             ) {
-                item(key = NETWORK_AVAILABILITY_LABEL) {
-                    NetworkStatusCard(isNetworkAvailable = state.networkAvailability)
-                }
                 items(state.connections, key = ConnectionState::id) {
                     ConnectionCard(
                         connection = it,
@@ -113,8 +98,6 @@ fun ShowConnectionsScreen(
         }
     }
 }
-
-private const val NETWORK_AVAILABILITY_LABEL: String = "NETWORK_AVAILABILITY_KEY"
 
 @Composable
 @ThemedPreview
@@ -134,10 +117,7 @@ private fun LoadingPreview() {
 @Composable
 @ThemedPreview
 private fun EmptyPreview() {
-    val state = ShowConnectionsScreenState.Viewer(
-        listOf(),
-        Result.failure(IllegalStateException())
-    )
+    val state = ShowConnectionsScreenState.Viewer(listOf())
     IoTConnectorTheme {
         ShowConnectionsScreen(
             state = state,
@@ -163,8 +143,7 @@ private fun Preview() {
                 id = UUID.randomUUID(),
                 endpoint = "/post/test",
             ),
-        ),
-        Result.failure(IllegalStateException())
+        )
     )
     IoTConnectorTheme {
         ShowConnectionsScreen(

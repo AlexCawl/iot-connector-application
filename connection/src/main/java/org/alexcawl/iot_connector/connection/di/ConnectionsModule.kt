@@ -9,8 +9,6 @@ import org.alexcawl.iot_connector.connection.data.ConnectionRepository
 import org.alexcawl.iot_connector.connection.domain.mapper.ConnectionStateMapper
 import org.alexcawl.iot_connector.connection.data.IConnectionEntityMapper
 import org.alexcawl.iot_connector.connection.data.IConnectionRepository
-import org.alexcawl.iot_connector.connection.data.INetworkStateRepository
-import org.alexcawl.iot_connector.connection.data.NetworkStateRepository
 import org.alexcawl.iot_connector.connection.domain.mapper.IConnectionStateMapper
 import org.alexcawl.iot_connector.connection.ui.show_screen.ShowConnectionsViewModel
 import org.alexcawl.iot_connector.connection.ui.update_screen.add_screen.AddConnectionViewModel
@@ -27,9 +25,6 @@ interface ConnectionsModule {
 
     @Binds
     fun bindConnectionRepository(repository: ConnectionRepository): IConnectionRepository
-
-    @Binds
-    fun bindNetworkStateRepository(repository: NetworkStateRepository): INetworkStateRepository
 
     @Binds
     @IntoMap
