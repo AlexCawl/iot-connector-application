@@ -10,7 +10,7 @@ sealed interface ViewerNavigationNode : NavigationNode {
         @Throws(IllegalArgumentException::class)
         override fun buildRoute(vararg arguments: Any?): String = try {
             val id = UUID.fromString(arguments[0].toString())
-            "viewer/${id}"
+            "/viewer/${id}"
         } catch (exception: RuntimeException) {
             throw IllegalArgumentException(exception)
         }

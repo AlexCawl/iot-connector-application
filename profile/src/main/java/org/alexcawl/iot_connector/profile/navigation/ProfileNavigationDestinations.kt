@@ -3,11 +3,11 @@ package org.alexcawl.iot_connector.profile.navigation
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import org.alexcawl.iot_connector.profile.ProfileComponentStore
 import org.alexcawl.iot_connector.profile.ui.show_screen.ShowProfilesViewModel
 import org.alexcawl.iot_connector.profile.ui.show_screen.component.ShowProfilesScreen
 import org.alexcawl.iot_connector.profile.ui.update_screen.add_screen.AddProfileViewModel
@@ -17,18 +17,16 @@ import org.alexcawl.iot_connector.profile.ui.update_screen.edit_screen.component
 import org.alexcawl.iot_connector.ui.util.composeViewModel
 import java.util.UUID
 
-inline fun NavGraphBuilder.includeShowProfilesScreen(
+fun NavGraphBuilder.includeShowProfilesScreen(
     route: String,
-    crossinline viewModelFactoryProducer: () -> ViewModelProvider.Factory,
-    noinline onAddProfileAction: () -> Unit,
-    noinline onEditProfileAction: (UUID) -> Unit
+    onAddProfileAction: () -> Unit,
+    onEditProfileAction: (UUID) -> Unit
 ) = composable(route = route) {
     val viewModel = composeViewModel(
         modelClass = ShowProfilesViewModel::class.java,
-        viewModelInstanceCreator = viewModelFactoryProducer
+        viewModelInstanceCreator = { ProfileComponentStore.component.provideFactory() }
     )
     val state by viewModel.state.collectAsState()
-
     ShowProfilesScreen(
         state = state,
         onAction = viewModel::handle,
@@ -37,17 +35,15 @@ inline fun NavGraphBuilder.includeShowProfilesScreen(
     )
 }
 
-inline fun NavGraphBuilder.includeAddProfileScreen(
+fun NavGraphBuilder.includeAddProfileScreen(
     route: String,
-    crossinline viewModelFactoryProducer: () -> ViewModelProvider.Factory,
-    noinline onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit
 ) = composable(route) {
     val viewModel = composeViewModel(
         modelClass = AddProfileViewModel::class.java,
-        viewModelInstanceCreator = viewModelFactoryProducer
+        viewModelInstanceCreator = { ProfileComponentStore.component.provideFactory() }
     )
     val state by viewModel.state.collectAsState()
-
     AddProfileScreen(
         state = state,
         onAction = viewModel::handle,
@@ -57,11 +53,10 @@ inline fun NavGraphBuilder.includeAddProfileScreen(
 
 const val EDIT_PROFILE_ID: String = "id"
 
-inline fun NavGraphBuilder.includeEditProfileScreen(
+fun NavGraphBuilder.includeEditProfileScreen(
     route: String,
-    crossinline viewModelFactoryProducer: () -> ViewModelProvider.Factory,
-    noinline onNavigateBack: () -> Unit,
-    noinline onNavigateWithException: (Throwable) -> Unit
+    onNavigateBack: () -> Unit,
+    onNavigateWithException: (Throwable) -> Unit
 ) = composable(
     route = route,
     arguments = listOf(navArgument(name = EDIT_PROFILE_ID) { type = NavType.StringType })
@@ -71,7 +66,7 @@ inline fun NavGraphBuilder.includeEditProfileScreen(
     }
     val viewModel = composeViewModel(
         modelClass = EditProfileViewModel::class.java,
-        viewModelInstanceCreator = viewModelFactoryProducer
+        viewModelInstanceCreator = { ProfileComponentStore.component.provideFactory() }
     )
     val state by viewModel.state.collectAsState()
     LaunchedEffect(key1 = profileId) {

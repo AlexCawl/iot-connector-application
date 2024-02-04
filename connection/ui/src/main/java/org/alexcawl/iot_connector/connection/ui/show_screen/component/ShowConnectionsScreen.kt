@@ -9,21 +9,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.connection.ui.R
 import org.alexcawl.iot_connector.connection.ui.show_screen.ShowConnectionsScreenAction
 import org.alexcawl.iot_connector.connection.ui.show_screen.ShowConnectionsScreenState
@@ -36,43 +30,16 @@ import org.alexcawl.iot_connector.ui.util.ThemedPreview
 import java.util.UUID
 
 @Suppress("UNUSED_PARAMETER")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShowConnectionsScreen(
     state: ShowConnectionsScreenState,
     onAction: (ShowConnectionsScreenAction) -> Unit,
-    onNavigateBack: () -> Unit,
     onNavigateToAddConnection: () -> Unit,
     onNavigateToEditConnection: (UUID) -> Unit,
     onNavigateToViewConnection: (UUID) -> Unit,
     modifier: Modifier = Modifier
 ) = Scaffold(
     modifier = modifier,
-    topBar = {
-        CenterAlignedTopAppBar(
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-                titleContentColor = MaterialTheme.colorScheme.onPrimary
-            ),
-            title = {
-                Text(
-                    text = "Connections",
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.titleLarge
-                )
-            },
-            navigationIcon = {
-                IconButton(onClick = onNavigateBack) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onPrimary
-                    )
-                }
-            }
-        )
-    },
     floatingActionButton = {
         FloatingActionButton(onClick = onNavigateToAddConnection) {
             Icon(imageVector = Icons.Filled.Add, contentDescription = null)
@@ -157,7 +124,6 @@ private fun LoadingPreview() {
         ShowConnectionsScreen(
             state = state,
             onAction = {},
-            onNavigateBack = {},
             onNavigateToAddConnection = {},
             onNavigateToEditConnection = {},
             onNavigateToViewConnection = {}
@@ -176,7 +142,6 @@ private fun EmptyPreview() {
         ShowConnectionsScreen(
             state = state,
             onAction = {},
-            onNavigateBack = {},
             onNavigateToAddConnection = {},
             onNavigateToEditConnection = {},
             onNavigateToViewConnection = {}
@@ -205,7 +170,6 @@ private fun Preview() {
         ShowConnectionsScreen(
             state = state,
             onAction = {},
-            onNavigateBack = {},
             onNavigateToAddConnection = {},
             onNavigateToEditConnection = {},
             onNavigateToViewConnection = {}

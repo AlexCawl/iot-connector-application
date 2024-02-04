@@ -3,11 +3,11 @@ package org.alexcawl.iot_connector.connection.navigation
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import org.alexcawl.iot_connector.connection.ConnectionComponentStore
 import org.alexcawl.iot_connector.connection.ui.show_screen.ShowConnectionsViewModel
 import org.alexcawl.iot_connector.connection.ui.show_screen.component.ShowConnectionsScreen
 import org.alexcawl.iot_connector.connection.ui.update_screen.add_screen.AddConnectionViewModel
@@ -18,17 +18,15 @@ import org.alexcawl.iot_connector.ui.util.composeViewModel
 import java.util.UUID
 
 
-inline fun NavGraphBuilder.includeShowConnectionsScreen(
+fun NavGraphBuilder.includeShowConnectionsScreen(
     route: String,
-    crossinline viewModelFactoryProducer: () -> ViewModelProvider.Factory,
-    noinline onNavigateBack: () -> Unit,
-    noinline onAddConnectionAction: () -> Unit,
-    noinline onEditConnectionAction: (UUID) -> Unit,
-    noinline onViewConnectionAction: (UUID) -> Unit
+    onAddConnectionAction: () -> Unit,
+    onEditConnectionAction: (UUID) -> Unit,
+    onViewConnectionAction: (UUID) -> Unit
 ) = composable(route = route) {
     val viewModel = composeViewModel(
         modelClass = ShowConnectionsViewModel::class.java,
-        viewModelInstanceCreator = viewModelFactoryProducer
+        viewModelInstanceCreator = { ConnectionComponentStore.component.provideFactory() }
     )
     val state by viewModel.state.collectAsState()
     ShowConnectionsScreen(
@@ -36,22 +34,19 @@ inline fun NavGraphBuilder.includeShowConnectionsScreen(
         onAction = viewModel::handle,
         onNavigateToAddConnection = onAddConnectionAction,
         onNavigateToEditConnection = onEditConnectionAction,
-        onNavigateToViewConnection = onViewConnectionAction,
-        onNavigateBack = onNavigateBack
+        onNavigateToViewConnection = onViewConnectionAction
     )
 }
 
-inline fun NavGraphBuilder.includeAddConnectionScreen(
+fun NavGraphBuilder.includeAddConnectionScreen(
     route: String,
-    crossinline viewModelFactoryProducer: () -> ViewModelProvider.Factory,
-    noinline onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit
 ) = composable(route = route) {
     val viewModel = composeViewModel(
         modelClass = AddConnectionViewModel::class.java,
-        viewModelInstanceCreator = viewModelFactoryProducer
+        viewModelInstanceCreator = { ConnectionComponentStore.component.provideFactory() }
     )
     val state by viewModel.state.collectAsState()
-
     AddConnectionScreen(
         state = state,
         onAction = viewModel::handle,
@@ -61,31 +56,31 @@ inline fun NavGraphBuilder.includeAddConnectionScreen(
 
 const val EDIT_CONNECTION_ID: String = "id"
 
-inline fun NavGraphBuilder.installEditConnectionScreen(
+fun NavGraphBuilder.includeEditConnectionScreen(
     route: String,
-    crossinline viewModelFactoryProducer: () -> ViewModelProvider.Factory,
-    noinline onNavigateBack: () -> Unit,
-    noinline onNavigateWithException: (Throwable) -> Unit
-) {
-    composable(route = route, arguments= listOf(navArgument(name = EDIT_CONNECTION_ID) { type = NavType.StringType })) { backStack ->
-        val connectionId: Result<UUID> = runCatching {
-            UUID.fromString(backStack.arguments?.getString(EDIT_CONNECTION_ID))
-        }
-        val viewModel = composeViewModel(
-            modelClass = EditConnectionViewModel::class.java,
-            viewModelInstanceCreator = viewModelFactoryProducer
-        )
-        val state by viewModel.state.collectAsState()
-        LaunchedEffect(key1 = connectionId) {
-            when (val id = connectionId.getOrNull()) {
-                null -> onNavigateWithException(connectionId.exceptionOrNull()!!)
-                else -> viewModel.setConnectionId(id)
-            }
-        }
-        EditConnectionScreen(
-            state = state,
-            onAction = viewModel::handle,
-            onNavigateBack = onNavigateBack
-        )
+    onNavigateBack: () -> Unit,
+    onNavigateWithException: (Throwable) -> Unit
+) = composable(
+    route = route,
+    arguments = listOf(navArgument(name = EDIT_CONNECTION_ID) { type = NavType.StringType })
+) { backStack ->
+    val connectionId: Result<UUID> = runCatching {
+        UUID.fromString(backStack.arguments?.getString(EDIT_CONNECTION_ID))
     }
+    val viewModel = composeViewModel(
+        modelClass = EditConnectionViewModel::class.java,
+        viewModelInstanceCreator = { ConnectionComponentStore.component.provideFactory() }
+    )
+    val state by viewModel.state.collectAsState()
+    LaunchedEffect(key1 = connectionId) {
+        when (val id = connectionId.getOrNull()) {
+            null -> onNavigateWithException(connectionId.exceptionOrNull()!!)
+            else -> viewModel.setConnectionId(id)
+        }
+    }
+    EditConnectionScreen(
+        state = state,
+        onAction = viewModel::handle,
+        onNavigateBack = onNavigateBack
+    )
 }
