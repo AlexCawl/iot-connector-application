@@ -44,4 +44,10 @@ dependencies {
     implementation(project(":viewer:data"))
     implementation(project(":viewer:domain"))
     implementation(project(":viewer:ui"))
+
+    // client module
+    implementation(project(":client"))
+    implementation(project(":client:data"))
+    implementation(project(":client:domain"))
+    implementation(project(":client:ui"))
 }

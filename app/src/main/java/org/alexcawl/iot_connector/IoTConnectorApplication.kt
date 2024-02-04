@@ -1,6 +1,7 @@
 package org.alexcawl.iot_connector
 
 import android.app.Application
+import org.alexcawl.iot_connector.client.ClientComponentStore
 import org.alexcawl.iot_connector.connection.ConnectionComponentStore
 import org.alexcawl.iot_connector.di.ApplicationComponent
 import org.alexcawl.iot_connector.di.DaggerApplicationComponent
@@ -21,6 +22,7 @@ class IoTConnectorApplication : Application() {
             ProfileComponentStore.inject(this)
             ConnectionComponentStore.inject(this)
             ViewerComponentStore.inject(this)
+            ClientComponentStore.inject(this)
         }
     }
 }

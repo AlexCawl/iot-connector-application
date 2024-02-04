@@ -1,6 +1,5 @@
 package org.alexcawl.iot_connector.viewer.ui.screen
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -34,7 +33,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
-import org.alexcawl.iot_connector.common.DEBUG_LOG_TAG
 import org.alexcawl.iot_connector.ui.components.placeholder.EmptyScreen
 import org.alexcawl.iot_connector.ui.components.placeholder.LoadingScreen
 import org.alexcawl.iot_connector.ui.state.data.TextRepresentationModel
@@ -170,10 +168,7 @@ fun ViewerScreen(
                 ) {
                     when (val representation = state.representations[it]) {
                         is TextRepresentationModel -> TextViewerScreen(state = representation)
-                        is ThermalRepresentationModel -> {
-                            Log.d(DEBUG_LOG_TAG, representation.toString())
-                            ThermalViewerScreen(state = representation)
-                        }
+                        is ThermalRepresentationModel -> ThermalViewerScreen(state = representation)
                         else -> throw IllegalStateException("Such representation is not supported: ${representation.javaClass}")
                     }
                 }

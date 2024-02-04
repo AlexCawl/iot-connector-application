@@ -40,3 +40,9 @@ include(":viewer")
 include(":viewer:data")
 include(":viewer:domain")
 include(":viewer:ui")
+
+// Client module
+include(":client")
+include(":client:data")
+include(":client:domain")
+include(":client:ui")
