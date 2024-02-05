@@ -1,5 +1,7 @@
 package org.alexcawl.iot_connector.viewer.navigation
 
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -21,7 +23,9 @@ fun NavGraphBuilder.includeViewerScreen(
     onNavigateWithException: (Throwable) -> Unit
 ) = composable(
     route = route,
-    arguments = listOf(navArgument(name = VIEW_CONNECTION_ID) { type = NavType.StringType })
+    arguments = listOf(navArgument(name = VIEW_CONNECTION_ID) { type = NavType.StringType }),
+    enterTransition = { slideInVertically(initialOffsetY = { it }) },
+    exitTransition = { slideOutVertically(targetOffsetY = { it }) }
 ) { backStack ->
     val connectionId: Result<UUID> = runCatching {
         UUID.fromString(backStack.arguments?.getString(VIEW_CONNECTION_ID))

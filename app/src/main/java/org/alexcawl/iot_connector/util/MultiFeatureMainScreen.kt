@@ -1,5 +1,6 @@
 package org.alexcawl.iot_connector.util
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -70,9 +71,17 @@ fun MultiFeatureMainScreen(
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
                 ),
                 title = {
-                    screens.find { it.route == destination?.destination?.route }
-                        ?.description
-                        ?.let { Text(text = it) }
+                    AnimatedContent(
+                        targetState = screens
+                            .find { it.route == destination?.destination?.route }
+                            ?.description,
+                        label = MAIN_SCREEN_TITLE_LABEL
+                    ) {
+                        when (it) {
+                            null -> Unit
+                            else -> Text(text = it)
+                        }
+                    }
                 }
             )
         },
@@ -127,3 +136,5 @@ fun MultiFeatureMainScreen(
         }
     }
 }
+
+private const val MAIN_SCREEN_TITLE_LABEL: String = "MAIN_TITLE"

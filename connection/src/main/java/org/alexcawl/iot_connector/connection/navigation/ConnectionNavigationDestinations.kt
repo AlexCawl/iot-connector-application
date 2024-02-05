@@ -1,5 +1,9 @@
 package org.alexcawl.iot_connector.connection.navigation
 
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -23,7 +27,11 @@ fun NavGraphBuilder.includeShowConnectionsScreen(
     onAddConnectionAction: () -> Unit,
     onEditConnectionAction: (UUID) -> Unit,
     onViewConnectionAction: (UUID) -> Unit
-) = composable(route = route) {
+) = composable(
+    route = route,
+    enterTransition = { slideInHorizontally(initialOffsetX = { -it }) },
+    exitTransition = { slideOutHorizontally(targetOffsetX = { -it }) }
+) {
     val viewModel = composeViewModel(
         modelClass = ShowConnectionsViewModel::class.java,
         viewModelInstanceCreator = { ConnectionComponentStore.component.provideFactory() }
@@ -41,7 +49,11 @@ fun NavGraphBuilder.includeShowConnectionsScreen(
 fun NavGraphBuilder.includeAddConnectionScreen(
     route: String,
     onNavigateBack: () -> Unit
-) = composable(route = route) {
+) = composable(
+    route = route,
+    enterTransition = { slideInVertically(initialOffsetY = { it }) },
+    exitTransition = { slideOutVertically(targetOffsetY = { it }) }
+) {
     val viewModel = composeViewModel(
         modelClass = AddConnectionViewModel::class.java,
         viewModelInstanceCreator = { ConnectionComponentStore.component.provideFactory() }
@@ -62,7 +74,9 @@ fun NavGraphBuilder.includeEditConnectionScreen(
     onNavigateWithException: (Throwable) -> Unit
 ) = composable(
     route = route,
-    arguments = listOf(navArgument(name = EDIT_CONNECTION_ID) { type = NavType.StringType })
+    arguments = listOf(navArgument(name = EDIT_CONNECTION_ID) { type = NavType.StringType }),
+    enterTransition = { slideInVertically(initialOffsetY = { it }) },
+    exitTransition = { slideOutVertically(targetOffsetY = { it }) }
 ) { backStack ->
     val connectionId: Result<UUID> = runCatching {
         UUID.fromString(backStack.arguments?.getString(EDIT_CONNECTION_ID))

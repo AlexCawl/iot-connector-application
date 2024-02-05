@@ -1,5 +1,7 @@
 package org.alexcawl.iot_connector.client.navigation
 
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
@@ -11,7 +13,11 @@ import org.alexcawl.iot_connector.ui.util.composeViewModel
 
 fun NavGraphBuilder.includeClientStatusScreen(
     route: String
-) = composable(route = route) {
+) = composable(
+    route = route,
+    enterTransition = { fadeIn() },
+    exitTransition = { fadeOut() }
+) {
     val viewModel = composeViewModel(
         modelClass = ClientStatusScreenViewModel::class.java,
         viewModelInstanceCreator = { ClientComponentStore.component.provideFactory() }

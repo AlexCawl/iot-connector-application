@@ -1,5 +1,9 @@
 package org.alexcawl.iot_connector.profile.navigation
 
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -21,7 +25,11 @@ fun NavGraphBuilder.includeShowProfilesScreen(
     route: String,
     onAddProfileAction: () -> Unit,
     onEditProfileAction: (UUID) -> Unit
-) = composable(route = route) {
+) = composable(
+    route = route,
+    enterTransition = { slideInHorizontally(initialOffsetX = { it }) },
+    exitTransition = { slideOutHorizontally(targetOffsetX = { it }) }
+) {
     val viewModel = composeViewModel(
         modelClass = ShowProfilesViewModel::class.java,
         viewModelInstanceCreator = { ProfileComponentStore.component.provideFactory() }
@@ -38,7 +46,11 @@ fun NavGraphBuilder.includeShowProfilesScreen(
 fun NavGraphBuilder.includeAddProfileScreen(
     route: String,
     onNavigateBack: () -> Unit
-) = composable(route) {
+) = composable(
+    route=route,
+    enterTransition = { slideInVertically(initialOffsetY = { it }) },
+    exitTransition = { slideOutVertically(targetOffsetY = { it }) }
+) {
     val viewModel = composeViewModel(
         modelClass = AddProfileViewModel::class.java,
         viewModelInstanceCreator = { ProfileComponentStore.component.provideFactory() }
@@ -59,7 +71,9 @@ fun NavGraphBuilder.includeEditProfileScreen(
     onNavigateWithException: (Throwable) -> Unit
 ) = composable(
     route = route,
-    arguments = listOf(navArgument(name = EDIT_PROFILE_ID) { type = NavType.StringType })
+    arguments = listOf(navArgument(name = EDIT_PROFILE_ID) { type = NavType.StringType }),
+    enterTransition = { slideInVertically(initialOffsetY = { it }) },
+    exitTransition = { slideOutVertically(targetOffsetY = { it }) }
 ) { backStack ->
     val profileId: Result<UUID> = runCatching {
         UUID.fromString(backStack.arguments?.getString(EDIT_PROFILE_ID))
