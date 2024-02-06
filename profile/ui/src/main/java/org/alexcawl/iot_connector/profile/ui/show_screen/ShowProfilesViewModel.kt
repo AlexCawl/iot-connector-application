@@ -1,8 +1,6 @@
 package org.alexcawl.iot_connector.profile.ui.show_screen
 
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,7 +20,7 @@ class ShowProfilesViewModel @Inject constructor(
     override val state: StateFlow<ShowProfilesScreenState> = _state.asStateFlow()
 
     override fun handle(action: ShowProfilesScreenAction) {
-        viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
+        viewModelScope.launch {
             when (action) {
                 is ShowProfilesScreenAction.SelectProfileById -> when (val current = _state.value) {
                     is ShowProfilesScreenState.Initial -> throw IllegalStateException()
@@ -36,7 +34,7 @@ class ShowProfilesViewModel @Inject constructor(
     }
 
     init {
-        viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
+        viewModelScope.launch {
             getProfiles().collect { (selectedProfile: ProfileState?, profiles: List<ProfileState>) ->
                 _state.emit(ShowProfilesScreenState.Viewing(selectedProfile, profiles))
             }

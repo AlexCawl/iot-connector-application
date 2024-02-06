@@ -1,8 +1,6 @@
 package org.alexcawl.iot_connector.profile.ui.update_screen
 
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +13,7 @@ abstract class ProfileViewModel : StateViewModel<ProfileScreenState, ProfileScre
     override val state: StateFlow<ProfileScreenState> = _state.asStateFlow()
 
     override fun handle(action: ProfileScreenAction) {
-        viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
+        viewModelScope.launch {
             when (action) {
                 is ProfileScreenAction.SetName -> when (val screenState = state.value) {
                     is ProfileScreenState.Builder -> _state.emit(screenState.copy(name = action.name))

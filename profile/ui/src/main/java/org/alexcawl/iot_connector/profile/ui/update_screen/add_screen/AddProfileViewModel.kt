@@ -1,8 +1,6 @@
 package org.alexcawl.iot_connector.profile.ui.update_screen.add_screen
 
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.alexcawl.iot_connector.profile.domain.usecase.CreateProfileUseCase
 import org.alexcawl.iot_connector.profile.domain.usecase.ProfileValidationException
@@ -16,7 +14,7 @@ class AddProfileViewModel @Inject constructor(
     private val validateProfile: ValidateProfileUseCase
 ) : ProfileViewModel() {
     init {
-        viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
+        viewModelScope.launch {
             _state.emit(ProfileScreenState.Builder())
         }
     }

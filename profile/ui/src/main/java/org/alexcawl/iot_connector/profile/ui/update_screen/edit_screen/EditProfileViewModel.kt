@@ -1,8 +1,6 @@
 package org.alexcawl.iot_connector.profile.ui.update_screen.edit_screen
 
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import org.alexcawl.iot_connector.profile.domain.usecase.DeleteProfileByIdUseCase
@@ -28,7 +26,7 @@ class EditProfileViewModel @Inject constructor(
     suspend fun setProfileId(uuid: UUID) = _profileId.emit(uuid)
 
     override fun handle(action: ProfileScreenAction) {
-        viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
+        viewModelScope.launch {
             when (action) {
                 is Delete -> _profileId.collect { profileId ->
                     when (profileId) {
@@ -76,7 +74,7 @@ class EditProfileViewModel @Inject constructor(
     }
 
     init {
-        viewModelScope.launch(Dispatchers.IO + SupervisorJob()) {
+        viewModelScope.launch {
             _profileId.collect { id ->
                 when (id) {
                     null -> Unit
