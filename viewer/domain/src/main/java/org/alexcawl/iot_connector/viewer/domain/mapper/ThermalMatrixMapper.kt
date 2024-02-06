@@ -49,7 +49,7 @@ class ThermalMatrixMapper @Inject constructor() : IThermalMatrixMapper {
             var counter = 0
             matrix.forEachIndexed { i, row ->
                 row.forEachIndexed { j, _ ->
-                    matrix[i][j] = data[counter++].toFloat()
+                    matrix[i][j] = data[counter++].toFloat() / 100
                 }
             }
         }

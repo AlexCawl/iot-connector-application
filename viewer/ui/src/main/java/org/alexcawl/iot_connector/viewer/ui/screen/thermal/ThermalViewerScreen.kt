@@ -1,24 +1,33 @@
 package org.alexcawl.iot_connector.viewer.ui.screen.thermal
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.RangeSlider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import org.alexcawl.iot_connector.ui.components.BoxWithZoom
 import org.alexcawl.iot_connector.ui.components.HeatMap
-import org.alexcawl.iot_connector.ui.components.card.InfoCard
+import org.alexcawl.iot_connector.ui.components.toggle_button.MultiSelectorButton
 import org.alexcawl.iot_connector.ui.state.data.ThermalRepresentationModel
 import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.theme.IoTConnectorTheme
 import org.alexcawl.iot_connector.ui.theme.extended.palettes.Palette
 import org.alexcawl.iot_connector.ui.util.ThemedPreview
 import kotlin.random.Random
+
+private const val DEFAULT_MIN_TEMP: Float = -40f
+private const val DEFAULT_MAX_TEMP: Float = 200f
+private val defaultRange: ClosedFloatingPointRange<Float> = DEFAULT_MIN_TEMP.rangeTo(DEFAULT_MAX_TEMP)
 
 @Composable
 fun ThermalViewerScreen(
@@ -29,85 +38,52 @@ fun ThermalViewerScreen(
     verticalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.medium, Alignment.Top),
     horizontalAlignment = Alignment.CenterHorizontally
 ) {
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.medium, Alignment.CenterHorizontally),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        InfoCard(
-            key = "Device",
-            value = state.device,
-            statusIcon = {},
-            modifier = Modifier.weight(1f)
-        )
-        InfoCard(
-            key = "Sensor type",
-            value = state.sensorType,
-            statusIcon = {},
-            modifier = Modifier.weight(1f)
-        )
-    }
-
-    BoxWithZoom(
-        content = {
-            HeatMap(
-                values = state.temperatures,
-                onColorPick = thermalColorPicker(ExtendedTheme.palettes.iron),
-                modifier = it.blur(4.dp)
-            )
-        },
-        modifier = Modifier.weight(1f)
+    var selectedPaletteIndex: Int by remember { mutableIntStateOf(0) }
+    val availablePalettes: List<Palette> = listOf(
+        ExtendedTheme.palettes.iron,
+        ExtendedTheme.palettes.gray,
+        ExtendedTheme.palettes.rainbow
     )
-//    BoxWithConstraints(
-//        modifier = Modifier.weight(1f),
-//        contentAlignment = Alignment.Center
-//    ) {
-//        HeatMap(
-//            values = state.temperatures,
-//            onColorPick = thermalColorPicker(ExtendedTheme.palettes.iron),
-//            modifier = Modifier.blur(4.dp)
-//        )
-//    }
+    val selectedPalette: Palette = availablePalettes[selectedPaletteIndex]
+    var range by remember { mutableStateOf(defaultRange) }
 
-    val temperatures = state.temperatures.flatMap { it.asIterable() }
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(ExtendedTheme.padding.medium, Alignment.CenterHorizontally),
-        verticalAlignment = Alignment.CenterVertically
+    MultiSelectorButton(
+        onSelect = { selectedPaletteIndex = it },
+        items = listOf(
+            Pair("Iron", null),
+            Pair("Gray", null),
+            Pair("Rainbow", null)
+        )
+    )
+    Box(
+        modifier = Modifier
+            .weight(1f)
+            .fillMaxWidth(),
+        contentAlignment = Alignment.Center
     ) {
-        InfoCard(
-            key = "Min",
-            value = "${temperatures.minOrNull() ?: "-"}",
-            statusIcon = {},
-            modifier = Modifier.weight(1f)
-        )
-        InfoCard(
-            key = "Avg",
-            value = "${temperatures.average()}",
-            statusIcon = {},
-            modifier = Modifier.weight(1f)
-        )
-        InfoCard(
-            key = "Max",
-            value = "${temperatures.maxOrNull() ?: "-"}",
-            statusIcon = {},
-            modifier = Modifier.weight(1f)
+        HeatMap(
+            values = state.temperatures,
+            onColorPick = {
+                if (it <= range.start) {
+                    selectedPalette.minColor
+                } else if (it >= range.endInclusive) {
+                    selectedPalette.maxColor
+                } else {
+                    val step = (it - range.start) / (range.endInclusive - range.start)
+                    selectedPalette.colors[(step * selectedPalette.length).toInt()]
+                }
+            },
+            modifier = Modifier.blur(8.dp)
         )
     }
-}
 
-private val thermalColorPicker: (Palette) -> ((Float) -> Color) = { palette ->
-    val minTemp = 10
-    val maxTemp = 40
+    RangeSlider(
+        value = range,
+        onValueChange = { range = it },
+        valueRange = defaultRange,
+        steps = 10
+    )
 
-    {
-        if (it <= minTemp) {
-            palette.minColor
-        } else if (it >= maxTemp) {
-            palette.maxColor
-        } else {
-            val step: Float = (it - minTemp) / (maxTemp - minTemp)
-            palette.colors[(step * palette.length).toInt()]
-        }
-    }
 }
 
 

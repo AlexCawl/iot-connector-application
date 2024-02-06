@@ -1,6 +1,7 @@
 package org.alexcawl.iot_connector.ui.components
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
@@ -60,11 +61,12 @@ private fun Preview() {
             false -> Color.Green
         }
     }
-    HeatMap(
-        values = temperatures,
-        onColorPick = picker,
-        modifier = Modifier
-            .fillMaxSize()
-            .blur(2.dp)
-    )
+    Box(modifier = Modifier.fillMaxSize()) {
+        HeatMap(
+            values = temperatures,
+            onColorPick = picker,
+            modifier = Modifier
+                .blur(2.dp)
+        )
+    }
 }
