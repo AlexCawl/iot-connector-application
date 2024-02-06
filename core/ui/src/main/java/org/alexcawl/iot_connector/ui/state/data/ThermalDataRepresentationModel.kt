@@ -3,19 +3,19 @@ package org.alexcawl.iot_connector.ui.state.data
 import androidx.compose.runtime.Immutable
 
 @Immutable
-data class ThermalRepresentationModel(
+data class ThermalDataRepresentationModel(
     val device: String,
     val sensorType: String,
-    val temperatures: Array<Array<Float>>
+    val temperatures: Array<Float>
 ) : ViewerDataRepresentationModel {
     override val priority: Int
-        get() = Int.MAX_VALUE
+        get() = 1
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as ThermalRepresentationModel
+        other as ThermalDataRepresentationModel
 
         if (device != other.device) return false
         if (sensorType != other.sensorType) return false

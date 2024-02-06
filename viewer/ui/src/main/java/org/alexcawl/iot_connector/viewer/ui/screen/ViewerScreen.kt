@@ -36,12 +36,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import org.alexcawl.iot_connector.ui.components.placeholder.EmptyScreen
 import org.alexcawl.iot_connector.ui.components.placeholder.LoadingScreen
 import org.alexcawl.iot_connector.ui.state.data.TextRepresentationModel
-import org.alexcawl.iot_connector.ui.state.data.ThermalRepresentationModel
+import org.alexcawl.iot_connector.ui.state.data.ThermalDataRepresentationModel
+import org.alexcawl.iot_connector.ui.state.data.ThermalMatrixRepresentationModel
 import org.alexcawl.iot_connector.ui.state.data.ViewerDataRepresentationModel
 import org.alexcawl.iot_connector.ui.theme.ExtendedTheme
 import org.alexcawl.iot_connector.ui.util.shimmerEffect
 import org.alexcawl.iot_connector.viewer.ui.screen.text.TextViewerScreen
-import org.alexcawl.iot_connector.viewer.ui.screen.thermal.ThermalViewerScreen
+import org.alexcawl.iot_connector.viewer.ui.screen.thermal.ThermalDataViewerScreen
+import org.alexcawl.iot_connector.viewer.ui.screen.thermal.ThermalMatrixViewerScreen
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -143,7 +145,8 @@ fun ViewerScreen(
                         state.representations.forEachIndexed { i: Int, representation: ViewerDataRepresentationModel ->
                             val (text, icon) = when (representation) {
                                 is TextRepresentationModel -> Pair("Text", Icons.Default.Create)
-                                is ThermalRepresentationModel -> Pair("Thermal", Icons.Default.Search)
+                                is ThermalDataRepresentationModel -> Pair("Thermal Data", Icons.Default.Search)
+                                is ThermalMatrixRepresentationModel  -> Pair("Thermal Matrix", Icons.Default.Search)
                                 else -> throw IllegalStateException("Such representation is not supported: ${representation.javaClass}")
                             }
                             Tab(
@@ -168,7 +171,8 @@ fun ViewerScreen(
                 ) {
                     when (val representation = state.representations[it]) {
                         is TextRepresentationModel -> TextViewerScreen(state = representation)
-                        is ThermalRepresentationModel -> ThermalViewerScreen(state = representation)
+                        is ThermalMatrixRepresentationModel -> ThermalMatrixViewerScreen(state = representation)
+                        is ThermalDataRepresentationModel -> ThermalDataViewerScreen(state = representation)
                         else -> throw IllegalStateException("Such representation is not supported: ${representation.javaClass}")
                     }
                 }

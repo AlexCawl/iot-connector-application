@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="device">Device</string>
+    <string name="sensor_type">Device</string>
+    <string name="minimum">Minimum</string>
+    <string name="maximum">Maximum</string>
+    <string name="average">Average</string>
+    <string name="median">Median</string>
+    <string name="undefined">Undefined</string>
 </resources>

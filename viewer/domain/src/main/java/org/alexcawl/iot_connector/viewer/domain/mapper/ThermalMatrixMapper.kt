@@ -24,7 +24,12 @@ class ThermalMatrixMapper @Inject constructor() : IThermalMatrixMapper {
                     0f
                 }
             }.also {
-                fillMatrix(it, array)
+                var counter = 0
+                for (i in 0 until LARGE_MATRIX_WIDTH) {
+                    for (j in 0 until LARGE_MATRIX_HEIGHT) {
+                        it[j][i] = array[counter++].toFloat() / 100
+                    }
+                }
             }
         }
 
