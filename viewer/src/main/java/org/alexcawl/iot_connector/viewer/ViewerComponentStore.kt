@@ -4,14 +4,12 @@ import org.alexcawl.iot_connector.di.ComponentStore
 import org.alexcawl.iot_connector.viewer.di.DaggerViewerComponent
 import org.alexcawl.iot_connector.viewer.di.ViewerComponent
 import org.alexcawl.iot_connector.viewer.di.ViewerDependencies
-import kotlin.properties.Delegates
 
 object ViewerComponentStore : ComponentStore<ViewerComponent, ViewerDependencies> {
-    override var component: ViewerComponent by Delegates.notNull()
+    override lateinit var dependencies: ViewerDependencies
 
-    override fun inject(dependencies: ViewerDependencies) {
-        component = DaggerViewerComponent.builder()
+    override val component: ViewerComponent
+        get() = DaggerViewerComponent.builder()
             .dependencies(dependencies)
             .build()
-    }
 }

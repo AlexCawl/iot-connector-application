@@ -19,10 +19,10 @@ class IoTConnectorApplication : Application() {
         super.onCreate()
         applicationComponent.apply {
             // initialize feature dependencies here
-            ProfileComponentStore.inject(this)
-            ConnectionComponentStore.inject(this)
-            ViewerComponentStore.inject(this)
-            ClientComponentStore.inject(this)
+            ProfileComponentStore.dependencies = this
+            ConnectionComponentStore.dependencies = this
+            ViewerComponentStore.dependencies = this
+            ClientComponentStore.dependencies = this
         }
     }
 }

@@ -1,7 +1,7 @@
 package org.alexcawl.iot_connector.di
 
 interface ComponentStore<C, D> {
-    var component: C
+    var dependencies: D
 
-    fun inject(dependencies: D)
+    val component: C
 }
