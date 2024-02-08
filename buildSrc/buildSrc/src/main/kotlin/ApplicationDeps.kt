@@ -98,5 +98,6 @@ object ApplicationDeps {
     object Utils {
         val coil = "io.coil-kt:coil:2.4.0"
         val coilCompose = "io.coil-kt:coil-compose:2.4.0"
+        val splashScreen = "androidx.core:core-splashscreen:1.0.1"
     }
 }

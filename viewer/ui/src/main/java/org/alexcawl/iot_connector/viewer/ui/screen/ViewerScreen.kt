@@ -129,7 +129,7 @@ fun ViewerScreen(
                 pagerState.animateScrollToPage(selectedIndex)
             }
 
-            LaunchedEffect(pagerState) {
+            LaunchedEffect(pagerState.currentPage) {
                 if (!pagerState.isScrollInProgress) {
                     selectedIndex = pagerState.currentPage
                 }

@@ -20,6 +20,7 @@ dependencies {
     // Util
     implementation(ApplicationDeps.Utils.coil)
     implementation(ApplicationDeps.Utils.coilCompose)
+    implementation(ApplicationDeps.Utils.splashScreen)
 
     // Testing
     androidTestImplementation(ApplicationDeps.Test.espresso)
