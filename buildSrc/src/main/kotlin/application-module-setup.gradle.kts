@@ -97,6 +97,7 @@ dependencies {
     // Util
     implementation(ApplicationDeps.Utils.coil)
     implementation(ApplicationDeps.Utils.coilCompose)
+    implementation(ApplicationDeps.Utils.splashScreen)
 
     // Testing
     testImplementation(ApplicationDeps.Test.junit)
