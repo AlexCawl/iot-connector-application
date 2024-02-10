@@ -3,8 +3,8 @@
     <style name="Theme.IoTConnector" parent="android:Theme.Material.Light.NoActionBar" />
 
     <style name="Theme.IoTConnector.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@android:color/white</item>
         <item name="postSplashScreenTheme">@style/Theme.IoTConnector</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/baseline_device_thermostat_24</item>
+        <item name="windowSplashScreenBackground">@color/splash_screen_background_color</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_screen_icon</item>
     </style>
 </resources>
