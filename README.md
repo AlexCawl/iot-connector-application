@@ -2,7 +2,7 @@
 
 ## Made by:
 
-* AlexCawl (me) (@fantasmagorius)[https://t.me/fantasmagorius]
+* AlexCawl [@fantasmagorius](https://t.me/fantasmagorius)
 
 ## Description
 
@@ -45,4 +45,4 @@
     * Gradle submodules
 * Kotlin
     * Coroutines
-    * some shit code...
+    * DSL
